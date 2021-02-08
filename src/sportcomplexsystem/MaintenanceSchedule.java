@@ -5,15 +5,23 @@
  */
 package sportcomplexsystem;
 
+import java.util.Calendar;
+
 /**
  *
  * @author YJ
  */
 public class MaintenanceSchedule {
     
-    
-    
-    
+    private Facility facility;
+    private Equipment equipment;
+    private String maintenanceID;
+    private String maintenanceType;
+    private String maintenanceDesc;
+    private double maintenanceCost;
+    private Calendar startDate;
+    private Calendar endDate;
+
     
     
 }

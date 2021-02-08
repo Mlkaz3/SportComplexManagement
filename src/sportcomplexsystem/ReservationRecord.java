@@ -18,8 +18,8 @@ public class ReservationRecord {
     private Date reservationTime;
     private Double reservationDuration;
     private User user;
-    private Facilities facilities;
-    private Equipments equipments;
+    private Facility facilities;
+    private Equipment equipments;
          
     //method
     void calculateDuration(){}

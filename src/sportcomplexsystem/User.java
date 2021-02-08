@@ -10,6 +10,7 @@ package sportcomplexsystem;
  * @author YJ
  */
 public class User {
+    
     private String userName;
     private String userID;
     private String userCategory;
