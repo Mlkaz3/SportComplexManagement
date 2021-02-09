@@ -13,15 +13,24 @@ import java.util.Date;
  */
 public class ReservationRecord {
     //field
-    private String reservationID;
-    private Date reservationDate;
-    private Date reservationTime;
-    private Double reservationDuration;
     private User user;
     private Facilities facilities;
     private Equipments equipments;
+    private String reservationID; //a unique id to verify reservation R0000000001
+    private Date reservationDate; //
+    private Date reservationStartTime; //student set it or???
+    private Date reservationEndTime;
+    private Double reservationDuration; //
+    
          
     //method
+    void checkIn(){}
+    void checkOut(){}
+    void reserve(){}
+    void alter(){}
+    void cancel(){}
+    
+    
     void calculateDuration(){}
     void calculatePenalty(){}
     void insertRecord(){}
