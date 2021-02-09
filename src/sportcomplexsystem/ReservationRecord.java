@@ -14,8 +14,8 @@ import java.util.Date;
 public class ReservationRecord {
     //field
     private User user;
-    private Facilities facilities;
-    private Equipments equipments;
+    private Facility facilities;
+    private Equipment equipments;
     private String reservationID; //a unique id to verify reservation R0000000001
     private Date reservationDate; //
     private Date reservationStartTime; //student set it or???

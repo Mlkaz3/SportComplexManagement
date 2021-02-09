@@ -9,6 +9,6 @@ package sportcomplexsystem;
  *
  * @author winnieyap
  */
-class Facilities {
+class Equipment {
     
 }
