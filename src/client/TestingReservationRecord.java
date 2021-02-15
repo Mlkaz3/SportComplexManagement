@@ -32,5 +32,15 @@ public class TestingReservationRecord {
         System.out.println("record2 " + record2);
         ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
         System.out.println("record3 " + record3);
+        
+        //client side planning
+        //staff able to edit the reservation record
+        //staff able to view the reservaion record
+        //staff able to sort the reservation record
+        //staff able to insert a new reservation record 
+        //staff able to delete a reservation record 
+        //staff able to ???
+        System.out.println("Today's Record");
+        System.out.println("______________");
     }
 }
