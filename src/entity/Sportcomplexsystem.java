@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sportcomplexsystem;
+package entity;
 
 import java.util.Scanner;
 
@@ -25,6 +25,11 @@ public class Sportcomplexsystem {
         System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             02:25PM     ");
         System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             02:25PM     ");
         
+        
+        System.out.println("Today's Registration");
+        System.out.println("RID        Name      Category           StartTime(In)       EndTime(Out)");
+        System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             02:25PM     ");
+        System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             02:25PM     ");
         
         System.out.println("TARUC SPORT COMPLEX");
         System.out.println("Please select a choice");
