@@ -9,6 +9,6 @@ package entity;
  *
  * @author winnieyap
  */
-class Facility {
+public class Facility {
     
 }
