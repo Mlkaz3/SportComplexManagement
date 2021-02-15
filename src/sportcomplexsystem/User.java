@@ -16,6 +16,10 @@ public class User {
     private String userCategory;
     private String userTel;
 
+    public User() {
+        
+    }
+    
     public User(String userName, String userID, String userCategory, String userTel) {
         this.userName = userName;
         this.userID = userID;

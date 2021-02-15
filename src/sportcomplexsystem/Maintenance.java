@@ -11,7 +11,7 @@ import java.util.Calendar;
  *
  * @author YJ
  */
-public class MaintenanceSchedule {
+public class Maintenance {
     
     private Facility facility;
     private Equipment equipment;
