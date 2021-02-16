@@ -9,6 +9,6 @@ package adt;
  *
  * @author YJ
  */
-public interface QueueInterface {
+public interface PriorityQueueInterface {
     
 }

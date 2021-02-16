@@ -5,13 +5,14 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  *
  * @author YJ
  */
-public class Maintenance {
+public class Maintenance implements Serializable {
     
     private Facility facility;
     private Equipment equipment;
@@ -22,6 +23,4 @@ public class Maintenance {
     private Calendar startDate;
     private Calendar endDate;
 
-    
-    
 }

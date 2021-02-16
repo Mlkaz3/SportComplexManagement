@@ -9,6 +9,6 @@ package adt;
  *
  * @author YJ
  */
-public class Schedule implements QueueInterface {
+public class Schedule implements PriorityQueueInterface {
     
 }
