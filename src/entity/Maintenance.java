@@ -23,4 +23,12 @@ public class Maintenance implements Serializable {
     private Calendar startDate;
     private Calendar endDate;
 
+    public Maintenance(Facility facility, String maintenanceID, String maintenanceType, String maintenanceDesc, double maintenanceCost, Calendar startDate) {
+        this.facility = facility;
+        this.maintenanceID = maintenanceID;
+        this.maintenanceType = maintenanceType;
+        this.maintenanceDesc = maintenanceDesc;
+        this.maintenanceCost = maintenanceCost;
+        this.startDate = startDate;
+    }
 }

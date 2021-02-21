@@ -5,35 +5,53 @@
  */
 package adt;
 
-import entity.Facility;
-
 /**
  *
  * @author YJ
  */
 public class PriorityQueue<T> implements PriorityQueueInterface<T> {
-    
+
     private T[] array;
-    private int numOfEntries;
-    private final static int DEFAULT_CAPACITY = 10;
+    private int numOfElements;
+    private int priority;
+    private final static int DEFAULT_CAPACITY = 20;
 
     public PriorityQueue() {
         array = (T[]) new Object[DEFAULT_CAPACITY];
-        numOfEntries = 0;
+        numOfElements = 0;
     }
-    
+
     @Override //Modify to add element based on priority
     public void joinQueue(T newElement) {
         boolean exist = contains(newElement);
         if (!exist) {
-            array[numOfEntries++] = newElement;
+            array[numOfElements++] = newElement;
+        }
+    }
+
+    @Override
+    public void leaveQueue(T anElement) {
+        if (contains(anElement)) {
+            int i = 0;
+            boolean found = false;
+            while (i < numOfElements && !found) {
+                if (array[i].equals(anElement)) {
+                    found = true;
+                } else {
+                    i++;
+                }
+            }
+            numOfElements--;
+            for (int j = i; j < numOfElements; j++) {
+                array[j] = array[j + 1];
+            }
         }
     }
 
     private boolean contains(T newElement) {
         boolean exist = false;
         int i = 0;
-        while (i < numOfEntries && !exist) {
+        while (i < numOfElements && !exist) {
             if (array[i].equals(newElement)) {
                 exist = true;
             } else {
@@ -44,32 +62,45 @@ public class PriorityQueue<T> implements PriorityQueueInterface<T> {
     }
 
     @Override
-    public void leaveQueue(T anElement) {
-        if (contains(anElement)) {
-            int i = 0;
-            boolean found = false;
-            while (i < numOfEntries && !found) {
-                if (array[i].equals(anElement)) {
-                    found = true;
-                } else {
-                    i++;
-                }
-            }
-            numOfEntries--;
-            for (int j = i; j < numOfEntries; j++) {
+    public void serveFirst() {
+        if (numOfElements != 0) {
+            numOfElements--;
+            for (int j = 0; j < numOfElements; j++) {
                 array[j] = array[j + 1];
             }
         }
     }
 
+//    @Override
+//    public void compare(T newElement) {
+//        int position = 0;
+//        for (int i = 0; i < numOfElements; i++) {
+//            if (newElement.toString().charAt(0) < array[i].toString().charAt(0)) {
+//                position = i;
+//            }
+//        }
+//        makeRoom(position);
+//        array[position - 1] = newElement;
+//        numOfElements++;
+//    }
+//    
+//    private void makeRoom(int newPosition) {
+//    int newIndex = newPosition - 1;
+//    int lastIndex = numOfElements - 1;
+//
+//    for (int index = lastIndex; index >= newIndex; index--) {
+//      array[index + 1] = array[index];
+//    }
+//  }
+    
     @Override
-    public void serveFirst() {
-        if (numOfEntries != 0) {
-            numOfEntries--;
-            for (int j = 0; j < numOfEntries; j++) {
-                array[j] = array[j + 1];
-            }
-        }
+    public boolean isEmpty() {
+        return numOfElements == 0;
+    }
+
+    @Override
+    public int getTotalEntry() {
+        return numOfElements;
     }
 
     @Override //KIV because can use custom comparator to identify priority when enqueuing element
@@ -78,30 +109,31 @@ public class PriorityQueue<T> implements PriorityQueueInterface<T> {
     }
 
     @Override
-    public int checkPosition(T anElement) {
-       int position = 0;
-       if (contains(anElement)) {
+    public int getPosition(T anElement) {
+        int position = 0;
+        if (contains(anElement)) {
             int i = 0;
-            
+
             boolean found = false;
-            while (i < numOfEntries && !found) {
+            while (i < numOfElements && !found) {
                 if (array[i].equals(anElement)) {
-                    position = i+1;
+                    position = i + 1;
                     found = true;
                 } else {
                     i++;
                 }
             }
-       }
-       return position;
+            return position;
+        }
+        return 0;
     }
-    
+
     @Override
     public String toString() {
         String str = "";
-        for (int i = 0; i < numOfEntries; i++) {
-        str += (i+1) + ". " + array[i] + "\n";
-    }
+        for (int i = 0; i < numOfElements; i++) {
+            str += (i + 1) + ". " + array[i] + "\n";
+        }
         return str;
-    } 
+    }
 }

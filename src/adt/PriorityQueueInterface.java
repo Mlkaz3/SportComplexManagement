@@ -5,8 +5,6 @@
  */
 package adt;
 
-import entity.Facility;
-
 /**
  *
  * @author YJ
@@ -16,5 +14,8 @@ public interface PriorityQueueInterface<T> {
     void leaveQueue (T aSchedule);
     void serveFirst ();
     void cutQueue (T newSchedule, int position, int priority);
-    int checkPosition(T aSchedule);
+    boolean isEmpty();
+    //void compare(T newElement);
+    int getPosition(T aSchedule);
+    int getTotalEntry();
 }
