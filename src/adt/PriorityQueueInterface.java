@@ -5,10 +5,16 @@
  */
 package adt;
 
+import entity.Facility;
+
 /**
  *
  * @author YJ
  */
-public interface PriorityQueueInterface {
-    
+public interface PriorityQueueInterface<T> {
+    void joinQueue (T newSchedule);
+    void leaveQueue (T aSchedule);
+    void serveFirst ();
+    void cutQueue (T newSchedule, int position, int priority);
+    int checkPosition(T aSchedule);
 }
