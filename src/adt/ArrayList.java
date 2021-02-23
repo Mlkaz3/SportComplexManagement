@@ -8,50 +8,51 @@ package adt;
 /**
  *
  * @author winnieyap
+ * note: 
+ * concrete class might be removed based on it's usage
  */
-public class LinkedList<T> implements ListInterf<T>{
-    
-    private Node head;
+public class ArrayList<T> implements ListInterface<T>{
+    private T[] array;
+    private int numberOfEntries;
+    private final static int DEFAULT_CAPACITY = 50;
 
     @Override
-    public boolean add(T newEntry) {
-        Node node = new Node(newEntry);
-        
+    public boolean add(T newElement) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean add(int newPosition, T newEntry) {
+    public boolean add(int givenPosition, T newElement) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public T remove(int givenPosition) {
+    public boolean replace(int givenPosition, T newElement) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void clear() {
+    public ListInterface getElement(int givenPosition) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean replace(int givenPosition, T newEntry) {
+    public boolean delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public T getEntry(int givenPosition) {
+    public boolean delete(T anElement) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean contains(T anEntry) {
+    public boolean copy(T givenElement) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getLength() {
+    public boolean contains(T givenElement) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -64,7 +65,10 @@ public class LinkedList<T> implements ListInterf<T>{
     public boolean isFull() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+    @Override
+    public int getLength() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
