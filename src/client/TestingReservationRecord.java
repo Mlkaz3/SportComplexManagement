@@ -18,6 +18,19 @@ import java.util.Date;
  */
 public class TestingReservationRecord {
     public static void main(String[] args) {
+        
+        // TODO code application logic here
+        System.out.println("Today's Reservation");
+        System.out.println("RID        Name      Category           StartTime(In)       EndTime(Out)");
+        System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             02:25PM     ");
+        System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             02:25PM     ");
+        
+        
+        System.out.println("Today's Registration");
+        System.out.println("RID        Name      Category           StartTime(In)       EndTime(Out)");
+        System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             02:25PM     ");
+        System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             02:25PM     ");
+        
         //might import another Calender
         Date now = new Date();
         
