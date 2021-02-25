@@ -9,28 +9,40 @@ package adt;
  *
  * @author YJ
  */
-public class PriorityQueue<T> implements PriorityQueueInterface<T> {
+public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
 
     private T[] array;
-    private int numOfElements;
-    private int priority;
-    private final static int DEFAULT_CAPACITY = 20;
+    private int numOfElements; //Length of queue
+    private final static int frontIndex = 0;
+    private int backIndex;  
+    private final static int DEFAULT_CAPACITY = 20; //Max number of maintenance schedules that can be made
 
-    public PriorityQueue() {
+    public ArrayPriorityQueue() {
         array = (T[]) new Object[DEFAULT_CAPACITY];
         numOfElements = 0;
     }
 
     @Override //Modify to add element based on priority
-    public void joinQueue(T newElement) {
+    public void enqueue(T newElement) {
         boolean exist = contains(newElement);
         if (!exist) {
             array[numOfElements++] = newElement;
+            backIndex++;
         }
     }
 
     @Override
-    public void leaveQueue(T anElement) {
+    public void dequeue() {
+        if (numOfElements != 0) {
+            numOfElements--;
+            for (int j = 0; j < numOfElements; j++) {
+                array[j] = array[j + 1];
+            }
+        }
+    }
+
+    @Override
+    public void remove(T anElement) {
         if (contains(anElement)) {
             int i = 0;
             boolean found = false;
@@ -42,7 +54,7 @@ public class PriorityQueue<T> implements PriorityQueueInterface<T> {
                 }
             }
             numOfElements--;
-            for (int j = i; j < numOfElements; j++) {
+            for (int j = i; j < numOfElements; j++) { //use circular array with dynamic front?
                 array[j] = array[j + 1];
             }
         }
@@ -60,52 +72,20 @@ public class PriorityQueue<T> implements PriorityQueueInterface<T> {
         }
         return exist;
     }
-
-    @Override
-    public void serveFirst() {
-        if (numOfElements != 0) {
-            numOfElements--;
-            for (int j = 0; j < numOfElements; j++) {
-                array[j] = array[j + 1];
-            }
-        }
-    }
-
-//    @Override
-//    public void compare(T newElement) {
-//        int position = 0;
-//        for (int i = 0; i < numOfElements; i++) {
-//            if (newElement.toString().charAt(0) < array[i].toString().charAt(0)) {
-//                position = i;
-//            }
-//        }
-//        makeRoom(position);
-//        array[position - 1] = newElement;
-//        numOfElements++;
-//    }
-//    
-//    private void makeRoom(int newPosition) {
-//    int newIndex = newPosition - 1;
-//    int lastIndex = numOfElements - 1;
-//
-//    for (int index = lastIndex; index >= newIndex; index--) {
-//      array[index + 1] = array[index];
-//    }
-//  }
     
     @Override
     public boolean isEmpty() {
-        return numOfElements == 0;
+        return backIndex < frontIndex;
+    } 
+    
+    @Override
+    public boolean isFull() {
+        return backIndex == array.length - 1;
     }
 
     @Override
     public int getTotalEntry() {
         return numOfElements;
-    }
-
-    @Override //KIV because can use custom comparator to identify priority when enqueuing element
-    public void cutQueue(T newElement, int position, int priority) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -136,4 +116,5 @@ public class PriorityQueue<T> implements PriorityQueueInterface<T> {
         }
         return str;
     }
+    
 }

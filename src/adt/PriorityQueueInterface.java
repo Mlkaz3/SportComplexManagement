@@ -8,14 +8,21 @@ package adt;
 /**
  *
  * @author YJ
+ * @param <T>
  */
 public interface PriorityQueueInterface<T> {
-    void joinQueue (T newSchedule);
-    void leaveQueue (T aSchedule);
-    void serveFirst ();
-    void cutQueue (T newSchedule, int position, int priority);
+    
+    void enqueue (T newElement);
+    
+    void dequeue ();
+    
+    void remove (T anElement);
+    
     boolean isEmpty();
-    //void compare(T newElement);
-    int getPosition(T aSchedule);
+    
+    boolean isFull();
+    
+    int getPosition(T anElement);
+    
     int getTotalEntry();
 }
