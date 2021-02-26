@@ -40,7 +40,7 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
             }
         }
     }
-
+    
     @Override
     public void remove(T anElement) {
         if (contains(anElement)) {

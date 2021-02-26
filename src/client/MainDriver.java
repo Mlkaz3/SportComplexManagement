@@ -203,11 +203,12 @@ public class MainDriver {
     private static void Maintenance() {
         int ch = 0;
         boolean invalidInput;
+
+        PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
+
         do {
             invalidInput = false;
             Scanner input = new Scanner(System.in);
-            PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
-            Maintenance maintenance = new Maintenance();
 
             System.out.println("\nMAINTENANCE");
             System.out.println("-----------");
@@ -215,6 +216,8 @@ public class MainDriver {
             System.out.println("(2) Remove");
             System.out.println("(3) Update");
             System.out.println("(4) Manage");
+                    
+            System.out.println("(5) Back");
 
             try {
                 System.out.print("Please select your choice: ");
@@ -223,6 +226,8 @@ public class MainDriver {
 
                 switch (ch) {
                     case 1:
+                        Maintenance maintenance = new Maintenance();
+
                         Scanner userInput = new Scanner(System.in);
                         System.out.print("\nFacility ID: ");
                         maintenance.setFacility(userInput.nextLine());
@@ -240,10 +245,14 @@ public class MainDriver {
 
                         break;
                     case 2:
-
+                        System.out.println("FIFO, first record will be removed");
+                        schedule.dequeue();
+                        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Maintenance cost");
+                        System.out.println("------------------------------------------------------------------------------");
+                        System.out.println(schedule);
                         break;
                     case 3:
-           
+
                         break;
                     case 4:
                         System.out.println("Maintenance History");
@@ -264,7 +273,7 @@ public class MainDriver {
                 System.out.println();
                 invalidInput = true;
             }
-        } while (ch != 4 || invalidInput);
+        } while (ch != 5 || invalidInput);
     }
 
     private static void Others() {
