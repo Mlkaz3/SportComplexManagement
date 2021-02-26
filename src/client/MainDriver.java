@@ -204,6 +204,7 @@ public class MainDriver {
         int ch = 0;
         boolean invalidInput;
 
+        //TO DO: serialize
         PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
 
         do {
@@ -215,8 +216,7 @@ public class MainDriver {
             System.out.println("(1) Add");
             System.out.println("(2) Remove");
             System.out.println("(3) Update");
-            System.out.println("(4) Manage");
-                    
+            System.out.println("(4) Manage");     
             System.out.println("(5) Back");
 
             try {

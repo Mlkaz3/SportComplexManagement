@@ -33,11 +33,14 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
 
     @Override
     public void dequeue() {
-        if (numOfElements != 0) {
-            numOfElements--;
-            for (int j = 0; j < numOfElements; j++) {
-                array[j] = array[j + 1];
+        T front = null;
+        if (!isEmpty()) {
+            front = array[frontIndex];
+
+            for (int i = frontIndex; i < backIndex; i++) {
+                array[i] = array[i + 1];
             }
+            backIndex--;
         }
     }
     
@@ -111,7 +114,7 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
     @Override
     public String toString() {
         String str = "";
-        for (int i = 0; i < numOfElements; i++) {
+        for (int i = 0; i < backIndex; i++) {
             str += (i + 1) + ". " + array[i] + "\n";
         }
         return str;
