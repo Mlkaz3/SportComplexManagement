@@ -41,8 +41,8 @@ public class TestingReservationRecord {
         
         ReservationRecord record1 = new ReservationRecord();
         System.out.println("record1 " + record1);
-        ReservationRecord record2 = new ReservationRecord(now,now,2.0,user,equipment);
-        System.out.println("record2 " + record2);
+        //ReservationRecord record2 = new ReservationRecord(now,now,2.0,user,equipment);
+        //System.out.println("record2 " + record2);
         ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
         System.out.println("record3 " + record3);
         

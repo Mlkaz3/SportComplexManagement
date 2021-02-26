@@ -70,7 +70,7 @@ public class Equipment {
 
     @Override
     public String toString() {
-        return String.format("%-10s %-30s %-6s %-5.2f %-10s %-10s",equipmentID , equipmentBrand , equipmentStatus , equipmentPrice , equipmentLocation , equipmentCode);
+        return String.format("%-10s %-30s %-6b %-6s %-10s %-10s",equipmentID , equipmentBrand , equipmentStatus , equipmentPrice , equipmentLocation , equipmentCode);
     }
     
     

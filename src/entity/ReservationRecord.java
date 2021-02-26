@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -41,7 +42,9 @@ public class ReservationRecord {
 
     //facilities constructor
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, Double reservationDuration, User user, Facility facilities) {
-        this.reservationStartTime = reservationStartTime;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+        //Date date = new Date(); 
+        this.reservationStartTime = new Date();
         this.reservationEndTime = reservationEndTime;
         this.reservationDuration = reservationDuration;
         this.user = user;
@@ -51,9 +54,9 @@ public class ReservationRecord {
     }
 
     //equipment constructor 
-    public ReservationRecord(Date reservationStartTime, Date reservationEndTime, Double reservationDuration, User user, Equipment equipments) {
-        this.reservationStartTime = reservationStartTime;
-        this.reservationEndTime = reservationEndTime;
+    public ReservationRecord(Double reservationDuration, User user, Equipment equipments) {
+        this.reservationStartTime = new Date();
+        this.reservationEndTime = reservationStartTime;
         this.reservationDuration = reservationDuration;
         this.user = user;
         this.equipments = equipments;
