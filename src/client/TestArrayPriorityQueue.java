@@ -8,7 +8,6 @@ package client;
 import adt.ArrayPriorityQueue;
 import entity.Maintenance;
 import adt.PriorityQueueInterface;
-import java.util.Comparator;
 import java.util.Scanner;
 
 /**
@@ -48,6 +47,7 @@ public class TestArrayPriorityQueue {
         PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
         
         Maintenance maintenance = new Maintenance();
+        Maintenance maintenance2 = new Maintenance();
         
         Scanner userInput = new Scanner(System.in);
         System.out.print("\nFacility ID: ");
@@ -60,10 +60,21 @@ public class TestArrayPriorityQueue {
         maintenance.setMaintenanceCost(userInput.nextDouble());
         
         schedule.enqueue(maintenance);
+        
+        System.out.print("\nFacility ID: ");
+        maintenance2.setFacility(userInput.nextLine());
+        System.out.print("Maintenance type: ");
+        maintenance2.setMaintenanceType(userInput.nextLine());
+        System.out.print("Maintenance description: ");
+        maintenance2.setMaintenanceDesc(userInput.nextLine());
+        System.out.print("Maintenance cost: ");
+        maintenance2.setMaintenanceCost(userInput.nextDouble());
+        schedule.enqueue(maintenance2);
+        
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Maintenance cost");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(schedule);
-
+        
         schedule.dequeue();
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Maintenance cost");
         System.out.println("------------------------------------------------------------------------------");
