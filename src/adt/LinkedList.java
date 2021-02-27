@@ -9,20 +9,60 @@ package adt;
  *
  * @author winnieyap
  */
-public class LinkedList<T> implements ListInterf<T>{
-    
+public class LinkedList<T> implements ListInterf<T> {
+
     private Node head;
+    private int length;	// number of entries in list/size
 
     @Override
     public boolean add(T newEntry) {
         Node node = new Node(newEntry);
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        if (isEmpty()) {
+            head = node;
+        } else {
+            Node currentNode = head;
+            while (currentNode.next != null) {
+                currentNode = currentNode.next;
+            }
+            currentNode.next = node;
+        }
+
+        length++;
+        return true;
     }
 
     @Override
     public boolean add(int newPosition, T newEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //node object that stored value to be enter into list
+        Node node = new Node(newEntry);
+
+        //validation of newPosition
+        if (validatePosition(newPosition)) {
+            //add element at front if the list is empty
+            if (isEmpty() || newPosition == 1) {
+                node.next = head;
+                head = node;
+                return true;
+            } else {
+                //finding the node before
+                Node nodeBefore = head;
+                for (int i = 1; i < newPosition - 1; ++i) {
+                    nodeBefore = nodeBefore.next;		
+                }
+                node.next = nodeBefore.next;	// make new node point to current node at newPosition
+                nodeBefore.next = node;
+                return true;
+            }
+        }
+
+        length++;
+        return false;
+
+    }
+
+    private boolean validatePosition(int newPosition) {
+        return newPosition >= 1 && newPosition <= length + 1;
     }
 
     @Override
@@ -32,7 +72,7 @@ public class LinkedList<T> implements ListInterf<T>{
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        length = 0;
     }
 
     @Override
@@ -52,19 +92,17 @@ public class LinkedList<T> implements ListInterf<T>{
 
     @Override
     public int getLength() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return length;
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return length == 0;
     }
 
     @Override
     public boolean isFull() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
-    
-    
-    
+
 }

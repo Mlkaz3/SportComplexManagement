@@ -12,7 +12,7 @@ package adt;
 public class Node<T> {
 
     private T data; // entry in list
-    private Node next; // link to next node
+    Node next; // link to next node
     
     //empty constructor
     public Node(){
