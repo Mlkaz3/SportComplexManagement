@@ -10,9 +10,16 @@ package adt;
  * @author winnieyap
  */
 public interface ListInterf<T> {
+    
+    //add a new entry to the linked list
     public boolean add(T newEntry);
+    
+    //add a new entry at given Position in the linked list
     public boolean add(int newPosition, T newEntry);
+    
+    //remove element at given position
     public T remove(int givenPosition);
+    
     public void clear();
     public boolean replace(int givenPosition, T newEntry);
     public T getEntry(int givenPosition);
