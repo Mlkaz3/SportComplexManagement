@@ -16,16 +16,21 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
     private final static int frontIndex = 0;
     private int backIndex;  
     private final static int DEFAULT_CAPACITY = 20; //Max number of maintenance schedules that can be made
+    private int initialCapacity;
 
-    public ArrayPriorityQueue() {
-        array = (T[]) new Object[DEFAULT_CAPACITY];
+    public ArrayPriorityQueue(int initialCapacity, PriorityComparator pc) {
+        array = (T[]) new Object[initialCapacity];
         numOfElements = 0;
     }
+    
+//    public ArrayPriorityQueue() {
+//        array = (T[]) new Object[DEFAULT_CAPACITY];
+//        numOfElements = 0;
+//    }
 
     @Override //Modify to add element based on priority
     public void enqueue(T newElement) {
-        boolean exist = contains(newElement);
-        if (!exist) {
+        if (!isFull()) {
             array[numOfElements++] = newElement;
             backIndex++;
         }
@@ -41,32 +46,35 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
                 array[i] = array[i + 1];
             }
             backIndex--;
+            numOfElements--;
         }
     }
     
     @Override
-    public void remove(T anElement) {
-        if (contains(anElement)) {
-            int i = 0;
-            boolean found = false;
-            while (i < numOfElements && !found) {
-                if (array[i].equals(anElement)) {
-                    found = true;
-                } else {
-                    i++;
+    public T remove(int position) {
+        T result = null;
+
+        if ((position >= 1) && (position <= numOfElements)) {
+
+            result = array[position - 1];
+
+            if (position < backIndex) {
+
+                for (int j = position - 1; j < backIndex; j++) { //use circular array with dynamic front?
+                    array[j] = array[j + 1];
                 }
             }
-            numOfElements--;
-            for (int j = i; j < numOfElements; j++) { //use circular array with dynamic front?
-                array[j] = array[j + 1];
-            }
+
+            backIndex--;
+
         }
+        return result;
     }
 
     private boolean contains(T newElement) {
         boolean exist = false;
         int i = 0;
-        while (i < numOfElements && !exist) {
+        while (i < backIndex && !exist) {
             if (array[i].equals(newElement)) {
                 exist = true;
             } else {
@@ -119,5 +127,4 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
         }
         return str;
     }
-    
 }

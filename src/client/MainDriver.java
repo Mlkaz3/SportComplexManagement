@@ -6,6 +6,7 @@
 package client;
 
 import adt.ArrayPriorityQueue;
+import adt.PriorityComparator;
 import adt.PriorityQueueInterface;
 import entity.Equipment;
 import entity.Maintenance;
@@ -205,7 +206,7 @@ public class MainDriver {
         boolean invalidInput;
 
         //TO DO: serialize
-        PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
+        PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>(10, new PriorityComparator());
 
         do {
             invalidInput = false;
@@ -214,8 +215,8 @@ public class MainDriver {
             System.out.println("\nMAINTENANCE");
             System.out.println("-----------");
             System.out.println("(1) Add");
-            System.out.println("(2) Remove");
-            System.out.println("(3) Update");
+            System.out.println("(2) Complete");
+            System.out.println("(3) Cancel");
             System.out.println("(4) Manage");     
             System.out.println("(5) Back");
 
@@ -223,12 +224,13 @@ public class MainDriver {
                 System.out.print("Please select your choice: ");
                 ch = input.nextInt();
                 System.out.println("");
-
+                Scanner userInput = new Scanner(System.in);
+                
                 switch (ch) {
                     case 1:
                         Maintenance maintenance = new Maintenance();
 
-                        Scanner userInput = new Scanner(System.in);
+                        
                         System.out.print("\nFacility ID: ");
                         maintenance.setFacility(userInput.nextLine());
                         System.out.print("Maintenance type: ");
@@ -252,7 +254,9 @@ public class MainDriver {
                         System.out.println(schedule);
                         break;
                     case 3:
-
+                        System.out.println("Cancel a schedule: ");
+                        int remove = userInput.nextInt();
+                        System.out.println(schedule.remove(remove) + " is cancelled.");
                         break;
                     case 4:
                         System.out.println("Maintenance History");

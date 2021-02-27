@@ -22,15 +22,17 @@ public class Maintenance implements Serializable {
     private double maintenanceCost;
     private Calendar startDate;
     private Calendar endDate;
+    private String priority;
 
     public Maintenance() {
         
     }
     
-    public Maintenance(String maintenanceType, String maintenanceDesc, double maintenanceCost) {
+    public Maintenance(String maintenanceType, String maintenanceDesc, double maintenanceCost, String priority) {
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.maintenanceCost = maintenanceCost;
+        this.priority = priority;
     }
 
     public String getFacility() {
@@ -96,12 +98,18 @@ public class Maintenance implements Serializable {
     public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
     }
-    
-    
 
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+    
     @Override
     public String toString() {
-        return String.format("%-15s %-20s %-25s RM %-5.2f", facilityID, maintenanceType, maintenanceDesc, maintenanceCost);
+        return String.format("%-15s %-20s %-25s %-20s %-20s", facilityID, maintenanceType, maintenanceDesc, maintenanceCost, priority);
     }
     
 }

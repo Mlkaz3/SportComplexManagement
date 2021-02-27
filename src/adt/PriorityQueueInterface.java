@@ -16,7 +16,7 @@ public interface PriorityQueueInterface<T> {
     
     void dequeue ();
     
-    void remove (T anElement);
+    T remove(int position);
     
     boolean isEmpty();
     
