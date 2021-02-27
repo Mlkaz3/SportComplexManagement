@@ -45,7 +45,7 @@ public class LinkedList<T> implements ListInterf<T> {
     }
     
     @Override
-    public boolean add(int newPosition, T newEntry) {
+    public boolean addAt(int newPosition, T newEntry) {
         //node object that stored value to be enter into list
         Node node = new Node(newEntry);
 
@@ -72,9 +72,7 @@ public class LinkedList<T> implements ListInterf<T> {
 
     }
 
-    private boolean validatePosition(int newPosition) {
-        return newPosition >= 1 && newPosition <= length + 1;
-    }
+    
 
     @Override
     public T remove(int givenPosition) {
@@ -114,6 +112,10 @@ public class LinkedList<T> implements ListInterf<T> {
     @Override
     public boolean isFull() {
         return false;
+    }
+    
+    private boolean validatePosition(int newPosition) {
+        return newPosition >= 1 && newPosition <= length + 1;
     }
 
 }

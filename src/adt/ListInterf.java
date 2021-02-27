@@ -18,7 +18,7 @@ public interface ListInterf<T> {
     public boolean addBack(T newEntry);
     
     //add a new entry at given Position in the linked list
-    public boolean add(int newPosition, T newEntry);
+    public boolean addAt(int newPosition, T newEntry);
     
     //remove element at given position
     public T remove(int givenPosition);
