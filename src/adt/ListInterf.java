@@ -12,7 +12,10 @@ package adt;
 public interface ListInterf<T> {
     
     //add a new entry to the linked list
-    public boolean add(T newEntry);
+    public boolean addFront(T newEntry);
+    
+    //add a new entry to the linked list
+    public boolean addBack(T newEntry);
     
     //add a new entry at given Position in the linked list
     public boolean add(int newPosition, T newEntry);

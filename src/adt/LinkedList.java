@@ -15,9 +15,22 @@ public class LinkedList<T> implements ListInterf<T> {
     private int length;	// number of entries in list/size
 
     @Override
-    public boolean add(T newEntry) {
+    public boolean addFront(T newEntry) {
         Node node = new Node(newEntry);
 
+        if (isEmpty()) {
+            head = node;
+        } else {
+            node.next =head;
+            head = node;
+        }
+        length++;
+        return true;
+    }
+
+    @Override
+    public boolean addBack(T newEntry) {
+        Node node = new Node(newEntry);
         if (isEmpty()) {
             head = node;
         } else {
@@ -27,11 +40,10 @@ public class LinkedList<T> implements ListInterf<T> {
             }
             currentNode.next = node;
         }
-
         length++;
         return true;
     }
-
+    
     @Override
     public boolean add(int newPosition, T newEntry) {
         //node object that stored value to be enter into list
@@ -55,7 +67,6 @@ public class LinkedList<T> implements ListInterf<T> {
                 return true;
             }
         }
-
         length++;
         return false;
 
