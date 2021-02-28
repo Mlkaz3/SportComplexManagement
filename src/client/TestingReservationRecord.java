@@ -66,8 +66,7 @@ public class TestingReservationRecord {
                 "Reservation ID", "Reservation Type", "Reservation DateTime", "Check In", "Check Out",
                 "Duration", "UserName", "Reserved Item"));
         System.out.println(reservationRecord);
-        
-        
+
         System.out.println("");
         System.out.println("SECTION 2");
         System.out.println("");
@@ -76,23 +75,23 @@ public class TestingReservationRecord {
         System.out.println(reservationRecord.contains(record2));
         System.out.println("ERROR, CANT DETECT SAME ELEMENT WITH MY CODE URGH");
         System.out.println("");
-        
+
         System.out.println("");
         System.out.println("SECTION 3");
         System.out.println("");
         System.out.println("Get the size of list");
         System.out.println("--------------------");
-        System.out.println("The size is "+reservationRecord.getLength());
+        System.out.println("The size is " + reservationRecord.getLength());
         System.out.println("");
-        
-         System.out.println("");
+
+        System.out.println("");
         System.out.println("SECTION 4");
         System.out.println("");
         System.out.println("Check wether the list is empty");
         System.out.println("------------------------------");
         System.out.println(reservationRecord.isEmpty());
         System.out.println("");
-        
+
         System.out.println("");
         System.out.println("SECTION 5");
         System.out.println("");
@@ -103,35 +102,53 @@ public class TestingReservationRecord {
         System.out.println("The element at position 3 is " + reservationRecord.getEntry(3));
         System.out.println("The element at position 4 is " + reservationRecord.getEntry(4));
         System.out.println("");
-        
-//        
-//        System.out.println("");
-//        System.out.println("SECTION 6");
-//        System.out.println("");
-//        System.out.println("Replace element at position 4 with element 3");
-//        System.out.println("--------------------------------------------");
-//        System.out.println(reservationRecord.replace(4, reservationRecord.getEntry(3)));
-//        System.out.println("The element at position 1 is " + reservationRecord.getEntry(1));
-//        System.out.println("The element at position 2 is " + reservationRecord.getEntry(2));
-//        System.out.println("The element at position 3 is " + reservationRecord.getEntry(3));
-//        System.out.println("The element at position 4 is " + reservationRecord.getEntry(4));
-//        System.out.println("");
-        
-//        System.out.println("");
-//        System.out.println("SECTION 7");
-//        System.out.println("");
-//        System.out.println("Remove element at position 4");
-//        System.out.println("--------------------------------------------");
-//        System.out.println(reservationRecord.remove(4));
-//        System.out.println(reservationRecord);
-//        System.out.println("");
-      
+
+        System.out.println("");
+        System.out.println("SECTION 6");
+        System.out.println("");
+        System.out.println("Replace element at position 4 with element 3");
+        System.out.println("--------------------------------------------");
+        ReservationRecord position3 = reservationRecord.getEntry(3);
+        System.out.println(reservationRecord.replace(4, position3));
+        System.out.println("The element at position 1 is " + reservationRecord.getEntry(1));
+        System.out.println("The element at position 2 is " + reservationRecord.getEntry(2));
+        System.out.println("The element at position 3 is " + reservationRecord.getEntry(3));
+        System.out.println("The element at position 4 is " + reservationRecord.getEntry(4));
+        System.out.println("");
+
+        System.out.println("");
+        System.out.println("SECTION 7");
+        System.out.println("");
+        System.out.println("Remove element at position 4");
+        System.out.println("----------------------------");
+        System.out.println("The element removed is " + reservationRecord.remove(4));
+        System.out.println("");
+
+        System.out.println("");
+        System.out.println("SECTION 8");
+        System.out.println("");
+        System.out.println("Print the list");
+        System.out.println("--------------");
+        System.out.println(reservationRecord);
+        System.out.println("");
+
+        System.out.println("");
+        System.out.println("SECTION 9");
+        System.out.println("");
+        System.out.println("Add record 1 at position 2");
+        System.out.println("--------------------------");
+        reservationRecord.addAt(2, record1);
+        System.out.println("Print the updated list");
+        System.out.println("----------------------");
+        System.out.println(reservationRecord);
+        System.out.println("");
+
 
 //        ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
 //        System.out.println("record3 " + record3);
         //client side planning
         //staff able to edit the reservation record
-        //staff able to view the reservaion record
+        //staff able to view the reservaion records
         //staff able to sort the reservation record
         //staff able to insert a new reservation record 
         //staff able to delete a reservation record 

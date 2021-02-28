@@ -110,22 +110,19 @@ public class LinkedList<T> implements ListInterf<T> {
     @Override
     public boolean replace(int givenPosition, T newEntry) {
         boolean isReplaced = true;
-        Node node = new Node(newEntry);
 
         //check for given Position is available or not
         //loop till the element at given position
         //replace the original element with newEntry
         if (validatePosition(givenPosition)) {
-            if (givenPosition == 1) {  //replacing first element 
-                head = node; //replace the head with new element
-            } else {
+            
                 //finding the node before to be removed
-                Node nodeBefore = head;
-                for (int i = 1; i < givenPosition - 1; ++i) {
-                    nodeBefore = nodeBefore.next;
+                Node nodeReplace = head;
+                for (int i = 1; i <= givenPosition - 1; i++) {
+                    nodeReplace = nodeReplace.next;
                 }
-                nodeBefore.next = node;	//update the latest newEntry   
-            }
+                nodeReplace.data = newEntry;	//update the latest newEntry   
+            
 
         } else {
             isReplaced = false;
@@ -135,7 +132,6 @@ public class LinkedList<T> implements ListInterf<T> {
 
     @Override
     public T getEntry(int givenPosition) {
-
         T entry = null;
         Node entryNode = null;
 
@@ -143,17 +139,17 @@ public class LinkedList<T> implements ListInterf<T> {
         //loop to get the element at given position
         //return the element
         if (validatePosition(givenPosition)) {
-            if (givenPosition == 1) {
-                entryNode = head;
-                head = head.next;
-            } else {
+//            if (givenPosition == 1) {
+//                entryNode = head;
+//                head = head.next;
+//            } else {
                 Node nodeBefore = head;
-                for (int i = 1; i < givenPosition - 1; ++i) {
+                for (int i = 1; i <= givenPosition - 1; ++i) {
                     nodeBefore = nodeBefore.next;
                 }
                 entryNode = nodeBefore;	// return the node
 
-            }
+            //}
             entry = (T) entryNode.data;
         }
         return entry;
