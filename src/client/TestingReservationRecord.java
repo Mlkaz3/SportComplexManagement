@@ -36,15 +36,25 @@ public class TestingReservationRecord {
         
         //hc!!
         User user = new User("Winnie", "19119", "Student", "0123456789");
-        Equipment equipment = new Equipment();
+        Equipment equipment = new Equipment("001","Yoonex",true,"12.00","Shelf0123","badminton racquet");
         Facility facility = new Facility();
+
+        //heading
+        System.out.println("");
+         System.out.println(String.format("%-15s %-20s %-30s %-30s %-30s %-20s %-20s %-20s",
+                "Reservation ID","Reservation Type","Reservation DateTime","Check In","Check Out",
+                "Duration","UserName","Reserved Item"));
         
-        ReservationRecord record1 = new ReservationRecord();
-        System.out.println("record1 " + record1);
-        //ReservationRecord record2 = new ReservationRecord(now,now,2.0,user,equipment);
-        //System.out.println("record2 " + record2);
-        ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
-        System.out.println("record3 " + record3);
+        ReservationRecord record1 = new ReservationRecord(20.00,user,equipment);
+        System.out.println(record1);
+        ReservationRecord record2 = new ReservationRecord(60.00,user,equipment);
+        System.out.println(record2);
+        ReservationRecord record3 = new ReservationRecord(10.00,user,equipment);
+        System.out.println(record3);
+        ReservationRecord record4 = new ReservationRecord(30.00,user,equipment);
+        System.out.println(record4);
+//        ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
+//        System.out.println("record3 " + record3);
         
         //client side planning
         //staff able to edit the reservation record

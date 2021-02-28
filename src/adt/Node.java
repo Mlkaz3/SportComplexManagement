@@ -11,7 +11,7 @@ package adt;
  */
 public class Node<T> {
 
-    private T data; // entry in list
+    T data; // entry in list
     Node next; // link to next node
     
     //empty constructor

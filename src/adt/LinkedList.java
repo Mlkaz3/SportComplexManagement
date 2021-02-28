@@ -21,7 +21,7 @@ public class LinkedList<T> implements ListInterf<T> {
         if (isEmpty()) {
             head = node;
         } else {
-            node.next =head;
+            node.next = head;
             head = node;
         }
         length++;
@@ -43,11 +43,12 @@ public class LinkedList<T> implements ListInterf<T> {
         length++;
         return true;
     }
-    
+
     @Override
     public boolean addAt(int newPosition, T newEntry) {
         //node object that stored value to be enter into list
         Node node = new Node(newEntry);
+        boolean isSuccessful = true;
 
         //validation of newPosition
         if (validatePosition(newPosition)) {
@@ -55,28 +56,50 @@ public class LinkedList<T> implements ListInterf<T> {
             if (isEmpty() || newPosition == 1) {
                 node.next = head;
                 head = node;
-                return true;
             } else {
                 //finding the node before
                 Node nodeBefore = head;
                 for (int i = 1; i < newPosition - 1; ++i) {
-                    nodeBefore = nodeBefore.next;		
+                    nodeBefore = nodeBefore.next;
                 }
                 node.next = nodeBefore.next;	// make new node point to current node at newPosition
                 nodeBefore.next = node;
-                return true;
             }
+        } else {
+            isSuccessful = false;
         }
         length++;
-        return false;
-
+        return isSuccessful;
     }
-
-    
 
     @Override
     public T remove(int givenPosition) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        T removedEntry = null;
+        Node removedNode = null;
+
+        //check for given Position is available or not
+        //loop to get the element at given position
+        //remove and re-assign the node
+        
+        if (validatePosition(givenPosition)) {
+            if (givenPosition == 1) {  //remove first element 
+                removedNode = head;
+                head = head.next;
+            } else {  //remove others position element 
+
+                //finding the node before to be removed
+                Node nodeBefore = head;
+                for (int i = 1; i < givenPosition - 1; ++i) {
+                    nodeBefore = nodeBefore.next;
+                }
+                removedNode = nodeBefore.next;	// node to be removed
+                nodeBefore.next = removedNode.next; //pointing node before remove to the node that being remove ltr
+            }
+            removedEntry = (T) removedNode.data;
+            length--;
+        }
+        
+        return removedEntry;
     }
 
     @Override
@@ -113,7 +136,7 @@ public class LinkedList<T> implements ListInterf<T> {
     public boolean isFull() {
         return false;
     }
-    
+
     private boolean validatePosition(int newPosition) {
         return newPosition >= 1 && newPosition <= length + 1;
     }
