@@ -11,6 +11,8 @@ import entity.Equipment;
 import entity.Facility;
 import java.util.Date;
 
+import adt.LinkedList;
+
 /**
  *
  * @author winnieyap
@@ -19,18 +21,22 @@ import java.util.Date;
 public class TestingReservationRecord {
     public static void main(String[] args) {
         
+        System.out.println("Expected output");
         // TODO code application logic here
         System.out.println("Today's Reservation");
-        System.out.println("RID        Name      Category           StartTime(In)       EndTime(Out)");
-        System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             02:25PM     ");
-        System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             02:25PM     ");
+        System.out.println("RID        Name      Category           ReservedTime    StartTime(In)       EndTime(Out)");
+        System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             02:25PM         01:25PM     ");
+        System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             02:25PM         01:25PM     ");
         
         
         System.out.println("Today's Registration");
-        System.out.println("RID        Name      Category           StartTime(In)       EndTime(Out)");
-        System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             02:25PM     ");
-        System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             02:25PM     ");
+        System.out.println("RID        Name      Category           ReservedTime    StartTime(In)       EndTime(Out)");
+        System.out.println("R0000001   Winnie    Facilities-Gym1    01:25PM             01:25PM             02:25PM     ");
+        System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             01:25PM             02:25PM     ");
         
+        
+        
+        System.out.println("");
         //might import another Calender
         Date now = new Date();
         
@@ -53,6 +59,17 @@ public class TestingReservationRecord {
         System.out.println(record3);
         ReservationRecord record4 = new ReservationRecord(30.00,user,equipment);
         System.out.println(record4);
+        
+        //implementing ADT
+        LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
+        reservationRecord.addFront(record1);
+        reservationRecord.addFront(record2);
+        reservationRecord.addFront(record3);
+        reservationRecord.addFront(record4);
+        System.out.println(reservationRecord.getLength());
+        System.out.println(reservationRecord);
+         
+
 //        ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
 //        System.out.println("record3 " + record3);
         
@@ -63,7 +80,7 @@ public class TestingReservationRecord {
         //staff able to insert a new reservation record 
         //staff able to delete a reservation record 
         //staff able to ???
-        System.out.println("Today's Record");
-        System.out.println("______________");
+//        System.out.println("Today's Record");
+//        System.out.println("______________");
     }
 }

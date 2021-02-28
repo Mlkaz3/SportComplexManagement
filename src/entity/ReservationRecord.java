@@ -43,6 +43,7 @@ public class ReservationRecord {
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, Double reservationDuration, User user, Facility facilities) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         //Date date = new Date(); 
+        this.reservationDateTime = new Date();
         this.reservationStartTime = new Date();
         this.reservationEndTime = reservationEndTime;
         this.reservationDuration = reservationDuration;
@@ -54,6 +55,7 @@ public class ReservationRecord {
 
     //equipment constructor 
     public ReservationRecord(Double reservationDuration, User user, Equipment equipments) {
+        this.reservationDateTime = new Date();
         this.reservationStartTime = new Date();
         this.reservationEndTime = reservationStartTime;
         this.reservationDuration = reservationDuration;
