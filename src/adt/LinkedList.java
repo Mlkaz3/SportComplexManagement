@@ -80,7 +80,6 @@ public class LinkedList<T> implements ListInterf<T> {
         //check for given Position is available or not
         //loop to get the element at given position
         //remove and re-assign the node
-        
         if (validatePosition(givenPosition)) {
             if (givenPosition == 1) {  //remove first element 
                 removedNode = head;
@@ -98,10 +97,11 @@ public class LinkedList<T> implements ListInterf<T> {
             removedEntry = (T) removedNode.data;
             length--;
         }
-        
+
         return removedEntry;
     }
 
+    //can add a function called remove last which remove the last record in the list
     @Override
     public void clear() {
         length = 0;
@@ -109,17 +109,90 @@ public class LinkedList<T> implements ListInterf<T> {
 
     @Override
     public boolean replace(int givenPosition, T newEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean isReplaced = true;
+        Node node = new Node(newEntry);
+
+        //check for given Position is available or not
+        //loop till the element at given position
+        //replace the original element with newEntry
+        if (validatePosition(givenPosition)) {
+            if (givenPosition == 1) {  //replacing first element 
+                head = node; //replace the head with new element
+            } else {
+                //finding the node before to be removed
+                Node nodeBefore = head;
+                for (int i = 1; i < givenPosition - 1; ++i) {
+                    nodeBefore = nodeBefore.next;
+                }
+                nodeBefore.next = node;	//update the latest newEntry   
+            }
+
+        } else {
+            isReplaced = false;
+        }
+        return isReplaced;
     }
 
     @Override
     public T getEntry(int givenPosition) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        T entry = null;
+        Node entryNode = null;
+
+        //check for given Position is available or not
+        //loop to get the element at given position
+        //return the element
+        if (validatePosition(givenPosition)) {
+            if (givenPosition == 1) {
+                entryNode = head;
+                head = head.next;
+            } else {
+                Node nodeBefore = head;
+                for (int i = 1; i < givenPosition - 1; ++i) {
+                    nodeBefore = nodeBefore.next;
+                }
+                entryNode = nodeBefore;	// return the node
+
+            }
+            entry = (T) entryNode.data;
+        }
+        return entry;
     }
 
     @Override
     public boolean contains(T anEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        boolean isContain = false;
+//
+//        Node node = new Node(anEntry);
+//
+//        //check for given Entry is null or not
+//        //loop till find similar element in the list
+//        //return true or false
+//        if (anEntry != null) {
+//            Node nodeBefore = head;
+//            for (int i = 1; i <= length; ++i) {
+//                //check each element wether is similar item
+//                if (nodeBefore == anEntry) {
+//                    isContain = true;
+//                    break;
+//                } else {
+//                    nodeBefore = nodeBefore.next;
+//                }
+//            }
+//        }
+//        return isContain;
+
+        boolean found = false;
+        Node currentNode = head;
+
+        while (!found && (currentNode != null)) {
+            if (anEntry.equals(currentNode.data)) {
+                found = true;
+            } else {
+                currentNode = currentNode.next;
+            }
+        }
+        return found;
     }
 
     @Override
@@ -134,11 +207,22 @@ public class LinkedList<T> implements ListInterf<T> {
 
     @Override
     public boolean isFull() {
-        return false;
+        return false; //it will never full 
     }
 
     private boolean validatePosition(int newPosition) {
         return newPosition >= 1 && newPosition <= length + 1;
+    }
+
+    @Override
+    public String toString() {
+        String outputStr = "";
+        Node currentNode = head;
+        while (currentNode != null) {
+            outputStr += currentNode.data + "\n";
+            currentNode = currentNode.next;
+        }
+        return outputStr;
     }
 
 }
