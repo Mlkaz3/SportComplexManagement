@@ -115,14 +115,13 @@ public class LinkedList<T> implements ListInterf<T> {
         //loop till the element at given position
         //replace the original element with newEntry
         if (validatePosition(givenPosition)) {
-            
-                //finding the node before to be removed
-                Node nodeReplace = head;
-                for (int i = 1; i <= givenPosition - 1; i++) {
-                    nodeReplace = nodeReplace.next;
-                }
-                nodeReplace.data = newEntry;	//update the latest newEntry   
-            
+
+            //finding the node before to be removed
+            Node nodeReplace = head;
+            for (int i = 1; i <= givenPosition - 1; i++) {
+                nodeReplace = nodeReplace.next;
+            }
+            nodeReplace.data = newEntry;	//update the latest newEntry   
 
         } else {
             isReplaced = false;
@@ -143,11 +142,11 @@ public class LinkedList<T> implements ListInterf<T> {
 //                entryNode = head;
 //                head = head.next;
 //            } else {
-                Node nodeBefore = head;
-                for (int i = 1; i <= givenPosition - 1; ++i) {
-                    nodeBefore = nodeBefore.next;
-                }
-                entryNode = nodeBefore;	// return the node
+            Node nodeBefore = head;
+            for (int i = 1; i <= givenPosition - 1; ++i) {
+                nodeBefore = nodeBefore.next;
+            }
+            entryNode = nodeBefore;	// return the node
 
             //}
             entry = (T) entryNode.data;
@@ -219,6 +218,27 @@ public class LinkedList<T> implements ListInterf<T> {
             currentNode = currentNode.next;
         }
         return outputStr;
+    }
+
+    private class Node<T> {
+
+        T data; // entry in list
+        Node next; // link to next node
+
+        //empty constructor
+        public Node() {
+
+        }
+
+        public Node(T data) {
+            this.data = data;
+            next = null;
+        }
+
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
     }
 
 }
