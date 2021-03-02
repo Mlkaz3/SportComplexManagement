@@ -9,7 +9,7 @@ package adt;
  *
  * @author winnieyap
  */
-public class LinkedList<T> implements ListInterf<T> {
+public class LinkedList<T> implements ListInterface<T> {
 
     private Node head;
     private int length;	// number of entries in list/size

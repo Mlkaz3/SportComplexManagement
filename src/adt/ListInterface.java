@@ -8,53 +8,27 @@ package adt;
 /**
  *
  * @author winnieyap
- * note: 
- * more function to be added 
- * some function to be removed based on it's usage 
  */
 public interface ListInterface<T> {
-    //add a new element
-    //usage: normal adding
-    boolean add(T newElement);
     
-    //add a new element at given position
-    //usage: ??
-    boolean add(int givenPosition, T newElement);
+    //add a new entry to the linked list
+    public boolean addFront(T newEntry);
     
-    //replace the element at given position with a new element 
-    //usage: when facilities/equipment reserved wrongly; when the reserved date is edited;
-    boolean replace(int givenPosition, T newElement);
+    //add a new entry to the linked list
+    public boolean addBack(T newEntry);
     
-    //get an element at givenPosition
-    //usage: ??
-    ListInterface getElement(int givenPosition);
+    //add a new entry at given Position in the linked list
+    public boolean addAt(int newPosition, T newEntry);
     
-    //delete the whole record
-    //usage: ??
-    boolean delete();
+    //remove element at given position
+    public T remove(int givenPosition);
     
-    //delete a given element
-    //usage: when reservation is canceled; when staff make mistakes;
-    boolean delete(T anElement);
-    
-    //copy a given element
-    //usage: ??
-    boolean copy(T givenElement);
-    
-    //check wether the given element exist in the list of record
-    //usage: ?? check duplication of user? 
-    boolean contains(T givenElement);
-    
-    //check wether the list of record is empty
-    //usage: ??
-    boolean isEmpty();
-    
-    //check wether the list of record is full
-    //usage: ???
-    boolean isFull();
-    
-    //check the length of list of record
-    //usage: ??? to analyse how many transaction in a day? 
-    int getLength();
+    public void clear();
+    public boolean replace(int givenPosition, T newEntry);
+    public T getEntry(int givenPosition);
+    public boolean contains(T anEntry);
+    public int getLength();
+    public boolean isEmpty();
+    public boolean isFull();
     
 }
