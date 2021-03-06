@@ -23,6 +23,9 @@ public interface ListInterface<T> {
     //remove element at given position
     public T remove(int givenPosition);
     
+    //to swap element that stick together
+    public boolean swap(int frontPosition, int backPosition);
+    
     public void clear();
     public boolean replace(int givenPosition, T newEntry);
     public T getEntry(int givenPosition);

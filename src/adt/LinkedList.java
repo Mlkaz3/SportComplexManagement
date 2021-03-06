@@ -220,6 +220,11 @@ public class LinkedList<T> implements ListInterface<T> {
         return outputStr;
     }
 
+    @Override
+    public boolean swap(int frontPosition, int backPosition) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private class Node<T> {
 
         T data; // entry in list
@@ -240,5 +245,7 @@ public class LinkedList<T> implements ListInterface<T> {
             this.next = next;
         }
     }
+    
+    //new function 
 
 }
