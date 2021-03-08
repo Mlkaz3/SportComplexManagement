@@ -9,52 +9,55 @@ package adt;
  *
  * @author YJ
  */
-public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
+public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueueInterface<T> {
 
     private T[] array;
-    private int numOfElements; //Length of queue
     private final static int frontIndex = 0;
-    private int backIndex;  
-    private final static int DEFAULT_CAPACITY = 20; //Max number of maintenance schedules that can be made
-    private int initialCapacity;
+    private int backIndex;
+    private static final int DEFAULT_CAPACITY = 20;
 
-    public ArrayPriorityQueue(int initialCapacity, PriorityComparator pc) {
-        array = (T[]) new Object[initialCapacity];
-        numOfElements = 0;
+    public ArrayPriorityQueue() {
+        this(DEFAULT_CAPACITY);
     }
-    
-//    public ArrayPriorityQueue() {
-//        array = (T[]) new Object[DEFAULT_CAPACITY];
-//        numOfElements = 0;
-//    }
 
-    @Override //Modify to add element based on priority
+    public ArrayPriorityQueue(int initialCapacity) {
+        array = (T[]) new Comparable[initialCapacity];
+        backIndex = -1;
+    }
+
+    @Override
     public void enqueue(T newElement) {
         if (!isFull()) {
-            array[numOfElements++] = newElement;
+            int i = 0;
+            while (i < backIndex && newElement.compareTo(array[i]) > 0) {
+                i++;
+            }
+            makeRoom(i + 1);
             backIndex++;
+            array[i] = newElement;
         }
     }
 
     @Override
     public void dequeue() {
         T front = null;
+
         if (!isEmpty()) {
             front = array[frontIndex];
 
-            for (int i = frontIndex; i < backIndex; i++) {
+            for (int i = frontIndex; i < backIndex; ++i) {
                 array[i] = array[i + 1];
             }
+
             backIndex--;
-            numOfElements--;
         }
     }
-    
+
     @Override
     public T remove(int position) {
         T result = null;
 
-        if ((position >= 1) && (position <= numOfElements)) {
+        if ((position >= 1) && (position <= backIndex)) {
 
             result = array[position - 1];
 
@@ -64,11 +67,39 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
                     array[j] = array[j + 1];
                 }
             }
-
             backIndex--;
-
         }
         return result;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return frontIndex > backIndex;
+    }
+
+    @Override
+    public boolean isFull() {
+        return backIndex == array.length - 1;
+    }
+
+    @Override
+    public int getPosition(T anElement) {
+        int position = 0;
+        if (contains(anElement)) {
+            int i = 0;
+
+            boolean found = false;
+            while (i < backIndex && !found) {
+                if (array[i].equals(anElement)) {
+                    position = i + 1;
+                    found = true;
+                } else {
+                    i++;
+                }
+            }
+            return position;
+        }
+        return 0;
     }
 
     private boolean contains(T newElement) {
@@ -84,47 +115,37 @@ public class ArrayPriorityQueue<T> implements PriorityQueueInterface<T> {
         return exist;
     }
     
+    private void makeRoom(int newPosition) {
+    int newIndex = newPosition - 1;
+    int lastIndex = backIndex + 1;
+
+    for (int index = lastIndex; index >= newIndex; index--) {
+      array[index + 1] = array[index];
+    }
+  }
+
     @Override
-    public boolean isEmpty() {
-        return backIndex < frontIndex;
-    } 
-    
-    @Override
-    public boolean isFull() {
-        return backIndex == array.length - 1;
+    public T getFront() {
+        T front = null;
+
+        if (!isEmpty()) {
+            front = array[frontIndex];
+        }
+        return front;
     }
 
     @Override
     public int getTotalEntry() {
-        return numOfElements;
-    }
-
-    @Override
-    public int getPosition(T anElement) {
-        int position = 0;
-        if (contains(anElement)) {
-            int i = 0;
-
-            boolean found = false;
-            while (i < numOfElements && !found) {
-                if (array[i].equals(anElement)) {
-                    position = i + 1;
-                    found = true;
-                } else {
-                    i++;
-                }
-            }
-            return position;
-        }
-        return 0;
+        return backIndex - 1;
     }
 
     @Override
     public String toString() {
         String str = "";
-        for (int i = 0; i < backIndex; i++) {
+        for (int i = 0; i <= backIndex; i++) {
             str += (i + 1) + ". " + array[i] + "\n";
         }
         return str;
     }
+
 }

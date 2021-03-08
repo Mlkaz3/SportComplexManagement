@@ -6,7 +6,6 @@
 package client;
 
 import adt.ArrayPriorityQueue;
-import adt.PriorityComparator;
 import adt.PriorityQueueInterface;
 import entity.Equipment;
 import entity.Maintenance;
@@ -206,7 +205,7 @@ public class MainDriver {
         boolean invalidInput;
 
         //TO DO: serialize
-        PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>(10, new PriorityComparator());
+        PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
 
         do {
             invalidInput = false;
@@ -231,7 +230,7 @@ public class MainDriver {
                         Maintenance maintenance = new Maintenance();
 
                         System.out.print("\nFacility ID: ");
-                        maintenance.setFacility(userInput.nextLine());
+                        maintenance.setFacilityID(userInput.nextLine());
                         System.out.print("Maintenance type: ");
                         maintenance.setMaintenanceType(userInput.nextLine());
                         System.out.print("Maintenance description: ");

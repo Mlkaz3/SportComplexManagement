@@ -10,7 +10,7 @@ package adt;
  * @author YJ
  * @param <T>
  */
-public interface PriorityQueueInterface<T> {
+public interface PriorityQueueInterface<T extends Comparable<T>> {
     
     void enqueue (T newElement);
     
@@ -23,6 +23,8 @@ public interface PriorityQueueInterface<T> {
     boolean isFull();
     
     int getPosition(T anElement);
+    
+    T getFront();
     
     int getTotalEntry();
 }

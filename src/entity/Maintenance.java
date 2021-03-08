@@ -12,43 +12,35 @@ import java.util.Calendar;
  *
  * @author YJ
  */
-public class Maintenance implements Serializable {
-    
+public class Maintenance implements Comparable<Maintenance> {
+
     private String facilityID;
-    private Equipment equipment;
     private String maintenanceID;
     private String maintenanceType;
     private String maintenanceDesc;
     private double maintenanceCost;
     private Calendar startDate;
     private Calendar endDate;
-    private String priority;
+    private Calendar requiredDate; // This determines the priority
+    private int priority;
 
     public Maintenance() {
-        
     }
     
-    public Maintenance(String maintenanceType, String maintenanceDesc, double maintenanceCost, String priority) {
+    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, double maintenanceCost, int priority) {
+        this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.maintenanceCost = maintenanceCost;
         this.priority = priority;
     }
 
-    public String getFacility() {
+    public String getFacilityID() {
         return facilityID;
     }
 
-    public void setFacility(String facilityID) {
+    public void setFacilityID(String facilityID) {
         this.facilityID = facilityID;
-    }
-
-    public Equipment getEquipment() {
-        return equipment;
-    }
-
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
     }
 
     public String getMaintenanceID() {
@@ -99,17 +91,73 @@ public class Maintenance implements Serializable {
         this.endDate = endDate;
     }
 
-    public String getPriority() {
+    public Calendar getRequiredDate() {
+        return requiredDate;
+    }
+
+    public void setRequiredDate(Calendar requiredDate) {
+        this.requiredDate = requiredDate;
+    }
+
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
     
+        
     @Override
     public String toString() {
         return String.format("%-15s %-20s %-25s %-20s %-20s", facilityID, maintenanceType, maintenanceDesc, maintenanceCost, priority);
     }
-    
+
+    @Override
+    public int hashCode() { // Ignored
+        int hash = 5;
+        return hash;
+    }
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        final Maintenance other = (Maintenance) obj;
+//        if (!Objects.equals(this.requiredDate, other.requiredDate)) {
+//            return false;
+//        }
+//        return true;
+//    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Maintenance other = (Maintenance) obj;
+        if (this.priority != other.priority) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int compareTo(Maintenance o) {
+      return this.priority - o.priority;
+    }
+   
 }
