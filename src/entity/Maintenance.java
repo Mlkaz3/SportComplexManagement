@@ -6,7 +6,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -21,18 +24,18 @@ public class Maintenance implements Comparable<Maintenance> {
     private double maintenanceCost;
     private Calendar startDate;
     private Calendar endDate;
-    private Calendar requiredDate; // This determines the priority
+    private Date requiredDate; // This determines the priority
     private int priority;
 
     public Maintenance() {
     }
     
-    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, double maintenanceCost, int priority) {
+    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, double maintenanceCost, Date requiredDate) {
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.maintenanceCost = maintenanceCost;
-        this.priority = priority;
+        this.requiredDate = requiredDate;
     }
 
     public String getFacilityID() {
@@ -91,11 +94,11 @@ public class Maintenance implements Comparable<Maintenance> {
         this.endDate = endDate;
     }
 
-    public Calendar getRequiredDate() {
+    public Date getRequiredDate() {
         return requiredDate;
     }
 
-    public void setRequiredDate(Calendar requiredDate) {
+    public void setRequiredDate(Date requiredDate) {
         this.requiredDate = requiredDate;
     }
 
@@ -110,13 +113,32 @@ public class Maintenance implements Comparable<Maintenance> {
         
     @Override
     public String toString() {
-        return String.format("%-15s %-20s %-25s %-20s %-20s", facilityID, maintenanceType, maintenanceDesc, maintenanceCost, priority);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        return String.format("%-15s %-20s %-25s %-20s %-20s", facilityID, maintenanceType, maintenanceDesc, maintenanceCost, formatter.format(requiredDate));
     }
 
     @Override
     public int hashCode() { // Ignored
         int hash = 5;
         return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Maintenance other = (Maintenance) obj;
+        if (!Objects.equals(this.requiredDate, other.requiredDate)) {
+            return false;
+        }
+        return true;
     }
 
 //    @Override
@@ -131,33 +153,15 @@ public class Maintenance implements Comparable<Maintenance> {
 //            return false;
 //        }
 //        final Maintenance other = (Maintenance) obj;
-//        if (!Objects.equals(this.requiredDate, other.requiredDate)) {
+//        if (this.priority != other.priority) {
 //            return false;
 //        }
 //        return true;
 //    }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Maintenance other = (Maintenance) obj;
-        if (this.priority != other.priority) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public int compareTo(Maintenance o) {
-      return this.priority - o.priority;
+      return this.requiredDate.compareTo(o.requiredDate);
     }
    
 }
