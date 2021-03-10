@@ -61,8 +61,8 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
 
             result = array[position - 1];
 
-            if (position < backIndex) {
-
+            if (position - 1 < backIndex) {
+                
                 for (int j = position - 1; j < backIndex; j++) {
                     array[j] = array[j + 1];
                 }
@@ -71,7 +71,7 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
         }
         return result;
     }
-
+    
     @Override
     public boolean isEmpty() {
         return frontIndex > backIndex;
