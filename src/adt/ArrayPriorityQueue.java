@@ -29,9 +29,9 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
     public void enqueue(T newElement) {
         if (!isFull()) {
             int i = 0;
-            while (i < backIndex && newElement.compareTo(array[i]) > 0) {
+            while (i <= backIndex && newElement.compareTo(array[i]) > 0) {
                 i++;
-            }
+            } 
             makeRoom(i + 1);
             backIndex++;
             array[i] = newElement;
@@ -57,13 +57,13 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
     public T remove(int position) {
         T result = null;
 
-        if ((position >= 1) && (position <= backIndex)) {
+        if ((position >= 1) && (position <= backIndex + 1)) {
 
             result = array[position - 1];
 
             if (position < backIndex) {
 
-                for (int j = position - 1; j < backIndex; j++) { //use circular array with dynamic front?
+                for (int j = position - 1; j < backIndex; j++) {
                     array[j] = array[j + 1];
                 }
             }

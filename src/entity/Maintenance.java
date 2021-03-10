@@ -29,7 +29,7 @@ public class Maintenance implements Comparable<Maintenance> {
 
     public Maintenance() {
     }
-    
+
     public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, double maintenanceCost, Date requiredDate) {
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
@@ -109,8 +109,7 @@ public class Maintenance implements Comparable<Maintenance> {
     public void setPriority(int priority) {
         this.priority = priority;
     }
-    
-        
+
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
@@ -141,27 +140,10 @@ public class Maintenance implements Comparable<Maintenance> {
         return true;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) {
-//            return true;
-//        }
-//        if (obj == null) {
-//            return false;
-//        }
-//        if (getClass() != obj.getClass()) {
-//            return false;
-//        }
-//        final Maintenance other = (Maintenance) obj;
-//        if (this.priority != other.priority) {
-//            return false;
-//        }
-//        return true;
-//    }
-
     @Override
     public int compareTo(Maintenance o) {
-      return this.requiredDate.compareTo(o.requiredDate);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        return formatter.format(this.requiredDate).compareTo(formatter.format(o.requiredDate));
     }
-   
+
 }
