@@ -8,6 +8,9 @@ package client;
 import adt.ArrayPriorityQueue;
 import entity.Maintenance;
 import adt.PriorityQueueInterface;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,9 +27,9 @@ public class TestArrayPriorityQueue {
         PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
 
         Maintenance maintenance = new Maintenance();
-        Maintenance maintenance2 = new Maintenance(); 
-        Maintenance maintenance3 = new Maintenance(); 
-        Maintenance maintenance4 = new Maintenance(); 
+        Maintenance maintenance2 = new Maintenance();
+        Maintenance maintenance3 = new Maintenance();
+        Maintenance maintenance4 = new Maintenance();
 
         Scanner userInput = new Scanner(System.in);
         //System.out.print("Enter due date (dd-mm-yyyy): ");
@@ -46,9 +49,6 @@ public class TestArrayPriorityQueue {
         Date requiredDate = format.parse(date);
         maintenance.setRequiredDate(requiredDate);
 
-        
- 
-
         System.out.print("\nFacility ID: ");
         maintenance2.setFacilityID(userInput.nextLine());
         System.out.print("Maintenance type: ");
@@ -59,12 +59,9 @@ public class TestArrayPriorityQueue {
         String date2 = userInput.nextLine();
         Date requiredDate1 = format.parse(date2);
         maintenance2.setRequiredDate(requiredDate1);
-        
-        
+
         //System.out.print("Maintenance cost: ");
         //maintenance2.setMaintenanceCost(userInput.nextDouble());
-        
-        
         System.out.print("\nFacility ID: ");
         maintenance3.setFacilityID(userInput.nextLine());
         System.out.print("Maintenance type: ");
@@ -76,26 +73,40 @@ public class TestArrayPriorityQueue {
         Date requiredDate2 = format.parse(date3);
         maintenance3.setRequiredDate(requiredDate2);
 
-        
         schedule.enqueue(maintenance);
         schedule.enqueue(maintenance2);
         schedule.enqueue(maintenance3);
 
-
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Maintenance cost");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(schedule);
         
+        System.out.println("Queue is empty: " + schedule.isEmpty());
+        
+        System.out.println("Queue is full: " + schedule.isFull());
+        
+        System.out.println("Total elements in queue: " + schedule.getTotalEntry());
+        
+        System.out.println("Element at front: " + schedule.getFront());
+
         System.out.println("Cancel a schedule: ");
         schedule.remove(userInput.nextInt());
-        
-        //schedule.dequeue();
+
+        schedule.dequeue();
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Maintenance cost");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(schedule);
         
-        
-
+        try {
+            File file = new File("MaintenanceSchedule.dat");
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+            out.writeObject(maintenance);
+            //closing the stream  
+            out.close();
+            System.out.println("success");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }

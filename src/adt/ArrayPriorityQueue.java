@@ -27,51 +27,59 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
 
     @Override
     public void enqueue(T newElement) {
-        if (!isFull()) {
+        if (!isFull() && !contains(newElement)) {
             int i = 0;
             while (i <= backIndex && newElement.compareTo(array[i]) > 0) {
                 i++;
-            } 
-            makeRoom(i + 1);
+            }
+            makeRoom(i);
             backIndex++;
             array[i] = newElement;
         }
     }
 
-    @Override
-    public void dequeue() {
-        T front = null;
+    private void makeRoom(int i) {
+        for (int index = backIndex + 1; index >= i; index--) {
+            array[index + 1] = array[index];
+        }
+    }
 
+    @Override
+    public T dequeue() {
+        T front = null;
         if (!isEmpty()) {
             front = array[frontIndex];
-
-            for (int i = frontIndex; i < backIndex; ++i) {
-                array[i] = array[i + 1];
-            }
-
+            shiftFront();
             backIndex--;
+        }
+        return front;
+    }
+
+    private void shiftFront() {
+        for (int i = frontIndex; i < backIndex; ++i) {
+            array[i] = array[i + 1];
         }
     }
 
     @Override
     public T remove(int position) {
         T result = null;
-
         if ((position >= 1) && (position <= backIndex + 1)) {
-
             result = array[position - 1];
-
             if (position - 1 < backIndex) {
-                
-                for (int j = position - 1; j < backIndex; j++) {
-                    array[j] = array[j + 1];
-                }
+                removeGap(position);
             }
             backIndex--;
         }
         return result;
     }
-    
+
+    private void removeGap(int position) {
+        for (int j = position - 1; j < backIndex; j++) {
+            array[j] = array[j + 1];
+        }
+    }
+
     @Override
     public boolean isEmpty() {
         return frontIndex > backIndex;
@@ -82,25 +90,24 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
         return backIndex == array.length - 1;
     }
 
-    @Override
-    public int getPosition(T anElement) {
-        int position = 0;
-        if (contains(anElement)) {
-            int i = 0;
-
-            boolean found = false;
-            while (i < backIndex && !found) {
-                if (array[i].equals(anElement)) {
-                    position = i + 1;
-                    found = true;
-                } else {
-                    i++;
-                }
-            }
-            return position;
-        }
-        return 0;
-    }
+//    @Override
+//    public int getPosition(T anElement) {
+//        int position = 0;
+//        if (contains(anElement)) {
+//            int i = 0;
+//            boolean found = false;
+//            while (i < backIndex && !found) {
+//                if (array[i].equals(anElement)) {
+//                    position = i + 1;
+//                    found = true;
+//                } else {
+//                    i++;
+//                }
+//            }
+//            return position;
+//        }
+//        return 0;
+//    }
 
     private boolean contains(T newElement) {
         boolean exist = false;
@@ -114,20 +121,10 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
         }
         return exist;
     }
-    
-    private void makeRoom(int newPosition) {
-    int newIndex = newPosition - 1;
-    int lastIndex = backIndex + 1;
-
-    for (int index = lastIndex; index >= newIndex; index--) {
-      array[index + 1] = array[index];
-    }
-  }
 
     @Override
     public T getFront() {
         T front = null;
-
         if (!isEmpty()) {
             front = array[frontIndex];
         }
@@ -136,7 +133,7 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
 
     @Override
     public int getTotalEntry() {
-        return backIndex - 1;
+        return backIndex + 1;
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * @author YJ
  */
-public class Maintenance implements Comparable<Maintenance> {
+public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     private String facilityID;
     private String maintenanceID;
@@ -25,7 +25,6 @@ public class Maintenance implements Comparable<Maintenance> {
     private Calendar startDate;
     private Calendar endDate;
     private Date requiredDate; // This determines the priority
-    private int priority;
 
     public Maintenance() {
     }
@@ -100,14 +99,6 @@ public class Maintenance implements Comparable<Maintenance> {
 
     public void setRequiredDate(Date requiredDate) {
         this.requiredDate = requiredDate;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
     }
 
     @Override
