@@ -17,7 +17,10 @@ import java.util.Objects;
  */
 public class Maintenance implements Comparable<Maintenance>, Serializable {
 
-    private String facilityID;
+    private Facility facility; // need a facility class constructor with facilityID and facilityID getter method
+    
+    private String facilityID; // temporary hardcode
+    private static int next = 1000;
     private String maintenanceID;
     private String maintenanceType;
     private String maintenanceDesc;
@@ -27,9 +30,11 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     private Date requiredDate; // This determines the priority
 
     public Maintenance() {
+        this.maintenanceID = String.valueOf(next++);
     }
 
-    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, double maintenanceCost, Date requiredDate) {
+    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, Date requiredDate) {
+        this.maintenanceID = String.valueOf(next++);
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
@@ -104,7 +109,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-        return String.format("%-15s %-20s %-25s %-20s %-20s", facilityID, maintenanceType, maintenanceDesc, maintenanceCost, formatter.format(requiredDate));
+        return String.format("%-15s %-20s %-25s %-20s", facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate));
     }
 
     @Override
@@ -137,4 +142,35 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
         return formatter.format(this.requiredDate).compareTo(formatter.format(o.requiredDate));
     }
 
+    //Entity class methods
+    public void add() { // add new schedule to queue
+          
+    }
+
+    public void cancel() { // remove schedule from queue
+
+    }
+
+    public void update() { // edit the details of the schedule or set the end date in the list
+        
+    }
+
+    public void serve() {  // serve the first in the queue = add to a list, set the start date 
+        
+    }
+    
+    public void manage() { // check total elements and the current first element in the queue
+        
+    }
+
+    public void calcDuration() { //end date - start date
+
+    }
+
+    public void calcCost() { // duration x payment per day
+
+    }
+   
+    
+    
 }

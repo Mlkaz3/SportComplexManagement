@@ -77,7 +77,7 @@ public class TestArrayPriorityQueue {
         schedule.enqueue(maintenance2);
         schedule.enqueue(maintenance3);
 
-        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Maintenance cost");
+        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(schedule);
         
@@ -93,7 +93,7 @@ public class TestArrayPriorityQueue {
         schedule.remove(userInput.nextInt());
 
         schedule.dequeue();
-        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Maintenance cost");
+        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(schedule);
         

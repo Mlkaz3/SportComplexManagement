@@ -26,8 +26,10 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
     }
 
     @Override
-    public void enqueue(T newElement) {
-        if (!isFull() && !contains(newElement)) {
+    public boolean enqueue(T newElement) {
+        boolean successful = true;
+
+        if (!isFull() && !duplicated(newElement)) {
             int i = 0;
             while (i <= backIndex && newElement.compareTo(array[i]) > 0) {
                 i++;
@@ -35,13 +37,10 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
             makeRoom(i);
             backIndex++;
             array[i] = newElement;
+        } else {
+            successful = false;
         }
-    }
-
-    private void makeRoom(int i) {
-        for (int index = backIndex + 1; index >= i; index--) {
-            array[index + 1] = array[index];
-        }
+        return successful;
     }
 
     @Override
@@ -55,16 +54,10 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
         return front;
     }
 
-    private void shiftFront() {
-        for (int i = frontIndex; i < backIndex; ++i) {
-            array[i] = array[i + 1];
-        }
-    }
-
     @Override
     public T remove(int position) {
         T result = null;
-        if ((position >= 1) && (position <= backIndex + 1)) {
+        if (!isEmpty() && (position >= 1) && (position <= backIndex + 1)) {
             result = array[position - 1];
             if (position - 1 < backIndex) {
                 removeGap(position);
@@ -72,12 +65,6 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
             backIndex--;
         }
         return result;
-    }
-
-    private void removeGap(int position) {
-        for (int j = position - 1; j < backIndex; j++) {
-            array[j] = array[j + 1];
-        }
     }
 
     @Override
@@ -89,6 +76,62 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
     public boolean isFull() {
         return backIndex == array.length - 1;
     }
+
+    @Override
+    public T getFront() {
+        T front = null;
+        if (!isEmpty()) {
+            front = array[frontIndex];
+        }
+        return front;
+    }
+
+    @Override
+    public int getTotalEntry() {
+        return backIndex + 1;
+    }
+
+    private void makeRoom(int i) {
+        for (int index = backIndex + 1; index >= i; index--) {
+            array[index + 1] = array[index];
+        }
+    }
+
+    private boolean duplicated(T newElement) {
+        boolean exist = false;
+        int i = 0;
+        while (i < backIndex && !exist) {
+            if (array[i].equals(newElement)) {
+                exist = true;
+            } else {
+                i++;
+            }
+        }
+        return exist;
+    }
+
+    private void shiftFront() {
+        for (int i = frontIndex; i < backIndex; ++i) {
+            array[i] = array[i + 1];
+        }
+    }
+
+    private void removeGap(int position) {
+        for (int j = position - 1; j < backIndex; j++) {
+            array[j] = array[j + 1];
+        }
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for (int i = 0; i <= backIndex; i++) {
+            str += (i + 1) + ". " + array[i] + "\n";
+        }
+        return str;
+    }
+
+}
 
 //    @Override
 //    public int getPosition(T anElement) {
@@ -108,41 +151,3 @@ public class ArrayPriorityQueue<T extends Comparable<T>> implements PriorityQueu
 //        }
 //        return 0;
 //    }
-
-    private boolean contains(T newElement) {
-        boolean exist = false;
-        int i = 0;
-        while (i < backIndex && !exist) {
-            if (array[i].equals(newElement)) {
-                exist = true;
-            } else {
-                i++;
-            }
-        }
-        return exist;
-    }
-
-    @Override
-    public T getFront() {
-        T front = null;
-        if (!isEmpty()) {
-            front = array[frontIndex];
-        }
-        return front;
-    }
-
-    @Override
-    public int getTotalEntry() {
-        return backIndex + 1;
-    }
-
-    @Override
-    public String toString() {
-        String str = "";
-        for (int i = 0; i <= backIndex; i++) {
-            str += (i + 1) + ". " + array[i] + "\n";
-        }
-        return str;
-    }
-
-}

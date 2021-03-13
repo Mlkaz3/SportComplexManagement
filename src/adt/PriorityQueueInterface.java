@@ -12,7 +12,7 @@ package adt;
  */
 public interface PriorityQueueInterface<T extends Comparable<T>> {
     
-    void enqueue (T newElement);
+    boolean enqueue (T newElement);
     
     T dequeue ();
     
@@ -22,9 +22,9 @@ public interface PriorityQueueInterface<T extends Comparable<T>> {
     
     boolean isFull();
     
-    //int getPosition(T anElement);
-    
     T getFront();
     
     int getTotalEntry();
 }
+
+    //int getPosition(T anElement);
