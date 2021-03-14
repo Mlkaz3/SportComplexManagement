@@ -6,18 +6,18 @@ public class Equipment {
     private Boolean equipmentStatus;
     private String equipmentPrice;
     private String equipmentLocation;
-    private String equipmentCode;
+    private String equipmentType;
 
     public Equipment() {
     }
 
-    public Equipment(String equipmentID, String equipmentBrand, Boolean equipmentStatus, String equipmentPrice, String equipmentLocation, String equipmentCode) {
+    public Equipment(String equipmentID, String equipmentBrand, Boolean equipmentStatus, String equipmentPrice, String equipmentLocation, String equipmentType) {
         this.equipmentID = equipmentID;
         this.equipmentBrand = equipmentBrand;
         this.equipmentStatus = equipmentStatus;
         this.equipmentPrice = equipmentPrice;
         this.equipmentLocation = equipmentLocation;
-        this.equipmentCode = equipmentCode;
+        this.equipmentType = equipmentType;
     }
 
     public String getEquipmentID() {
@@ -60,17 +60,17 @@ public class Equipment {
         this.equipmentLocation = equipmentLocation;
     }
 
-    public String getEquipmentCode() {
-        return equipmentCode;
+    public String getEquipmentType() {
+        return equipmentType;
     }
 
-    public void setEquipmentCode(String equipmentCode) {
-        this.equipmentCode = equipmentCode;
+    public void setEquipmentType(String equipmentType) {
+        this.equipmentType = equipmentType;
     }
 
     @Override
     public String toString() {
-        return String.format("%-10s %-30s %-6b %-6s %-10s %-10s",equipmentID , equipmentBrand , equipmentStatus , equipmentPrice , equipmentLocation , equipmentCode);
+        return String.format("%-15s %-20s %-20b %-20s %-20s %-20s",equipmentID , equipmentBrand , equipmentStatus , equipmentPrice , equipmentLocation , equipmentType);
     }
     
     

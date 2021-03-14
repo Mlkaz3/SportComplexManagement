@@ -143,7 +143,7 @@ public class ReservationRecord {
 
             return String.format("%-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
             reservationDateTime,reservationStartTime,reservationEndTime,reservationDuration,
-            user.getUserName(),equipments.getEquipmentCode());
+            user.getUserName(),equipments.getEquipmentType());
         }
         
         return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
