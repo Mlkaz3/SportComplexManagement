@@ -81,6 +81,11 @@ public class DriverDraft {
                 System.out.println("PLS VIEW [NO.] - view details of registration report at position [NO.]");
                 System.out.println("PLS FILTER - filter registration report at position [NO.]");
                 System.out.println("PLS SHOW - filter registration report at position [NO.]");
+                System.out.println("select reservation record at when... ");
+                System.out.println("check if which record exist ... ");
+                System.out.println("check how many rows of record exist... ");
+                System.out.println("replacing record??? ");
+                System.out.println("remove record??? ");
                 //actions include: View Details at position X / first row / last row 
                 //actions include: Update Details at position X / position 1/ last position
                 //actions include: Filter report based on date, ID, facilities, equipments, Status 
