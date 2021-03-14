@@ -143,32 +143,20 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     }
 
     //Entity class methods
-    public void add() { // add new schedule to queue
-          
-    }
-
-    public void cancel() { // remove schedule from queue
-
-    }
-
-    public void update() { // edit the details of the schedule or set the end date in the list
-        
-    }
-
-    public void serve() {  // serve the first in the queue = add to a list, set the start date 
+    public void updateSchedule() { // edit the details of the schedule or set the end date in the list
         
     }
     
-    public void manage() { // check total elements and the current first element in the queue
-        
-    }
-
     public void calcDuration() { //end date - start date
 
     }
 
     public void calcCost() { // duration x payment per day
 
+    }
+    
+    public boolean updateStatus() { // update status of facility
+        return true;
     }
    
     

@@ -5,7 +5,7 @@
  */
 package client;
 
-import adt.ArrayPriorityQueue;
+import adt.LinkedPriorityQueue;
 import adt.PriorityQueueInterface;
 import entity.Equipment;
 import entity.Maintenance;
@@ -205,7 +205,7 @@ public class MainDriver {
         boolean invalidInput;
 
         //TO DO: serialize
-        PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
+        PriorityQueueInterface<Maintenance> schedule = new LinkedPriorityQueue<>();
 
         do {
             invalidInput = false;

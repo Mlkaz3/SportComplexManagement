@@ -5,7 +5,7 @@
  */
 package client;
 
-import adt.ArrayPriorityQueue;
+import adt.LinkedPriorityQueue;
 import entity.Maintenance;
 import adt.PriorityQueueInterface;
 import java.io.File;
@@ -20,16 +20,15 @@ import java.util.Scanner;
  *
  * @author YJ
  */
-public class TestArrayPriorityQueue {
+public class TestLinkedPriorityQueue {
 
-    public static void main(String[] args) throws ParseException {
+   public static void main(String[] args) throws ParseException {
 
-        PriorityQueueInterface<Maintenance> schedule = new ArrayPriorityQueue<>();
+        PriorityQueueInterface<Maintenance> schedule = new LinkedPriorityQueue<>();
 
         Maintenance maintenance = new Maintenance();
         Maintenance maintenance2 = new Maintenance();
         Maintenance maintenance3 = new Maintenance();
-        Maintenance maintenance4 = new Maintenance();
 
         Scanner userInput = new Scanner(System.in);
         //System.out.print("Enter due date (dd-mm-yyyy): ");
@@ -60,8 +59,6 @@ public class TestArrayPriorityQueue {
         Date requiredDate1 = format.parse(date2);
         maintenance2.setRequiredDate(requiredDate1);
 
-        //System.out.print("Maintenance cost: ");
-        //maintenance2.setMaintenanceCost(userInput.nextDouble());
         System.out.print("\nFacility ID: ");
         maintenance3.setFacilityID(userInput.nextLine());
         System.out.print("Maintenance type: ");
@@ -80,13 +77,14 @@ public class TestArrayPriorityQueue {
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(schedule);
-        
+
+        //schedule.desc();
+        System.out.println("Get position of maintenance 1: " + schedule.getPosition(maintenance));
+
         System.out.println("Queue is empty: " + schedule.isEmpty());
-        
-        System.out.println("Queue is full: " + schedule.isFull());
-        
+
         System.out.println("Total elements in queue: " + schedule.getTotalEntry());
-        
+
         System.out.println("Element at front: " + schedule.getFront());
 
         System.out.println("Cancel a schedule: ");
@@ -96,7 +94,7 @@ public class TestArrayPriorityQueue {
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(schedule);
-        
+
         try {
             File file = new File("MaintenanceSchedule.dat");
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
