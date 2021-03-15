@@ -25,11 +25,13 @@ public class ReservationRecord {
     private Date reservationStartTime; //time where student start to use an equipment or facilities
     private Date reservationEndTime; //time where student end to use an equipment or facilities
     private Double reservationDuration; //start time - end time, but user might late return; or do function that generate duration after user return
-
+    private String status; //to store the status of a reservation, which can be success or failure due to cancelation/ not turn up to register, it can be staff input too 
     //other object
     private User user; //user info
     private Facility facilities; //facilities info
     private Equipment equipments; //equipment info
+    
+    
 
     //might having a penalty but soon 
     //private penaltyRate;

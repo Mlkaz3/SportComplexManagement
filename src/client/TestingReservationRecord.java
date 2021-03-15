@@ -34,6 +34,7 @@ public class TestingReservationRecord {
         System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             01:25PM             02:25PM     ");
 
         System.out.println("");
+        
         //might import another Calender
         Date now = new Date();
 
