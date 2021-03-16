@@ -28,21 +28,21 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
     public boolean enqueue(T newElement) {
         boolean successful = true;
 
-        if (!duplicated(newElement)) {  // if the element doesn't exist in the queue
+        if (!contains(newElement)) {  // to avoid duplication of record
             Node newNode = new Node(newElement, null);
 
             Node currentNode = firstNode;
             Node previousNode = null;
 
-            while (currentNode != null && newElement.compareTo(currentNode.data) > 0) { // compare each element in queue to determine insertion position
+            while (currentNode != null && newElement.compareTo(currentNode.data) > 0) { // compare each element in queue to check if given element has higher priority
                 previousNode = currentNode;
                 currentNode = currentNode.next;
-            }
+            } 
 
-            if (isEmpty() || (previousNode == null)) { // if queue is empty or element has the highest priority
+            if (isEmpty() || (previousNode == null)) { // if queue is initially empty or element has the highest priority
                 newNode.next = firstNode;
                 firstNode = newNode;
-            } else { // insert at position found
+            } else { // insert at position found or at the end of queue
                 newNode.next = currentNode;
                 previousNode.next = newNode;
             }
@@ -72,7 +72,7 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
         if ((position >= 1) && (position <= length)) { // if given position is valid
             if (position == 1) { // case 1: position is 1
                 result = firstNode.data;
-                firstNode = firstNode.next;
+                firstNode = firstNode.next; // assign second node as the first node
             } else { // others: loop to get element at given position
                 Node nodeBefore = firstNode;
                 for (int i = 1; i < position - 1; ++i) {
@@ -110,9 +110,9 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
     public int getPosition(T anElement) {
         boolean found = false;
         Node currentNode = firstNode;
-        for (int i = 0; i < length; i++) {
+        for (int i = 1; i <= length; i++) {
             if (currentNode.data.compareTo(anElement) == 0) { // loop to find the position of given element
-                return i+1; // position found
+                return i; // position found
             } else {
                 currentNode = currentNode.next; // move to the next node
             }
@@ -156,7 +156,8 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
         return str;
     }
 
-    private boolean duplicated(T newElement) {
+    @Override
+    public boolean contains(T newElement) {
         boolean exist = false;
         Node currentNode = firstNode;
         while (currentNode != null && !exist) { // loop through the queue

@@ -5,10 +5,13 @@
  */
 package entity;
 
+import adt.LinkedPriorityQueue;
+import adt.PriorityQueueInterface;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 /**
@@ -18,13 +21,15 @@ import java.util.Objects;
 public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     private Facility facility; // need a facility class constructor with facilityID and facilityID getter method
-    
+
     private String facilityID; // temporary hardcode
     private static int next = 1000;
     private String maintenanceID;
     private String maintenanceType;
     private String maintenanceDesc;
     private double maintenanceCost;
+    private double costPerDay;
+    private Calendar requestDate;
     private Calendar startDate;
     private Calendar endDate;
     private Date requiredDate; // This determines the priority
@@ -80,6 +85,22 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     public void setMaintenanceCost(double maintenanceCost) {
         this.maintenanceCost = maintenanceCost;
+    }
+
+    public double getCostPerDay() {
+        return costPerDay;
+    }
+
+    public void setCostPerDay(double costPerDay) {
+        this.costPerDay = costPerDay;
+    }
+
+    public Calendar getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(Calendar requestDate) {
+        this.requestDate = requestDate;
     }
 
     public Calendar getStartDate() {
@@ -143,22 +164,21 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     }
 
     //Entity class methods
-    public void updateSchedule() { // edit the details of the schedule or set the end date in the list
-        
-    }
-    
-    public void calcDuration() { //end date - start date
-
+    public int calcDuration() { //end date - start date
+        return Math.abs(endDate.get(Calendar.DAY_OF_YEAR) - startDate.get(Calendar.DAY_OF_YEAR));
     }
 
-    public void calcCost() { // duration x payment per day
-
+    public double calcCost() { // duration x payment per day
+        return calcDuration() * costPerDay;
     }
-    
+
     public boolean updateStatus() { // update status of facility
         return true;
     }
-   
-    
-    
+
+    public boolean checkStatus(Maintenance m) {
+        PriorityQueueInterface<Maintenance> appointment = new LinkedPriorityQueue<>();
+        return !appointment.contains(m);
+    }
+
 }

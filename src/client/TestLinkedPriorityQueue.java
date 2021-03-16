@@ -24,7 +24,7 @@ public class TestLinkedPriorityQueue {
 
    public static void main(String[] args) throws ParseException {
 
-        PriorityQueueInterface<Maintenance> schedule = new LinkedPriorityQueue<>();
+        PriorityQueueInterface<Maintenance> appointment = new LinkedPriorityQueue<>();
 
         Maintenance maintenance = new Maintenance();
         Maintenance maintenance2 = new Maintenance();
@@ -70,30 +70,30 @@ public class TestLinkedPriorityQueue {
         Date requiredDate2 = format.parse(date3);
         maintenance3.setRequiredDate(requiredDate2);
 
-        schedule.enqueue(maintenance);
-        schedule.enqueue(maintenance2);
-        schedule.enqueue(maintenance3);
+        appointment.enqueue(maintenance);
+        appointment.enqueue(maintenance2);
+        appointment.enqueue(maintenance3);
 
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
         System.out.println("------------------------------------------------------------------------------");
-        System.out.println(schedule);
+        System.out.println(appointment);
 
         //schedule.desc();
-        System.out.println("Get position of maintenance 1: " + schedule.getPosition(maintenance));
+        System.out.println("Get position of maintenance 1: " + appointment.getPosition(maintenance));
 
-        System.out.println("Queue is empty: " + schedule.isEmpty());
+        System.out.println("Queue is empty: " + appointment.isEmpty());
 
-        System.out.println("Total elements in queue: " + schedule.getTotalEntry());
+        System.out.println("Total elements in queue: " + appointment.getTotalEntry());
 
-        System.out.println("Element at front: " + schedule.getFront());
+        System.out.println("Element at front: " + appointment.getFront());
 
         System.out.println("Cancel a schedule: ");
-        schedule.remove(userInput.nextInt());
+        appointment.remove(userInput.nextInt());
 
-        schedule.dequeue();
+        appointment.dequeue();
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
         System.out.println("------------------------------------------------------------------------------");
-        System.out.println(schedule);
+        System.out.println(appointment);
 
         try {
             File file = new File("MaintenanceSchedule.dat");

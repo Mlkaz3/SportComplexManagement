@@ -29,4 +29,6 @@ public interface PriorityQueueInterface<T extends Comparable<T>> {
     void clear();
     
     void desc();
+    
+    boolean contains(T newElement);
 }
