@@ -41,9 +41,9 @@ public class ReservationRecord {
         this.reservationID = String.valueOf(nextNumber++);
     }
 
-    //facilities constructor
+    //for facilities constructor
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, Double reservationDuration, User user, Facility facilities) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+      
         //Date date = new Date(); 
         this.reservationDateTime = new Date();
         this.reservationStartTime = new Date();
@@ -55,7 +55,7 @@ public class ReservationRecord {
         this.reservationType = "Facilities";
     }
 
-    //equipment constructor 
+    //for equipment constructor 
     public ReservationRecord(Double reservationDuration, User user, Equipment equipments) {
         this.reservationDateTime = new Date();
         this.reservationStartTime = new Date();
@@ -136,7 +136,8 @@ public class ReservationRecord {
 
     @Override
     public String toString() {
-       
+         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+       //formatting the date 
         if (facilities == null) {
 //            return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
 //                    + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
@@ -144,13 +145,13 @@ public class ReservationRecord {
 //                    + reservationDuration + ", user=" + user + ", equipments=" + equipments + '}';
 
             return String.format("%-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
-            reservationDateTime,reservationStartTime,reservationEndTime,reservationDuration,
+            reservationDateTime,formatter.format(reservationStartTime),formatter.format(reservationEndTime),reservationDuration,
             user.getUserName(),equipments.getEquipmentType());
         }
         
         return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
                 + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
-                + reservationStartTime + ", reservationEndTime=" + reservationEndTime + ", reservationDuration="
+                + formatter.format(reservationStartTime) + ", reservationEndTime=" + formatter.format(reservationEndTime) + ", reservationDuration="
                 + reservationDuration + ", user=" + user + ", facilities=" + facilities + '}';
     }
 

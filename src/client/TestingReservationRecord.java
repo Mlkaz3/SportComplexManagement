@@ -51,10 +51,10 @@ public class TestingReservationRecord {
 
         //implementing ADT
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
-        reservationRecord.addFront(record1);
-        reservationRecord.addFront(record2);
-        reservationRecord.addFront(record3);
-        reservationRecord.addFront(record4);
+        reservationRecord.addFirst(record1);
+        reservationRecord.addFirst(record2);
+        reservationRecord.addFirst(record3);
+        reservationRecord.addFirst(record4);
 
         System.out.println("");
         System.out.println("SECTION 1");
@@ -122,7 +122,7 @@ public class TestingReservationRecord {
         System.out.println("");
         System.out.println("Remove element at position 4");
         System.out.println("----------------------------");
-        System.out.println("The element removed is " + reservationRecord.remove(4));
+        System.out.println("The element removed is " + reservationRecord.removeAt(4));
         System.out.println("");
 
         System.out.println("");

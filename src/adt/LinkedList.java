@@ -5,6 +5,8 @@
  */
 package adt;
 
+import java.util.Iterator;
+
 /**
  *
  * @author winnieyap
@@ -15,7 +17,7 @@ public class LinkedList<T> implements ListInterface<T> {
     private int length;	// number of entries in list/size
 
     @Override
-    public boolean addFront(T newEntry) {
+    public boolean addFirst(T newEntry) {
         Node node = new Node(newEntry);
 
         if (isEmpty()) {
@@ -29,7 +31,7 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
-    public boolean addBack(T newEntry) {
+    public boolean addLast(T newEntry) {
         Node node = new Node(newEntry);
         if (isEmpty()) {
             head = node;
@@ -73,7 +75,7 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
-    public T remove(int givenPosition) {
+    public T removeAt(int givenPosition) {
         T removedEntry = null;
         Node removedNode = null;
 
@@ -205,23 +207,41 @@ public class LinkedList<T> implements ListInterface<T> {
         return false; //it will never full 
     }
 
+    //self introduced method 
     private boolean validatePosition(int newPosition) {
         return newPosition >= 1 && newPosition <= length + 1;
     }
 
     @Override
     public String toString() {
+        int items =1;
         String outputStr = "";
         Node currentNode = head;
         while (currentNode != null) {
-            outputStr += currentNode.data + "\n";
+            outputStr += items +". "+  currentNode.data + "\n";
             currentNode = currentNode.next;
+            items++;
         }
         return outputStr;
     }
 
     @Override
     public boolean swap(int frontPosition, int backPosition) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public T remove(T newEntry) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public T removeLast() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public T removeFirst() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -246,6 +266,26 @@ public class LinkedList<T> implements ListInterface<T> {
         }
     }
     
-    //new function 
+    private class LinkedListIterator implements Iterator<T> {
+        private Node<T> trav = head;
+
+        @Override
+        public boolean hasNext() {
+          return trav != null;
+        }
+
+        @Override
+        public T next() {
+          T data = trav.data;
+          trav = trav.next;
+          return data;
+        }
+
+        @Override
+        public void remove() {
+          throw new UnsupportedOperationException();
+        }
+      }
+    
 
 }

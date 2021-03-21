@@ -45,22 +45,30 @@ public class UsageLog {
         Scanner input = new Scanner(System.in);
 
         //hc!!
-        User user = new User("Winnie", "19119", "Student", "0123456789");
+        User user = new User("Tan Pei Ling", "19119", "Student", "0123456789");
+        User user1 = new User("Ting Tin Tin", "19109", "Alumni", "0123456781");
+        User user2 = new User("Phea Lee Mai", "18119", "Student", "0123456782");
+        User user3 = new User("Lim Siew Mooi", "20119", "Student", "0123456783");
+
         Equipment equipment = new Equipment("001", "Yoonex", true, "12.00", "Shelf0123", "badminton racquet");
+
+        Equipment equipment1 = new Equipment("002", "Adidas", true, "12.00", "Shelf0122", "squash racquet");
+        Equipment equipment2 = new Equipment("003", "MsiaB", true, "12.00", "Shelf0121", "tennis ball");
+        Equipment equipment3 = new Equipment("004", "Nike", true, "12.00", "Shelf0120", "badminton racquet");
         Facility facility = new Facility();
 
         //creating 4 record
         ReservationRecord record1 = new entity.ReservationRecord(20.00, user, equipment);
-        ReservationRecord record2 = new entity.ReservationRecord(60.00, user, equipment);
-        ReservationRecord record3 = new entity.ReservationRecord(10.00, user, equipment);
-        ReservationRecord record4 = new entity.ReservationRecord(30.00, user, equipment);
+        ReservationRecord record2 = new entity.ReservationRecord(60.00, user1, equipment1);
+        ReservationRecord record3 = new entity.ReservationRecord(10.00, user2, equipment2);
+        ReservationRecord record4 = new entity.ReservationRecord(30.00, user3, equipment3);
 
         //implementing ADT
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
-        reservationRecord.addFront(record1);
-        reservationRecord.addFront(record2);
-        reservationRecord.addFront(record3);
-        reservationRecord.addFront(record4);
+        reservationRecord.addFirst(record1);
+        reservationRecord.addFirst(record2);
+        reservationRecord.addFirst(record3);
+        reservationRecord.addFirst(record4);
 
         //read the file data in
         //reservationRecord = Deserialize(reservationRecord);
@@ -80,6 +88,7 @@ public class UsageLog {
                 //print heading with reservation record in the memory
                 printHeading();
                 System.out.println(reservationRecord);
+
 
                 //enable staff to choose a row to perform actions
                 System.out.print("Please select a row to perform actions: ");
@@ -101,12 +110,12 @@ public class UsageLog {
 
                 switch (case1) {
                     case 1:
-                       //view facilities booking detail at position row
-                       //print all the facilities info at position row
+                        //view facilities booking detail at position row
+                        //print all the facilities info at position row
                         break;
                     case 2:
                         //update facilities booking at position row
-                       //update selection: what value to be update? 
+                        //update selection: what value to be update? 
                         break;
                     case 3:
                         //cancel facilities booking at position row
