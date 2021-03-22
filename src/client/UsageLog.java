@@ -8,6 +8,11 @@ Log:
 16/3/2021 
 - work on designing the main 
 - ideas: https://openplay.ie/online-booking-system/sports-centres.php
+
+22/3/2021 
+- work on driver path/flow 
+- flow chart planning
+- outcome: file:///C:/Users/user/Desktop/flow%20chart.html
  */
 package client;
 
@@ -38,8 +43,11 @@ import javax.swing.JOptionPane;
 public class UsageLog {
 
     public static void main(String[] args) {
+        
+        LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
 
         Date now = new Date();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         int ch = 0;
         Scanner input = new Scanner(System.in);
@@ -51,11 +59,11 @@ public class UsageLog {
         User user3 = new User("Lim Siew Mooi", "20119", "Student", "0123456783");
 
         Equipment equipment = new Equipment("001", "Yoonex", true, "12.00", "Shelf0123", "badminton racquet");
-
         Equipment equipment1 = new Equipment("002", "Adidas", true, "12.00", "Shelf0122", "squash racquet");
         Equipment equipment2 = new Equipment("003", "MsiaB", true, "12.00", "Shelf0121", "tennis ball");
         Equipment equipment3 = new Equipment("004", "Nike", true, "12.00", "Shelf0120", "badminton racquet");
-        Facility facility = new Facility();
+
+        Facility facility = new Facility(); //facility havent done 
 
         //creating 4 record
         ReservationRecord record1 = new entity.ReservationRecord(20.00, user, equipment);
@@ -64,7 +72,7 @@ public class UsageLog {
         ReservationRecord record4 = new entity.ReservationRecord(30.00, user3, equipment3);
 
         //implementing ADT
-        LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
+        
         reservationRecord.addFirst(record1);
         reservationRecord.addFirst(record2);
         reservationRecord.addFirst(record3);
@@ -89,37 +97,67 @@ public class UsageLog {
                 printHeading();
                 System.out.println(reservationRecord);
 
-
                 //enable staff to choose a row to perform actions
-                System.out.print("Please select a row to perform actions: ");
-                row = input.nextInt();
+                do {
+                    System.out.print("Please select a row to perform actions: ");
+                    row = input.nextInt();
 
-                //validate the row input, make sure it is not larger than the list size 
-                if (row < 0) { //false condition with loop 
+                    //validate the row input, make sure it is not larger than the list size 
+                } while (row < 1 || row > reservationRecord.getLength());
 
-                }
-
+                System.out.println("Row selected: " + row);
+                System.out.println("Reservation Record Details: " + reservationRecord.getEntry(row));
+                System.out.println("");
                 //then print selection of actions to be performed
                 System.out.println("\nActions: ");
                 System.out.println("1. View Facilities Booking");
                 System.out.println("2. Update Facilities Booking"); //thinking a edit column but no sure what to add still 
-                System.out.println("3. Cancel Facilities Booking");
-                System.out.print("\uD83D\uDE40" + " Please choose your action: ");
+                System.out.println("3. Cancel Facilities Booking !!might not doing need discuss with teammates.");
 
-                case1 = input.nextInt();
+                do {
+                    System.out.print("\uD83D\uDE40" + " Please choose your action: ");
+                    case1 = input.nextInt();
 
+                    //validate the row input, make sure it is not larger than the list size 
+                } while (case1 < 1 || case1 > 3);
+
+                System.out.println("");
                 switch (case1) {
                     case 1:
                         //view facilities booking detail at position row
                         //print all the facilities info at position row
+                        System.out.println("print a full description of the booking include it's status");
+                        System.out.println("Booking #" + reservationRecord.getEntry(row).getReservationID() + " Details");
+                        System.out.println("General Details");
+                        System.out.println("---------------");
+                        System.out.println("Booking Creation Date: " + reservationRecord.getEntry(row).getReservationDate());
+                        System.out.println("");
+                        System.out.println("Booking Facilities/Equipment");
+                        System.out.println("----------------------------");
+                        System.out.println("Booking Type: " + reservationRecord.getEntry(row).getReservationType());
+                        if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
+                            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
+                        } else {
+                            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
+                        }
+
+                        System.out.println("");
+                        System.out.println("Booking Date");
+                        System.out.println("------------");
+                        System.out.println("From: ");
+                        System.out.println("To: ");
+                        System.out.println("Duration: ");
+
                         break;
                     case 2:
                         //update facilities booking at position row
                         //update selection: what value to be update? 
+                        System.out.println("Selection of items to update");
                         break;
                     case 3:
                         //cancel facilities booking at position row
                         //cancel should be added into another dat file, written with reason
+                        System.out.println("Cancelation of an bookings");
                         break;
                     default:
                         break;
@@ -203,7 +241,7 @@ public class UsageLog {
     private static void printHeading() {
         //heading
         System.out.println("");
-        System.out.println(String.format("%-15s %-20s %-30s %-30s %-30s %-20s %-20s %-20s",
+        System.out.println(String.format("%-2s %-15s %-20s %-30s %-30s %-30s %-20s %-20s %-20s", "No.",
                 "Reservation ID", "Reservation Type", "Reservation DateTime", "Check In", "Check Out",
                 "Duration", "UserName", "Reserved Item"));
     }

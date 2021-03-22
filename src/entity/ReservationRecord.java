@@ -67,6 +67,15 @@ public class ReservationRecord {
         this.reservationType = "Equipments";
     }
 
+    public String getReservationType() {
+        return reservationType;
+    }
+
+    public void setReservationType(String reservationType) {
+        this.reservationType = reservationType;
+    }
+
+
     public String getReservationID() {
         return reservationID;
     }
@@ -137,14 +146,16 @@ public class ReservationRecord {
     @Override
     public String toString() {
          SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+ 
        //formatting the date 
+     
         if (facilities == null) {
 //            return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
 //                    + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
 //                    + reservationStartTime + ", reservationEndTime=" + reservationEndTime + ", reservationDuration="
 //                    + reservationDuration + ", user=" + user + ", equipments=" + equipments + '}';
 
-            return String.format("%-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
+            return String.format(" %-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
             reservationDateTime,formatter.format(reservationStartTime),formatter.format(reservationEndTime),reservationDuration,
             user.getUserName(),equipments.getEquipmentType());
         }
@@ -153,6 +164,7 @@ public class ReservationRecord {
                 + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
                 + formatter.format(reservationStartTime) + ", reservationEndTime=" + formatter.format(reservationEndTime) + ", reservationDuration="
                 + reservationDuration + ", user=" + user + ", facilities=" + facilities + '}';
+        
     }
 
     //method

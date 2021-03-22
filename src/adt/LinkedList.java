@@ -218,7 +218,7 @@ public class LinkedList<T> implements ListInterface<T> {
         String outputStr = "";
         Node currentNode = head;
         while (currentNode != null) {
-            outputStr += items +". "+  currentNode.data + "\n";
+            outputStr +=  items + "." + currentNode.data + "\n";
             currentNode = currentNode.next;
             items++;
         }
