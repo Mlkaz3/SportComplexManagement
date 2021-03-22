@@ -155,15 +155,28 @@ public class ReservationRecord {
 //                    + reservationStartTime + ", reservationEndTime=" + reservationEndTime + ", reservationDuration="
 //                    + reservationDuration + ", user=" + user + ", equipments=" + equipments + '}';
 
-            return String.format(" %-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
-            reservationDateTime,formatter.format(reservationStartTime),formatter.format(reservationEndTime),reservationDuration,
-            user.getUserName(),equipments.getEquipmentType());
+//            return String.format(" %-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
+//            reservationDateTime,formatter.format(reservationStartTime),formatter.format(reservationEndTime),reservationDuration,
+//            user.getUserName(),equipments.getEquipmentType());
+            
+            return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #"+ reservationID + " of "+ equipments.getEquipmentBrand() + " "+ equipments.getEquipmentType(),"Pending",
+            formatter.format(reservationStartTime),formatter.format(reservationEndTime),formatter.format(reservationDateTime),user.getUserID());
+            
+            /*expected output
+            Booking                  Status          From                   To                      Date
+            #ID of Items booked      Pending         22/3/2021 08:00AM      22/3/2021 09:00AM       2 mins ago
+            
+            
+            */
         }
         
-        return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
-                + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
-                + formatter.format(reservationStartTime) + ", reservationEndTime=" + formatter.format(reservationEndTime) + ", reservationDuration="
-                + reservationDuration + ", user=" + user + ", facilities=" + facilities + '}';
+//        return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
+//                + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
+//                + formatter.format(reservationStartTime) + ", reservationEndTime=" + formatter.format(reservationEndTime) + ", reservationDuration="
+//                + reservationDuration + ", user=" + user + ", facilities=" + facilities + '}';
+        
+        return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #"+reservationID + " of "+ facilities.getFacilityType(),"Pending",
+        formatter.format(reservationStartTime),formatter.format(reservationEndTime),formatter.format(reservationDateTime),user.getUserID());
         
     }
 

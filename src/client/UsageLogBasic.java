@@ -13,6 +13,12 @@ Log:
 - work on driver path/flow 
 - flow chart planning
 - outcome: file:///C:/Users/user/Desktop/flow%20chart.html
+
+23/3/2021
+- formattin output suggestion: https://stackoverflow.com/questions/13813247/java-generating-formatted-report-in-text-file-format
+- idea: add a search bar
+- a complete linked list model: https://beginnersbook.com/2013/12/linkedlist-in-java-with-example/
+
  */
 package client;
 
@@ -33,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -40,10 +47,10 @@ import javax.swing.JOptionPane;
  *
  * @author winnie <winnieyap20@gmail.com>
  */
-public class UsageLog {
+public class UsageLogBasic {
 
     public static void main(String[] args) {
-        
+
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
 
         Date now = new Date();
@@ -72,7 +79,6 @@ public class UsageLog {
         ReservationRecord record4 = new entity.ReservationRecord(30.00, user3, equipment3);
 
         //implementing ADT
-        
         reservationRecord.addFirst(record1);
         reservationRecord.addFirst(record2);
         reservationRecord.addFirst(record3);
@@ -86,90 +92,139 @@ public class UsageLog {
         System.out.println("2. Equipment Bookings");
         System.out.println("3. ");
 
-        System.out.print("Please select your choice: ");
-        ch = input.nextInt();
+        do {
+            try {
+                System.out.print("Please select your choice: ");
+                ch = input.nextInt();
+            } catch (InputMismatchException exception) {
+                System.out.println("Not an valid choice, please try again.");
+                if (input.next().isEmpty()) {
+                    break;
+                }
+            }
+        } while (ch < 1 || ch > 3);
 
         switch (ch) {
-            case 1:
+            case 1 -> {
                 int case1 = 0;
                 int row = 0;
                 //print heading with reservation record in the memory
+
                 printHeading();
                 System.out.println(reservationRecord);
 
                 //enable staff to choose a row to perform actions
                 do {
-                    System.out.print("Please select a row to perform actions: ");
-                    row = input.nextInt();
+                    try {
+                        System.out.print("Please select a row to perform actions: ");
+                        row = input.nextInt();
+                    } catch (InputMismatchException exception) {
+                        System.out.println("Not an valid choice, please try again.");
+                        if (input.next().isEmpty()) {
+                            break;
+                        }
+                    }
+                } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
 
-                    //validate the row input, make sure it is not larger than the list size 
-                } while (row < 1 || row > reservationRecord.getLength());
-
-                System.out.println("Row selected: " + row);
-                System.out.println("Reservation Record Details: " + reservationRecord.getEntry(row));
                 System.out.println("");
+
+                System.out.println("Booking #" + reservationRecord.getEntry(row).getReservationID() + " Details");
+                System.out.println("-".repeat(80));
+
+                System.out.println("General Details");
+                System.out.println("---------------");
+                System.out.println("Booking Creation Date: " + reservationRecord.getEntry(row).getReservationDate());
+                System.out.println("Booking Status: "); //status can be pending or success or cancelation
+
+                System.out.println("\nBooking Facilities/Equipment");
+                System.out.println("----------------------------");
+                System.out.println("Booking Type: " + reservationRecord.getEntry(row).getReservationType());
+
+                if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
+                    System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
+                } else {
+                    System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
+                }
+
+                System.out.println("\nBooking Date");
+                System.out.println("------------");
+                System.out.println("From: " + reservationRecord.getEntry(row).getReservationStartTime());
+                System.out.println("To: " + reservationRecord.getEntry(row).getReservationEndTime());
+                System.out.println("Duration: " + reservationRecord.getEntry(row).getReservationDuration() + " minutes");
+
+                System.out.println("\nBooker Details");
+                System.out.println("--------------");
+                System.out.println("Booker ID: " + reservationRecord.getEntry(row).getUser().getUserID());
+                System.out.println("Booker Name: " + reservationRecord.getEntry(row).getUser().getUserName());
+                System.out.println("Booker Type: " + reservationRecord.getEntry(row).getUser().getUserCategory());
+                System.out.println("Booker Tel: " + reservationRecord.getEntry(row).getUser().getUserTel());
+
+                System.out.println("");
+                System.out.println("-".repeat(80));
+
                 //then print selection of actions to be performed
-                System.out.println("\nActions: ");
-                System.out.println("1. View Facilities Booking");
-                System.out.println("2. Update Facilities Booking"); //thinking a edit column but no sure what to add still 
-                System.out.println("3. Cancel Facilities Booking !!might not doing need discuss with teammates.");
+                System.out.println("\nActions to be perform: ");
+                //System.out.println("1. View Facilities Booking");
+                System.out.println("1. Update Facilities Booking"); //thinking a edit column but no sure what to add still 
+                System.out.println("2. Delete This Booking");
+                System.out.println("3. ");
+                System.out.println("4. ");
 
                 do {
-                    System.out.print("\uD83D\uDE40" + " Please choose your action: ");
-                    case1 = input.nextInt();
+                    try {
+                        System.out.print("\uD83D\uDE40" + " Please choose your action: ");
+                        case1 = input.nextInt();
+                    } catch (InputMismatchException exception) {
+                        System.out.println("Not an valid choice, please try again.");
+                        if (input.next().isEmpty()) {
+                            break;
+                        }
+                    }
 
                     //validate the row input, make sure it is not larger than the list size 
-                } while (case1 < 1 || case1 > 3);
+                } while (case1 < 1 || case1 > 2);
 
                 System.out.println("");
                 switch (case1) {
-                    case 1:
-                        //view facilities booking detail at position row
-                        //print all the facilities info at position row
-                        System.out.println("print a full description of the booking include it's status");
-                        System.out.println("Booking #" + reservationRecord.getEntry(row).getReservationID() + " Details");
-                        System.out.println("General Details");
-                        System.out.println("---------------");
-                        System.out.println("Booking Creation Date: " + reservationRecord.getEntry(row).getReservationDate());
-                        System.out.println("");
-                        System.out.println("Booking Facilities/Equipment");
-                        System.out.println("----------------------------");
-                        System.out.println("Booking Type: " + reservationRecord.getEntry(row).getReservationType());
-                        if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
-                            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
-                        } else {
-                            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
-                        }
-
-                        System.out.println("");
-                        System.out.println("Booking Date");
-                        System.out.println("------------");
-                        System.out.println("From: ");
-                        System.out.println("To: ");
-                        System.out.println("Duration: ");
-
-                        break;
-                    case 2:
+                    case 1 -> {
                         //update facilities booking at position row
                         //update selection: what value to be update? 
+                        System.out.println("");
                         System.out.println("Selection of items to update");
-                        break;
-                    case 3:
+                        System.out.println("");
+                        System.out.println("1-Extension of reserved time");
+                        System.out.println("2-");
+                    }
+                    case 2 -> {
+                        int deletion = 0;
                         //cancel facilities booking at position row
-                        //cancel should be added into another dat file, written with reason
-                        System.out.println("Cancelation of an bookings");
-                        break;
-                    default:
-                        break;
+                        System.out.println("Deleting this booking...");
+                        System.out.println("Are you sure you want to permanently delete this booking? (1=yes,0=no)");
+                        System.out.print("-> ");
+
+                        deletion = input.nextInt();
+                        if (deletion == 1) {
+                            reservationRecord.removeAt(row);
+                            System.out.println(reservationRecord);
+                        } else {
+                            System.out.println("The record is remain in the table.");
+                        }
+
+                    }
+                    case 3 -> {
+
+                    }
+                    default -> {
+                    }
+
                 }
+            }
 
-                break;
+            case 2 -> {
+            }
 
-            case 2:
-                break;
-
-            case 3:
-                break;
+            case 3 -> {
+            }
         }
 
         //for choices 2 
@@ -241,9 +296,10 @@ public class UsageLog {
     private static void printHeading() {
         //heading
         System.out.println("");
-        System.out.println(String.format("%-2s %-15s %-20s %-30s %-30s %-30s %-20s %-20s %-20s", "No.",
-                "Reservation ID", "Reservation Type", "Reservation DateTime", "Check In", "Check Out",
-                "Duration", "UserName", "Reserved Item"));
+        System.out.println("Bookings");
+        System.out.println(String.format("%-2s %-40s %-15s %-20s %-20s %-20s %-10s", "No.",
+                "Booking", "Status", "From", "To", "Date", "UserID"));
+
     }
 
     private static LinkedList<ReservationRecord> Deserialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {

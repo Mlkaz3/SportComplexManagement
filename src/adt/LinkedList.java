@@ -67,10 +67,11 @@ public class LinkedList<T> implements ListInterface<T> {
                 node.next = nodeBefore.next;	// make new node point to current node at newPosition
                 nodeBefore.next = node;
             }
+            length++;
         } else {
             isSuccessful = false;
         }
-        length++;
+        
         return isSuccessful;
     }
 

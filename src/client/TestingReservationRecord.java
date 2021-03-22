@@ -51,10 +51,10 @@ public class TestingReservationRecord {
 
         //implementing ADT
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
-        reservationRecord.addFirst(record1);
+        reservationRecord.addAt(1,record1);
         reservationRecord.addFirst(record2);
         reservationRecord.addFirst(record3);
-        reservationRecord.addFirst(record4);
+        reservationRecord.addLast(record4);
 
         System.out.println("");
         System.out.println("SECTION 1");
