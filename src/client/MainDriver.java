@@ -176,6 +176,30 @@ public class MainDriver {
                             System.out.println("User Validation on going (2s)");
                             System.out.println("User Validation on going (1s)");
 
+                            String name;
+                            String id;
+                            String cat;
+                            String con;
+
+                            User currentUser = new User();
+
+                            System.out.println("---------");
+                            System.out.println("User Info");
+                            System.out.println("---------");
+                            System.out.println("User Name: ");
+                            currentUser.setUserName(input.nextLine());
+                            System.out.println("User ID: ");
+                            id = input.nextLine();
+                            currentUser.setUserID(id);
+                            System.out.println("User Category: ");
+                            cat = input.nextLine();
+                            currentUser.setUserCategory(cat);
+                            System.out.println("User Contact: ");
+                            con = input.nextLine();
+                            currentUser.setUserTel(cat);
+
+                            System.out.println(currentUser);
+
                             //add record
                             ReservationRecord record1 = new ReservationRecord(duration, user, equipment);
                             System.out.println("user1:" + user);
@@ -320,8 +344,7 @@ public class MainDriver {
                 System.out.println("FA - Facilites");
                 System.out.println("EQ - Equipment");
                 System.out.println("ST - Status");
-            }
-            else{
+            } else {
                 System.out.println("USAGE REPORT");
                 System.out.println("duration : 01/01/2021 - 01/03/2021");
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -369,4 +392,5 @@ public class MainDriver {
 //            }
         //} while (ch != 3 || invalidInput);
     }
+
 }

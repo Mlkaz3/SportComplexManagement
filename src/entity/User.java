@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.Scanner;
+
 /**
  *
  * @author YJ
@@ -22,6 +24,11 @@ public class User {
         this.userCategory = userCategory;
         this.userTel = userTel;
     }
+
+    public User() {
+       
+    }
+
 
     public String getUserName() {
         return userName;

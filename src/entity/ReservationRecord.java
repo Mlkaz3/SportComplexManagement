@@ -30,8 +30,6 @@ public class ReservationRecord {
     private User user; //user info
     private Facility facilities; //facilities info
     private Equipment equipments; //equipment info
-    
-    
 
     //might having a penalty but soon 
     //private penaltyRate;
@@ -43,7 +41,6 @@ public class ReservationRecord {
 
     //for facilities constructor
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, Double reservationDuration, User user, Facility facilities) {
-      
         //Date date = new Date(); 
         this.reservationDateTime = new Date();
         this.reservationStartTime = new Date();

@@ -109,7 +109,6 @@ public class UsageLogBasic {
                 int case1 = 0;
                 int row = 0;
                 //print heading with reservation record in the memory
-
                 printHeading();
                 System.out.println(reservationRecord);
 
@@ -164,11 +163,9 @@ public class UsageLogBasic {
 
                 //then print selection of actions to be performed
                 System.out.println("\nActions to be perform: ");
-                //System.out.println("1. View Facilities Booking");
-                System.out.println("1. Update Facilities Booking"); //thinking a edit column but no sure what to add still 
-                System.out.println("2. Delete This Booking");
-                System.out.println("3. ");
-                System.out.println("4. ");
+                System.out.println("1. View Facilities Booking");
+                System.out.println("2. Update Facilities Booking"); //thinking a edit column but no sure what to add still 
+                System.out.println("3. Delete This Booking");
 
                 do {
                     try {
@@ -180,35 +177,47 @@ public class UsageLogBasic {
                             break;
                         }
                     }
-
                     //validate the row input, make sure it is not larger than the list size 
-                } while (case1 < 1 || case1 > 2);
+                } while (case1 < 1 || case1 > 3);
 
                 System.out.println("");
                 switch (case1) {
                     case 1 -> {
+                        //view booking details 
+                        //choose a selection
+                        System.out.println("");
+                        System.out.println("Selection of items to view:");
+                        System.out.println("1-Booking Item");
+                        System.out.println("2-User Profile");
+                        System.out.println("3-Back");
+                       
+                        int view_selection = 0;
+
+                        do {
+                            try {
+                                System.out.print("\uD83D\uDE40" + " Please choose your action: ");
+                                view_selection = input.nextInt();
+                            } catch (InputMismatchException exception) {
+                                System.out.println("Not an valid choice, please try again.");
+                                if (input.next().isEmpty()) {
+                                    break;
+                                }
+                            }
+                            //validate the row input, make sure it is not larger than the list size 
+                        } while (view_selection < 1 || view_selection > 3);
+
+                    }
+                    case 2 -> {
                         //update facilities booking at position row
                         //update selection: what value to be update? 
                         System.out.println("");
-                        System.out.println("Selection of items to update");
-                        System.out.println("");
-                        System.out.println("1-Extension of reserved time");
-                        System.out.println("2-Update reserved items");
-                        System.out.println("3-");
-                        System.out.println("4-");
-                        
-                        //updation of 
-                        //booking item 
-                        //user
-                        //booking date 
-                        
-                        //view of 
-                        //user
-                        //booking item 
-                        
-                        
+                        System.out.println("Selection of items to update:");
+                        System.out.println("1-Update of Reservation Time");
+                        System.out.println("2-Update Reserved Items");
+                        System.out.println("3-Update User Info");
+                        System.out.println("4-Extension of Reserved Time");
                     }
-                    case 2 -> {
+                    case 3 -> {
                         int deletion = 0;
                         //cancel facilities booking at position row
                         System.out.println("Deleting this booking...");
@@ -224,9 +233,6 @@ public class UsageLogBasic {
                         }
 
                     }
-                    case 3 -> {
-
-                    }
                     default -> {
                     }
 
@@ -240,8 +246,6 @@ public class UsageLogBasic {
             }
         }
 
-        //for choices 2 
-        //for choices 3 
     }
 
     private static void NOTUSINGYET() {
