@@ -278,7 +278,7 @@ public class MainDriver {
                     case 3:
                         System.out.println("Cancel a schedule: ");
                         int remove = userInput.nextInt();
-                        System.out.println(schedule.remove(remove) + " is cancelled.");
+                        //System.out.println(schedule.remove(remove) + " is cancelled.");
                         break;
                     case 4:
                         System.out.println("Maintenance History");

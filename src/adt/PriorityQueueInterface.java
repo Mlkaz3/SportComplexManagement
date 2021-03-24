@@ -16,8 +16,6 @@ public interface PriorityQueueInterface<T extends Comparable<T>> {
     
     T dequeue();
     
-    T remove(int position);
-    
     boolean remove(T anElement);
     
     T getFront();
@@ -28,9 +26,13 @@ public interface PriorityQueueInterface<T extends Comparable<T>> {
     
     int getPosition(T anElement);
     
+    T getElement(int position);
+    
     void clear();
     
     void desc();
     
     boolean contains(T newElement);
 }
+
+    //T remove(int position);

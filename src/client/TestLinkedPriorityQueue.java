@@ -85,6 +85,11 @@ public class TestLinkedPriorityQueue {
         appointment.enqueue(maintenance);
         appointment.enqueue(maintenance2);
         appointment.enqueue(maintenance3);
+        
+        System.out.print("Remove element: ");
+        System.out.println(appointment.getElement(userInput.nextInt()));
+        //appointment.remove(appointment.getElement(userInput.nextInt()));
+        
 
         System.out.println("                                            Maintenance Appointment Queue\n");
         System.out.printf("%-10s %-15s %-25s %-20s %-30s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date | ", "Request Timestamp");
@@ -101,7 +106,7 @@ public class TestLinkedPriorityQueue {
         System.out.println("Element at front: " + appointment.getFront());
 
         System.out.println("Cancel a schedule: ");
-        appointment.remove(userInput.nextInt());
+        //appointment.remove(userInput.nextInt());
 
         appointment.dequeue();
         System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date | ", "Request Timestamp");

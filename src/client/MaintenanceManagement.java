@@ -126,10 +126,7 @@ public class MaintenanceManagement { //read and write to file
     //cancel appointment
     public void cancelAppt() throws ParseException {
         Maintenance maintenance = new Maintenance();
-        //use remove T or remove int?
-        //Scanner userInput = new Scanner(System.in);
-        //System.out.println("Cancel an appointment: ");
-        //appointmentQueue.remove(userInput.nextInt());
+
         displayQueue();
 
         if (appointmentQueue.isEmpty()) {
@@ -137,27 +134,18 @@ public class MaintenanceManagement { //read and write to file
 
         } else {
             System.out.println("\nCancel an appointment - ");
+            
             boolean remove = false;
+            
             do {
 
-                Scanner userInput = new Scanner(System.in);
-                System.out.print("\nFacility ID: ");
-
-                maintenance.setFacilityID(userInput.nextLine());
-                System.out.print("Maintenance type: ");
-
-                maintenance.setMaintenanceType(userInput.nextLine());
-                System.out.print("Maintenance description: ");
-
-                maintenance.setMaintenanceDesc(userInput.nextLine());
-                System.out.print("Date required (yyyy-mm-dd): ");
-                String date = userInput.nextLine();
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-                Date requiredDate = format.parse(date);
-                maintenance.setRequiredDate(requiredDate);
+                System.out.print("\nEnter your choice: ");
+                int position = userInput.nextInt();
+                
+                maintenance = appointmentQueue.getElement(position);
                 
                 remove = appointmentQueue.remove(maintenance);
-                
+  
                 if (remove == true) {
                     System.out.println("\nAppointment is cancelled.");
                 } else {
@@ -217,7 +205,6 @@ public class MaintenanceManagement { //read and write to file
         } catch (Exception e) {
         }
     }
-
 }
 
 //        System.out.println("[1] Check position");

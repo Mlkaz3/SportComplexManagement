@@ -88,27 +88,6 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
     }
 
     @Override
-    public T remove(int position) {
-        T result = null;
-
-        if ((position >= 1) && (position <= length)) { // if given position is valid
-            if (position == 1) { // case 1: position is 1
-                result = firstNode.data;
-                firstNode = firstNode.next; // assign second node as the first node
-            } else { // others: loop to get element at given position
-                Node nodeBefore = firstNode;
-                for (int i = 1; i < position - 1; ++i) {
-                    nodeBefore = nodeBefore.next;
-                }
-                result = nodeBefore.next.data; // point to the element to be removed
-                nodeBefore.next = nodeBefore.next.next;
-            }
-            length--;
-        }
-        return result;
-    }
-
-    @Override
     public T getFront() {
         T front = null;
 
@@ -143,6 +122,22 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
             return -1;
         }
         return -1;
+    }
+
+    @Override
+    public T getElement(int position) {
+        T result = null;
+        
+        if (!isEmpty()) {
+            if ((position >= 1) && (position <= length)) {
+                Node currentNode = firstNode;
+                for (int i = 1; i < position - 1; i++) {
+                    currentNode = currentNode.next; // move to the next node
+                }
+                result = (T) currentNode.data; // currentNode is pointing to the node at given position
+            }
+        }
+        return result;
     }
 
     @Override
@@ -208,3 +203,24 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
         }
     }
 }
+
+//    @Override
+//    public T remove(int position) {
+//        T result = null;
+//
+//        if ((position >= 1) && (position <= length)) { // if given position is valid
+//            if (position == 1) { // case 1: position is 1
+//                result = firstNode.data;
+//                firstNode = firstNode.next; // assign second node as the first node
+//            } else { // others: loop to get element at given position
+//                Node nodeBefore = firstNode;
+//                for (int i = 1; i < position - 1; ++i) {
+//                    nodeBefore = nodeBefore.next;
+//                }
+//                result = nodeBefore.next.data; // point to the element to be removed
+//                nodeBefore.next = nodeBefore.next.next;
+//            }
+//            length--;
+//        }
+//        return result;
+//    }
