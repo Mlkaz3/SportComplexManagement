@@ -12,13 +12,14 @@ package entity;
 import java.util.Date;
 import java.util.Objects;
 
-    
 public class Facility {
+
     private String facilityID;
     private String facilityName;
     private String facilityType;
     private String facilityAvailability;
-    
+    private boolean status;
+
     //set as string for now but the correct one shud be Date
     private String timeSlot;   // the array List the facility ahve throught the day
     //private Date checkingTimeSlot; // the timeslot requested by the user ,together with the facilityAvai can check if that time is available or not
@@ -29,8 +30,6 @@ public class Facility {
     public Facility(String facilityID) {
         this.facilityID = facilityID;
     }
-    
-    
 
     public Facility(String facilityID, String facilityName, String facilityType, String facilityAvailability, String timeSlot, Date checkingTimeSlot) {
         this.facilityID = facilityID;
@@ -41,7 +40,6 @@ public class Facility {
         //this.checkingTimeSlot = checkingTimeSlot;
     }
 
-    
     public String getFacilityID() {
         return facilityID;
     }
@@ -82,6 +80,14 @@ public class Facility {
         this.timeSlot = timeSlot;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     /*public Date getCheckingTimeSlot() {
         return checkingTimeSlot;
     }
@@ -89,7 +95,6 @@ public class Facility {
     public void setCheckingTimeSlot(Date checkingTimeSlot) {
         this.checkingTimeSlot = checkingTimeSlot;
     }*/
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -116,12 +121,8 @@ public class Facility {
 
     @Override
     public String toString() {
-        return "Facility ID:" + facilityID + "\n Facility Name: " + facilityName + "\n Facility Type:" + facilityType +
-                "\n Facility Availability: " + facilityAvailability + "\n Time Slot:" + timeSlot;
+        return "Facility ID:" + facilityID + "\n Facility Name: " + facilityName + "\n Facility Type:" + facilityType
+                + "\n Facility Availability: " + facilityAvailability + "\n Time Slot:" + timeSlot;
     }
 
-
-
-    
-    
 }

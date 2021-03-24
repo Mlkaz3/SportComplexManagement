@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,7 @@ import java.util.Scanner;
  * @author YJ
  */
 public class TestLinkedPriorityQueue {
-
+    
    public static void main(String[] args) throws ParseException {
 
         PriorityQueueInterface<Maintenance> appointment = new LinkedPriorityQueue<>();
@@ -47,7 +48,12 @@ public class TestLinkedPriorityQueue {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         Date requiredDate = format.parse(date);
         maintenance.setRequiredDate(requiredDate);
-
+        //set date of making appointment
+        GregorianCalendar cal = new GregorianCalendar();
+        //Date now = new Date();
+        Date now = cal.getTime();
+        maintenance.setRequestDate(now);
+       
         System.out.print("\nFacility ID: ");
         maintenance2.setFacilityID(userInput.nextLine());
         System.out.print("Maintenance type: ");
@@ -58,6 +64,9 @@ public class TestLinkedPriorityQueue {
         String date2 = userInput.nextLine();
         Date requiredDate1 = format.parse(date2);
         maintenance2.setRequiredDate(requiredDate1);
+        
+        //Date now2 = new Date();
+        //maintenance2.setRequestDate(now2);
 
         System.out.print("\nFacility ID: ");
         maintenance3.setFacilityID(userInput.nextLine());
@@ -69,13 +78,17 @@ public class TestLinkedPriorityQueue {
         String date3 = userInput.nextLine();
         Date requiredDate2 = format.parse(date3);
         maintenance3.setRequiredDate(requiredDate2);
+        
+        //Date now3 = new Date();
+        //maintenance3.setRequestDate(now3);
 
         appointment.enqueue(maintenance);
         appointment.enqueue(maintenance2);
         appointment.enqueue(maintenance3);
 
-        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
-        System.out.println("------------------------------------------------------------------------------");
+        System.out.println("                                            Maintenance Appointment Queue\n");
+        System.out.printf("%-10s %-15s %-25s %-20s %-30s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date | ", "Request Timestamp");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
         System.out.println(appointment);
 
         //schedule.desc();
@@ -91,7 +104,7 @@ public class TestLinkedPriorityQueue {
         appointment.remove(userInput.nextInt());
 
         appointment.dequeue();
-        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date");
+        System.out.printf("%-10s %-15s %-25s %-20s\n", "Facility ID | ", "Maintenance type | ", "Maintenance description | ", "Required Date | ", "Request Timestamp");
         System.out.println("------------------------------------------------------------------------------");
         System.out.println(appointment);
 

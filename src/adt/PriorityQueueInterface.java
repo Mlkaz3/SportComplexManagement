@@ -18,6 +18,8 @@ public interface PriorityQueueInterface<T extends Comparable<T>> {
     
     T remove(int position);
     
+    boolean remove(T anElement);
+    
     T getFront();
     
     int getTotalEntry();

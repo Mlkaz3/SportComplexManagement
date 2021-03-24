@@ -9,9 +9,7 @@ import adt.LinkedPriorityQueue;
 import adt.PriorityQueueInterface;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
 /**
@@ -29,21 +27,21 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     private String maintenanceDesc;
     private double maintenanceCost;
     private double costPerDay;
-    private Calendar requestDate;
-    private Calendar startDate;
-    private Calendar endDate;
+    private Date requestDate;
+    private Date startDate;
+    private Date endDate;
     private Date requiredDate; // This determines the priority
 
     public Maintenance() {
         this.maintenanceID = String.valueOf(next++);
     }
 
-    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, Date requiredDate) {
+    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
         this.maintenanceID = String.valueOf(next++);
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
-        this.maintenanceCost = maintenanceCost;
+        this.requestDate = requestDate;
         this.requiredDate = requiredDate;
     }
 
@@ -95,27 +93,27 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
         this.costPerDay = costPerDay;
     }
 
-    public Calendar getRequestDate() {
+    public Date getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(Calendar requestDate) {
+    public void setRequestDate(Date requestDate) {
         this.requestDate = requestDate;
     }
 
-    public Calendar getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Calendar startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public Calendar getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -130,7 +128,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-        return String.format("%-15s %-20s %-25s %-20s", facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate));
+        return String.format("%-15s %-20s %-25s %-20s %-20s", facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestDate);
     }
 
     @Override
@@ -165,7 +163,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     //Entity class methods
     public int calcDuration() { //end date - start date
-        return Math.abs(endDate.get(Calendar.DAY_OF_YEAR) - startDate.get(Calendar.DAY_OF_YEAR));
+        return (int)(endDate.getTime() - startDate.getTime() / (1000 * 60 * 60 * 24));      
     }
 
     public double calcCost() { // duration x payment per day
@@ -176,7 +174,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
         return true;
     }
 
-    public boolean checkStatus(Maintenance m) {
+    public boolean checkStatus(Maintenance m) { // do i need this?
         PriorityQueueInterface<Maintenance> appointment = new LinkedPriorityQueue<>();
         return !appointment.contains(m);
     }

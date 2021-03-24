@@ -37,7 +37,7 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
             while (currentNode != null && newElement.compareTo(currentNode.data) > 0) { // compare each element in queue to check if given element has higher priority
                 previousNode = currentNode;
                 currentNode = currentNode.next;
-            } 
+            }
 
             if (isEmpty() || (previousNode == null)) { // if queue is initially empty or element has the highest priority
                 newNode.next = firstNode;
@@ -63,6 +63,28 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
             length--;
         }
         return front;
+    }
+
+    @Override
+    public boolean remove(T anElement) {
+        if (!isEmpty()) {
+            Node previousNode = null;
+            Node currentNode = firstNode;
+            while (currentNode != null && currentNode.data.compareTo(anElement) < 0) {
+                previousNode = currentNode;
+                currentNode = currentNode.next;
+            }
+            if (currentNode != null && currentNode.data.equals(anElement)) {
+                if (currentNode == firstNode) {
+                    firstNode = firstNode.next;
+                } else {
+                    previousNode.next = currentNode.next;
+                }
+                length--;
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
