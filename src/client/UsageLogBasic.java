@@ -193,7 +193,20 @@ public class UsageLogBasic {
                         System.out.println("Selection of items to update");
                         System.out.println("");
                         System.out.println("1-Extension of reserved time");
-                        System.out.println("2-");
+                        System.out.println("2-Update reserved items");
+                        System.out.println("3-");
+                        System.out.println("4-");
+                        
+                        //updation of 
+                        //booking item 
+                        //user
+                        //booking date 
+                        
+                        //view of 
+                        //user
+                        //booking item 
+                        
+                        
                     }
                     case 2 -> {
                         int deletion = 0;

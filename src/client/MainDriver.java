@@ -40,10 +40,10 @@ public class MainDriver {
                 System.out.println("*                MANAGEMENT SYSTEM                *");
                 System.out.println("*                                                 *");
                 System.out.println("*    Select an Option                             *");
-                System.out.println("*    [1] Facilities                               *");
-                System.out.println("*    [2] Equipment                                *");
-                System.out.println("*    [3] Maintenance                              *");
-                System.out.println("*    [4] Usage Log                                *");
+                System.out.println("*    [1] Facilities Management                    *");
+                System.out.println("*    [2] Equipment Management                     *");
+                System.out.println("*    [3] Maintenance Management                   *");
+                System.out.println("*    [4] Usage Management                         *");
                 System.out.println("*    [5] Exit                                     *");
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
