@@ -31,6 +31,13 @@ public class Facility {
         this.facilityID = facilityID;
     }
 
+    public Facility(String facilityID, String facilityName, String facilityType, boolean status) {
+        this.facilityID = facilityID;
+        this.facilityName = facilityName;
+        this.facilityType = facilityType;
+        this.status = status;
+    }
+    
     public Facility(String facilityID, String facilityName, String facilityType, String facilityAvailability, String timeSlot, Date checkingTimeSlot) {
         this.facilityID = facilityID;
         this.facilityName = facilityName;

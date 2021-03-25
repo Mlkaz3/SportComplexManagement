@@ -90,16 +90,16 @@ public class MaintenanceManagement { //read and write to file, manage completion
         do {
             System.out.print("Date required (yyyy-mm-dd): ");
             date = userInput.nextLine();
-                formatter.setLenient(false);
-                try {
-                    Date requiredDate = formatter.parse(date);
-                    maintenance.setRequiredDate(requiredDate);
-                    validDate = true;
-                } catch (ParseException e) {
-                    System.out.println("\nInvalid date format.");
-                    System.out.println();
-                    validDate = false;
-                }
+            formatter.setLenient(false);
+            try {
+                Date requiredDate = formatter.parse(date);
+                maintenance.setRequiredDate(requiredDate);
+                validDate = true;
+            } catch (ParseException e) {
+                System.out.println("\nInvalid date format.");
+                System.out.println();
+                validDate = false;
+            }
         } while (validDate != true);
 
         //set date of making appointment
@@ -117,46 +117,67 @@ public class MaintenanceManagement { //read and write to file, manage completion
     //send for maintenance, set maintenance ID
     public void serveFront() {
 
-        Maintenance maintenance = new Maintenance();
+        Maintenance maintenance;
         char ch = 0;
         displayQueue();
 
         if (appointmentQueue.isEmpty()) {
             System.out.println("\nThere is nothing to be removed from queue.");
-
         } else {
 
             System.out.println("\nCommence maintenance for the first appointment? (Y/N)");
 
+            boolean validInput = true;
             do {
                 try {
-                    String input = userInput.nextLine();
-                    ch = input.charAt(0);
+//                    String input = userInput.nextLine();
+//                    ch = input.charAt(0);
+                    ch = userInput.next().charAt(0);
 
                     switch (Character.toUpperCase(ch)) {
                         case 'Y' -> {
-                            appointmentQueue.dequeue();
-                            //maintenanceHistory.add(appointmentQueue.dequeue());
-                            GregorianCalendar startDate = new GregorianCalendar();
-                            Date now = startDate.getTime();
-                            maintenance.setStartDate(now);
-                            facility.setStatus(false);
+                            maintenance = appointmentQueue.dequeue();
 
+//                            Maintenance maintenance1 = new Maintenance();
+//                            
+//                            String maintenanceID = maintenance1.getMaintenanceID();
+//                            String facilityID = maintenance.getFacilityID();
+//                            String maintenanceType = maintenance.getMaintenanceType();
+//                            String maintenanceDesc = maintenance.getMaintenanceDesc();
+//                            
+//                            GregorianCalendar startDate = new GregorianCalendar();
+//                            Date now = startDate.getTime();
+//                            maintenance1.setStartDate(now);
+//                            
+//                            maintenance1.setMaintenanceID(maintenanceID);
+//                            maintenance1.setFacilityID(facilityID);
+//                            maintenance1.setMaintenanceType(maintenanceType);
+//                            maintenance1.setMaintenanceDesc(maintenanceDesc);
+//                            maintenance1.setEndDate(now);
+//                            maintenance1.setMaintenanceCost(0.00);
+                            maintenanceHistory.add(maintenance);
+
+                            //facility.setStatus(false);
                             System.out.println("Facility is currently undergoing maintenance!");
+                            break;
                         }
                         case 'N' -> {
+                            break;
                         }
                         default -> {
                             System.out.println();
                             System.out.println("Error. Please select a correct choice.");
                             System.out.println();
+                            validInput = true;
+                            break;
                         }
                     }
                 } catch (InputMismatchException e) {
                     System.out.println();
                     System.out.println("Error. Please enter Y or N only.");
+                    validInput = true;
                 }
-            } while (ch != 'N');
+            } while (validInput != true);
             pressAnyKeyToContinue();
         }
     }
@@ -336,14 +357,15 @@ public class MaintenanceManagement { //read and write to file, manage completion
     //manage completed maintenance (write endDate, set status = true, calcDuration & cost)
     public void manageCompletion() {
 
-        Maintenance maintenance = new Maintenance();
+        //Maintenance maintenance = new Maintenance();
+        System.out.println(maintenanceHistory);
 
-        GregorianCalendar endDate = new GregorianCalendar();
-        Date now = endDate.getTime();
-        maintenance.setEndDate(now);
-        facility.setStatus(true);
-        maintenance.calcDuration();
-        maintenance.calcCost();
+//        GregorianCalendar endDate = new GregorianCalendar();
+//        Date now = endDate.getTime();
+//        maintenance.setEndDate(now);
+//        facility.setStatus(true);
+//        maintenance.calcDuration();
+//        maintenance.calcCost();
     }
 
     public static void pressAnyKeyToContinue() {

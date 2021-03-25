@@ -35,6 +35,17 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     public Maintenance() {
     }
 
+    public Maintenance(String maintenanceID, String facilityID, String maintenanceType, String maintenanceDesc, Date startDate, Date endDate, double maintenanceCost) {
+        this.maintenanceID = maintenanceID;
+        this.facilityID = facilityID;
+        this.maintenanceType = maintenanceType;
+        this.maintenanceDesc = maintenanceDesc;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.maintenanceCost = maintenanceCost;
+    }
+    
+
     public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
