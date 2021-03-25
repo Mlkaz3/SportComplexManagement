@@ -20,16 +20,14 @@ import java.util.Scanner;
  */
 public class TestArrList {
         public static void main(String[] args) throws ParseException {
-            
-            
+
         String input_Type;
         String input_ID;
         
             
         ListInter<Facility> facility = new ArrList<>();
-        //ListInter<Facility> facility2 = new ArrList<>();
-        
 
+        //This is for list
         Facility badmintonCourt1 = new Facility(); //"F001", "repair", "desc", 200.00, 19-06-2000
         Facility badmintonCourt2 = new Facility();
         Facility badmintonCourt3 = new Facility();
@@ -108,7 +106,6 @@ public class TestArrList {
         System.out.println("Choose the ID of Court");
         input_ID = userInput.nextLine();
         
-
 
         facility.add(badmintonCourt1);
         facility.add(badmintonCourt2);
