@@ -10,16 +10,21 @@ import java.util.Iterator;
 /**
  *
  * @author winnieyap
+ * @param <T>
  */
-public class LinkedList<T> implements ListInterface<T> {
+public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
 
     private Node head;
     private int length;	// number of entries in list/size
 
+    public LinkedList() {
+        head = null;
+        length = 0;
+    }
+
     @Override
     public boolean addFirst(T newEntry) {
         Node node = new Node(newEntry);
-
         if (isEmpty()) {
             head = node;
         } else {
@@ -71,7 +76,7 @@ public class LinkedList<T> implements ListInterface<T> {
         } else {
             isSuccessful = false;
         }
-        
+
         return isSuccessful;
     }
 
@@ -215,11 +220,11 @@ public class LinkedList<T> implements ListInterface<T> {
 
     @Override
     public String toString() {
-        int items =1;
+        int items = 1;
         String outputStr = "";
         Node currentNode = head;
         while (currentNode != null) {
-            outputStr +=  items + "." + currentNode.data + "\n";
+            outputStr += items + "." + currentNode.data + "\n";
             currentNode = currentNode.next;
             items++;
         }
@@ -227,8 +232,14 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
-    public boolean swap(int frontPosition, int backPosition) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void swap(int frontPosition, int backPosition) {
+        T frontEntry = null;
+        T backEntry = null;
+        //implement of swap
+        frontEntry = getEntry(frontPosition);
+        backEntry = getEntry(backPosition);
+        replace(frontPosition,backEntry);
+        replace(backPosition,frontEntry);
     }
 
     @Override
@@ -265,28 +276,29 @@ public class LinkedList<T> implements ListInterface<T> {
             this.data = data;
             this.next = next;
         }
+
     }
-    
+
+    public Iterator<T> getIterator() {
+        return new LinkedListIterator();
+    }
+
     private class LinkedListIterator implements Iterator<T> {
+
         private Node<T> trav = head;
 
         @Override
         public boolean hasNext() {
-          return trav != null;
+            return trav != null;
         }
 
         @Override
         public T next() {
-          T data = trav.data;
-          trav = trav.next;
-          return data;
+            T data = trav.data;
+            trav = trav.next;
+            return data;
         }
 
-        @Override
-        public void remove() {
-          throw new UnsupportedOperationException();
-        }
-      }
-    
+    }
 
 }

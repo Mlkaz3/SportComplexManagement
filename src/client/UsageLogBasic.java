@@ -19,6 +19,16 @@ Log:
 - idea: add a search bar
 - a complete linked list model: https://beginnersbook.com/2013/12/linkedlist-in-java-with-example/
 
+24/3/2021
+- discussion with groupmates to avoid clashing 
+- plan further for the whole function 
+- study of linked list: https://www.programcreek.com/2013/01/sort-linkedlist-of-user-defined-objects-in-java/
+
+25/3/2021
+- sorting datetime https://www.geeksforgeeks.org/comparator-interface-java/
+- https://www.geeksforgeeks.org/how-to-sort-a-linked-list-that-is-sorted-alternating-ascending-and-descending-orders/
+- dealing with date https://www.geeksforgeeks.org/find-the-duration-of-difference-between-two-dates-in-java/
+- https://www.javatpoint.com/program-to-sort-the-elements-of-the-singly-linked-list
  */
 package client;
 
@@ -36,10 +46,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -54,7 +71,7 @@ public class UsageLogBasic {
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
 
         Date now = new Date();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         int ch = 0;
         Scanner input = new Scanner(System.in);
@@ -64,6 +81,7 @@ public class UsageLogBasic {
         User user1 = new User("Ting Tin Tin", "19109", "Alumni", "0123456781");
         User user2 = new User("Phea Lee Mai", "18119", "Student", "0123456782");
         User user3 = new User("Lim Siew Mooi", "20119", "Student", "0123456783");
+        User user4 = new User("Kenneth", "20109", "Student", "0123456783");
 
         Equipment equipment = new Equipment("001", "Yoonex", true, "12.00", "Shelf0123", "badminton racquet");
         Equipment equipment1 = new Equipment("002", "Adidas", true, "12.00", "Shelf0122", "squash racquet");
@@ -73,21 +91,38 @@ public class UsageLogBasic {
         Facility facility = new Facility(); //facility havent done 
 
         //creating 4 record
-        ReservationRecord record1 = new entity.ReservationRecord(20.00, user, equipment);
-        ReservationRecord record2 = new entity.ReservationRecord(60.00, user1, equipment1);
-        ReservationRecord record3 = new entity.ReservationRecord(10.00, user2, equipment2);
-        ReservationRecord record4 = new entity.ReservationRecord(30.00, user3, equipment3);
+//        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 02:01"), (Date) myFormatObj.parse("02/02/2021 03:01"), user, equipment);
+//        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 03:11"), (Date) myFormatObj.parse("02/02/2021 04:12"), user1, equipment1);
+//        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 04:13"), (Date) myFormatObj.parse("02/02/2021 04:37"), user2, equipment2);
+//        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 05:01"), (Date) myFormatObj.parse("02/02/2021 06:00"), user3, equipment3);
+//        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 07:01"), (Date) myFormatObj.parse("02/02/2021 10:01"), user4, equipment3);
 
+        ReservationRecord record1_ = new entity.ReservationRecord(now, now, user, equipment);
+        ReservationRecord record2_ = new entity.ReservationRecord(now, now, user1, equipment1);
+        ReservationRecord record3_ = new entity.ReservationRecord(now, now, user2, equipment2);
+        ReservationRecord record4_ = new entity.ReservationRecord(now, now, user3, equipment3);
+        ReservationRecord record5_ = new entity.ReservationRecord(now, now, user4, equipment3);
         //implementing ADT
-        reservationRecord.addFirst(record1);
-        reservationRecord.addFirst(record2);
-        reservationRecord.addFirst(record3);
-        reservationRecord.addFirst(record4);
+//        reservationRecord.addFirst(record1);
+//        reservationRecord.addFirst(record2);
+//        reservationRecord.addFirst(record3);
+//        reservationRecord.addFirst(record4);
+//        reservationRecord.addFirst(record5);
+
+        reservationRecord.addFirst(record1_);
+        reservationRecord.addFirst(record2_);
+        reservationRecord.addFirst(record3_);
+        reservationRecord.addFirst(record4_);
+        reservationRecord.addFirst(record5_);
+        Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
 
         //read the file data in
         //reservationRecord = Deserialize(reservationRecord);
         System.out.println("ⓦⓔⓛⓒⓞⓜⓔ ⓣⓞ ⓣⓐⓡⓤⓒ ⓢⓟⓞⓡⓣ ⓒⓞⓜⓟⓛⓔⓧ");
-        System.out.println("🅆🄴🄻🄲🄾🄼🄴 🅃🄾 🅃🄰🅁🅄🄲 🅂🄿🄾🅁🅃 🄲🄾🄼🄿🄻🄴🅇 🄵🄰🄲🄸🄻🄸🅃🄸🄴🅂 🄰🄽🄳 🅄🅂🄰🄶🄴 🄼🄰🄽🄰🄶🄴🄼🄴🄽🅃 🅂🅈🅂🅃🄴🄼");
+        System.out.println("🅆🄴🄻🄲🄾🄼🄴 🅃🄾 🅃🄰🅁🅄? 🅂🄿🄾🅁🅃 🄲🄾🄼🄿🄻🄴🅇 🄵🄰🄲🄸🄻🄸🅃🄸🄴🅂 🄰🄽🄳 🅄🅂🄰🄶🄴 🄼🄰🄽🄰🄶🄴🄼🄴🄽🅃 🅂🅈🅂🅃🄴🄼");
         System.out.println("1. Facilities Bookings");
         System.out.println("2. Equipment Bookings");
         System.out.println("3. ");
@@ -125,45 +160,10 @@ public class UsageLogBasic {
                     }
                 } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
 
-                System.out.println("");
-
-                System.out.println("Booking #" + reservationRecord.getEntry(row).getReservationID() + " Details");
-                System.out.println("-".repeat(80));
-
-                System.out.println("General Details");
-                System.out.println("---------------");
-                System.out.println("Booking Creation Date: " + reservationRecord.getEntry(row).getReservationDate());
-                System.out.println("Booking Status: "); //status can be pending or success or cancelation
-
-                System.out.println("\nBooking Facilities/Equipment");
-                System.out.println("----------------------------");
-                System.out.println("Booking Type: " + reservationRecord.getEntry(row).getReservationType());
-
-                if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
-                    System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
-                } else {
-                    System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
-                }
-
-                System.out.println("\nBooking Date");
-                System.out.println("------------");
-                System.out.println("From: " + reservationRecord.getEntry(row).getReservationStartTime());
-                System.out.println("To: " + reservationRecord.getEntry(row).getReservationEndTime());
-                System.out.println("Duration: " + reservationRecord.getEntry(row).getReservationDuration() + " minutes");
-
-                System.out.println("\nBooker Details");
-                System.out.println("--------------");
-                System.out.println("Booker ID: " + reservationRecord.getEntry(row).getUser().getUserID());
-                System.out.println("Booker Name: " + reservationRecord.getEntry(row).getUser().getUserName());
-                System.out.println("Booker Type: " + reservationRecord.getEntry(row).getUser().getUserCategory());
-                System.out.println("Booker Tel: " + reservationRecord.getEntry(row).getUser().getUserTel());
-
-                System.out.println("");
-                System.out.println("-".repeat(80));
-
+                bookingDetails(reservationRecord, row);
                 //then print selection of actions to be performed
                 System.out.println("\nActions to be perform: ");
-                System.out.println("1. View Facilities Booking");
+                System.out.println("1. View Facilities Booking dont do this first ");
                 System.out.println("2. Update Facilities Booking"); //thinking a edit column but no sure what to add still 
                 System.out.println("3. Delete This Booking");
 
@@ -190,7 +190,7 @@ public class UsageLogBasic {
                         System.out.println("1-Booking Item");
                         System.out.println("2-User Profile");
                         System.out.println("3-Back");
-                       
+
                         int view_selection = 0;
 
                         do {
@@ -211,26 +211,81 @@ public class UsageLogBasic {
                         //update facilities booking at position row
                         //update selection: what value to be update? 
                         System.out.println("");
-                        System.out.println("Selection of items to update:");
-                        System.out.println("1-Update of Reservation Time");
-                        System.out.println("2-Update Reserved Items");
-                        System.out.println("3-Update User Info");
-                        System.out.println("4-Extension of Reserved Time");
+                        System.out.println("Selection of updating booking details:");
+                        System.out.println("1 Extension of booking duration ");
+                        System.out.println("2 Modify booking facility/equipment ");
+                        System.out.println("3 Update booker information");
+                        System.out.println("4 Alter booking duration");
+
+                        //user selection
+                        int update_selection;
+                        update_selection = input.nextInt();
+
+                        switch (update_selection) {
+                            case 1 -> {
+
+                                //flow
+                                //get current row record 
+                                ReservationRecord currentRecord = reservationRecord.getEntry(row);
+                                String type = currentRecord.getReservationType();
+                                String booking_item;
+                                LinkedList<ReservationRecord> bookingitems = new LinkedList<>();
+                                System.out.println(type);
+                                System.out.println(bookingitems);
+
+                                if ("Facilities".equals(type)) {
+                                    //get the booking items
+                                    booking_item = currentRecord.getFacilities().getFacilityID();
+                                } else {
+                                    booking_item = currentRecord.getEquipments().getEquipmentID();
+                                }
+
+                                System.out.println("booking item id: " + booking_item);
+
+                                Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+                                while (newiterator.hasNext()) {
+                                    ReservationRecord record = newiterator.next();
+                                    System.out.println(record);
+
+                                    if (record.getEquipments().getEquipmentID() == booking_item) {
+                                        bookingitems.addFirst(record);
+                                    }
+                                }
+                                System.out.println("Printing the booking items");
+                                System.out.println(bookingitems);
+
+                                //arrage in time, ascending order
+                                //no idea how to do so
+                                //Collections.sort(bookingitems);
+                                //use the next end time - start time 
+                            }
+                            case 2 -> {
+                                //Modify booking facility/equipment
+                                ReservationRecord modifyBookingItem = reservationRecord.getEntry(row);
+                                String modifyitem;
+                                System.out.println("Modify booking items to");
+                                modifyitem = input.next();
+
+                                //needa do validation 
+                                //either equipment/facilities
+                                System.out.println("Enter booking items to be edit");
+
+                            }
+                            case 3 -> {
+                                updateBooker(reservationRecord, row);
+
+                            }
+                            case 4 -> {
+                                // Alter booking duration}
+                                //this similar as case 1 
+                                //i also dk how 
+                            }
+                        }
+
                     }
                     case 3 -> {
-                        int deletion = 0;
-                        //cancel facilities booking at position row
-                        System.out.println("Deleting this booking...");
-                        System.out.println("Are you sure you want to permanently delete this booking? (1=yes,0=no)");
-                        System.out.print("-> ");
-
-                        deletion = input.nextInt();
-                        if (deletion == 1) {
-                            reservationRecord.removeAt(row);
-                            System.out.println(reservationRecord);
-                        } else {
-                            System.out.println("The record is remain in the table.");
-                        }
+                        //delete record done 
+                        deleteBooking(reservationRecord, row);
 
                     }
                     default -> {
@@ -246,6 +301,103 @@ public class UsageLogBasic {
             }
         }
 
+    }
+
+    private static void updateBooker(LinkedList<ReservationRecord> reservationRecord, int row) {
+        Scanner input = new Scanner(System.in);
+        //Update booker information
+        //get the object to update
+        ReservationRecord currentRecord = reservationRecord.getEntry(row);
+        User currentUser = currentRecord.getUser();
+
+        System.out.println("double confirm entry: " + currentRecord);
+
+        String user_update;
+
+        System.out.println("Before updation: " + reservationRecord.getEntry(row));
+        System.out.println("User Info:" + reservationRecord.getEntry(row).getUser());
+
+        System.out.println("Name: ");
+        user_update = input.next();
+        currentUser.setUserName(user_update);
+        System.out.println("User ID: ");
+        user_update = input.next();
+        currentUser.setUserID(user_update);
+        System.out.println("User Category: ");
+        user_update = input.next();
+        currentUser.setUserCategory(user_update);
+        System.out.println("User Contact: ");
+        user_update = input.next();
+        currentUser.setUserTel(user_update);
+        currentRecord.setUser(currentUser);
+
+        //update with replace
+        reservationRecord.replace(row, currentRecord);
+        System.out.println("After updation: " + reservationRecord.getEntry(row));
+        System.out.println("User Info:" + reservationRecord.getEntry(row).getUser());
+        System.out.println("Booker Info Successfully Update.");
+    }
+
+    private static void bookingDetails(LinkedList<ReservationRecord> reservationRecord, int row) {
+        System.out.println("");
+
+        System.out.println("Booking #" + reservationRecord.getEntry(row).getReservationID() + " Details");
+        System.out.println("-".repeat(80));
+
+        System.out.println("General Details");
+        System.out.println("---------------");
+        System.out.println("Booking Creation Date: " + reservationRecord.getEntry(row).getReservationDate());
+        System.out.println("Booking Status: "); //status can be pending or success or cancelation
+
+        System.out.println("\nBooking Facilities/Equipment");
+        System.out.println("----------------------------");
+        System.out.println("Booking Type: " + reservationRecord.getEntry(row).getReservationType());
+
+        if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
+            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
+        } else {
+            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
+        }
+
+        System.out.println("\nBooking Date");
+        System.out.println("------------");
+        System.out.println("From: " + reservationRecord.getEntry(row).getReservationStartTime());
+        System.out.println("To: " + reservationRecord.getEntry(row).getReservationEndTime());
+        System.out.println("Duration: " + reservationRecord.getEntry(row).getReservationDuration() + " minutes");
+
+        System.out.println("\nBooker Details");
+        System.out.println("--------------");
+        System.out.println("Booker ID: " + reservationRecord.getEntry(row).getUser().getUserID());
+        System.out.println("Booker Name: " + reservationRecord.getEntry(row).getUser().getUserName());
+        System.out.println("Booker Type: " + reservationRecord.getEntry(row).getUser().getUserCategory());
+        System.out.println("Booker Tel: " + reservationRecord.getEntry(row).getUser().getUserTel());
+
+        System.out.println("");
+        System.out.println("-".repeat(80));
+    }
+
+    private static void deleteBooking(LinkedList<ReservationRecord> reservationRecord, int row) {
+        Scanner input = new Scanner(System.in);
+        String deletion;
+        //cancel facilities booking at position row
+        System.out.println("Deleting this booking...");
+        System.out.println("Are you sure you want to permanently delete this booking? (Yes/No)");
+        System.out.print("-> ");
+
+        deletion = input.next();
+        switch (deletion.toLowerCase()) {
+            case "yes" -> {
+                reservationRecord.removeAt(row);
+                System.out.println(reservationRecord);
+            }
+            case "no" -> {
+                System.out.println("The record is remain in the table.");
+            }
+            default -> {
+                System.out.println("Wrong command.");
+            }
+
+        }
     }
 
     private static void NOTUSINGYET() {
@@ -357,6 +509,44 @@ public class UsageLogBasic {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Cannot save to file", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public static class SortByID implements Comparator<ReservationRecord> {
+
+        public int compare(ReservationRecord a, ReservationRecord b) {
+            return a.getReservationStartTime().compareTo(b.getReservationStartTime());
+        }
+    }
+
+    //i not sure this can work or not but er...
+    public LinkedList<ReservationRecord> sort(LinkedList<ReservationRecord> toSortList) {
+        //Node current will point to head  
+        int index = 1;
+        ReservationRecord current;
+        ReservationRecord next;
+        ReservationRecord temp;
+        LinkedList<ReservationRecord> SortedList = toSortList;
+
+        if (toSortList != null) {
+            current = SortedList.getEntry(index);
+            next = SortedList.getEntry(index + 1);
+            while (current != null) { //ensuring n position is not null             
+                //comparing 1st and 2nd element 
+
+                while (next != null) { //ensuring that n+1 position is not null
+                    if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) > 0) {
+                        temp = current;
+                        current = next;
+                        SortedList.swap(index, index+1);
+                        next = temp;
+                    }
+                }
+
+                //If current node's data is greater than index's node data, swap the data between them  
+            }
+        }
+        return SortedList;
+
     }
 
 }

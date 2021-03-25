@@ -44,10 +44,10 @@ public class TestingReservationRecord {
         Facility facility = new Facility();
 
         //creating 4 record
-        ReservationRecord record1 = new ReservationRecord(20.00, user, equipment);
-        ReservationRecord record2 = new ReservationRecord(60.00, user, equipment);
-        ReservationRecord record3 = new ReservationRecord(10.00, user, equipment);
-        ReservationRecord record4 = new ReservationRecord(30.00, user, equipment);
+        ReservationRecord record1 = new ReservationRecord(user, equipment);
+        ReservationRecord record2 = new ReservationRecord(user, equipment);
+        ReservationRecord record3 = new ReservationRecord(user, equipment);
+        ReservationRecord record4 = new ReservationRecord(user, equipment);
 
         //implementing ADT
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
@@ -144,6 +144,16 @@ public class TestingReservationRecord {
         System.out.println(reservationRecord);
         System.out.println("");
 
+        System.out.println("");
+        System.out.println("SECTION 10");
+        System.out.println("");
+        System.out.println("Swap row 1 and 2");
+        System.out.println("--------------------------");
+        reservationRecord.swap(1, 2);
+        System.out.println("Print the updated list");
+        System.out.println("----------------------");
+        System.out.println(reservationRecord);
+        System.out.println("");
 
 //        ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
 //        System.out.println("record3 " + record3);

@@ -8,8 +8,9 @@ package adt;
 /**
  *can do index of 
  * @author winnieyap
+ * @param <T>
  */
-public interface ListInterface<T> {
+public interface ListInterface<T extends Comparable<T>> {
     
     //add a new entry to the linked list
     public boolean addFirst(T newEntry);
@@ -27,7 +28,7 @@ public interface ListInterface<T> {
     public T removeFirst();
     
     //to swap element that stick together
-    public boolean swap(int frontPosition, int backPosition);
+    public void swap(int frontPosition, int backPosition);
     
     public void clear();
     
@@ -42,5 +43,5 @@ public interface ListInterface<T> {
     public boolean isEmpty();
     
     public boolean isFull();
-    
+        
 }
