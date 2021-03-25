@@ -85,13 +85,13 @@ public class ArrayStack<T> implements StackInterface<T> {
     }
 
     @Override
-    //return size of the stack
+    //return size of the stack(no. of current elements in stack)
     public int size() {
         return topIndex + 1;
     }
 
     @Override
-    //return length of the array stack
+    //return length of the array stack (the number of elements it can hold)
     public int length() {
         return this.array.length;
     }
