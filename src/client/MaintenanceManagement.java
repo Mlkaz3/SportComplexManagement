@@ -80,7 +80,6 @@ public class MaintenanceManagement { //read and write to file
 
         if (appointmentQueue.enqueue(maintenance)) {
             System.out.println("\nAppointment added successfully!");
-            System.out.println(appointmentQueue.getTotalEntry());
         }
 
         pressAnyKeyToContinue();
@@ -180,7 +179,8 @@ public class MaintenanceManagement { //read and write to file
         } else {
 
             System.out.print("\nEnter your choice: ");
-            int position = userInput.nextInt();
+            String choice = userInput.nextLine();
+            int position = Integer.parseInt(choice); //do try catch for this
 
             maintenance = appointmentQueue.getElement(position);
 
@@ -190,42 +190,43 @@ public class MaintenanceManagement { //read and write to file
             System.out.println("[4] Required date");
             System.out.println("[5] Done");
 
-            char field;
+            int num;
             do {
                 System.out.print("\nSelect a field to edit: ");
-                field = userInput.next().charAt(0);
+                String field = userInput.nextLine();
+                num = Integer.parseInt(field); //do try catch for this
 
-                switch (field) {
-                    case '1' -> {
+                switch (num) {
+                    case 1 -> {
                         String newID;
                         do {
                             System.out.print("\nNew facility ID: ");
                             newID = userInput.nextLine();
-                            //validID(newID) == false; does not work charAt(0) == 'B' also does not work
-                            if (newID.length() != 4) {
+                            
+                            if (validID(newID) == false) {
                                 System.out.println("Invalid facility ID.");
                             } else {
                                 maintenance.setFacilityID(newID);
                                 System.out.println("\nFacility ID updated!");
                             }
-                        } while (newID.length() != 4);
+                        } while (validID(newID) != true);
                         break;
                     }
-                    case '2' -> {
+                    case 2 -> {
                         System.out.print("New maintenance type: ");
                         String newType = userInput.nextLine();
                         maintenance.setMaintenanceType(newType);
                         userInput.nextLine();
                         break;
                     }
-                    case '3' -> {
+                    case 3 -> {
                         System.out.print("New maintenance description: ");
                         String newDesc = userInput.nextLine();
                         maintenance.setMaintenanceDesc(newDesc);
                         userInput.nextLine();
                         break;
                     }
-                    case '4' -> {
+                    case 4 -> {
                         System.out.print("New date required (yyyy-mm-dd): ");
                         String date = userInput.nextLine();
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
@@ -243,7 +244,7 @@ public class MaintenanceManagement { //read and write to file
                         break;
                     }
                 }
-            } while (field != '5');
+            } while (num != 5);
         }
     }
 
@@ -269,7 +270,7 @@ public class MaintenanceManagement { //read and write to file
     }
 
     public static boolean validID(String facilityID) {
-        return !(facilityID.length() == 4); //facilityID.charAt(0) != 'B' || facilityID.charAt(0) != 'T'
+        return !(facilityID.charAt(0) == 'B' && facilityID.charAt(0) == 'T' && facilityID.length() == 4); //
     }
 }
 
