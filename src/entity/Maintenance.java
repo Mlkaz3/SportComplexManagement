@@ -33,11 +33,9 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     private Date requiredDate; // This determines the priority
 
     public Maintenance() {
-        this.maintenanceID = String.valueOf(next++);
     }
 
     public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
-        this.maintenanceID = String.valueOf(next++);
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
@@ -54,8 +52,8 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     }
 
     public String getMaintenanceID() {
-        maintenanceID = Integer.toString(next);
-        return "D" + maintenanceID;
+        maintenanceID = Integer.toString(next++);
+        return "M" + maintenanceID;
     }
 
     public void setMaintenanceID(String maintenanceID) {
@@ -129,7 +127,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-        return String.format("%-15s %-20s %-25s %-20s %-20s", facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestDate);
+        return String.format("%-17s %-20s %-30s %-20s %-25s", facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestDate);
     }
 
     @Override

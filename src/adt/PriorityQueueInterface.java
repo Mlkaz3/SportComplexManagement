@@ -30,7 +30,3 @@ public interface PriorityQueueInterface<T extends Comparable<T>> {
 
     boolean contains(T newElement);
 }
-
-//T remove(int position);
-//void desc();
-    //int getPosition(T anElement);

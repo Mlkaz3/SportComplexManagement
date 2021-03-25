@@ -40,19 +40,15 @@ public class TestMaintenanceManagement {
 
                 switch (ch) {
                     case 1 -> {
-                        System.out.println();
                         manageAppt();
                     }
                     case 2 -> {
-                        System.out.println();
                         maintenanceMgmt.addAppt();
                     }
                     case 3 -> {
-                        System.out.println();
-                        maintenanceMgmt.cancelAppt(); //use row num to access maintenance object
+                        maintenanceMgmt.cancelAppt();
                     }
                     case 4 -> {
-                        System.out.println();
                         maintenanceMgmt.editAppt();
                     }
                     case 5 -> {
@@ -72,6 +68,9 @@ public class TestMaintenanceManagement {
     }
 
     public static void manageAppt() {
+        
+        maintenanceMgmt.displayQueue();
+        
         int ch = 0;
         do {
             Scanner input = new Scanner(System.in);
