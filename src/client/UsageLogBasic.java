@@ -268,16 +268,31 @@ public class UsageLogBasic {
                                 int new_row = bookingitems.getPosition(currentRecord);
 
                                 //use the next end time - start time 
-                                Date pre_endtime = bookingitems.getEntry(new_row).getReservationEndTime();
-                                Date next_starttime = bookingitems.getEntry(new_row + 1).getReservationStartTime(); //here got error cause no next row 
-       
-                                //if null then perform?? 
+                                ReservationRecord currentBooking = bookingitems.getEntry(new_row);
+                                ReservationRecord comingBooking;
+
+                                if (new_row + 1 >= bookingitems.getLength()) {
+                                    //indicate no coming booking 
+                                    System.out.println("Duration is able to be extend.");
+                                    System.out.println("Please enter new extend duration: ");
+
+                                } else {
+                                    comingBooking = bookingitems.getEntry(new_row + 1);
+                                    Date pre_endtime = currentBooking.getReservationEndTime();
+                                    Date next_starttime = comingBooking.getReservationStartTime(); //here got error cause no next row 
+                                   
+                                    double difference_In_Time = next_starttime.getTime() - pre_endtime.getTime();
+                                  
+                                    double diff_mins = (difference_In_Time / (1000 * 60)) % 60;
+                                    System.out.println("Duration that able to be extend is: " + diff_mins + "minute(s)");
+                                }
                                 
-                                
-                                double difference_In_Time = next_starttime.getTime() - pre_endtime.getTime();
-                               // double diff_hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
-                                double diff_mins = (difference_In_Time / (1000 * 60)) % 60;
-                                System.out.println("Duration that able to be extend is: " + diff_mins + "minute(s)");
+                                //prompt user do you want to be extend? 
+                                //or cancel extension 
+                                //1- continue to extend 
+                                //2- cancel extension
+                                System.out.println("");
+
                             }
                             case 2 -> {
                                 //Modify booking facility/equipment
@@ -577,8 +592,8 @@ public class UsageLogBasic {
         LinkedList<ReservationRecord> SortedList = toSortList;
         SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-        for (int i = 1; i < SortedList.getLength() +1; i++) {
-            for (int j = 1; j < SortedList.getLength()+ 1; j++) {
+        for (int i = 1; i < SortedList.getLength() + 1; i++) {
+            for (int j = 1; j < SortedList.getLength() + 1; j++) {
                 current = SortedList.getEntry(i);
                 next = SortedList.getEntry(j);
                 if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) < 0) {
@@ -590,7 +605,5 @@ public class UsageLogBasic {
         }
         return SortedList;
     }
-
-
 
 }
