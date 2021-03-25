@@ -5,10 +5,14 @@
  */
 package client;
 
+import adt.ArrList;
 import adt.LinkedPriorityQueue;
+import adt.ListInter;
 import adt.PriorityQueueInterface;
 import entity.Facility;
 import entity.Maintenance;
+import java.io.IOException;
+import static java.lang.Character.isDigit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,25 +49,26 @@ public class MaintenanceManagement { //read and write to file
 
     //insert appointment
     public void addAppt() throws ParseException {
+
         Maintenance maintenance = new Maintenance();
 
         displayQueue();
 
         System.out.println("\nAdd an appointment - ");
-        
+
         //print available facility here
-            
         System.out.print("\nFacility ID: ");
         maintenance.setFacilityID(userInput.nextLine());
-        
+
         System.out.print("Maintenance type: ");
         maintenance.setMaintenanceType(userInput.nextLine());
-        
+
         System.out.print("Maintenance description: ");
         maintenance.setMaintenanceDesc(userInput.nextLine());
-        
+
         System.out.print("Date required (yyyy-mm-dd): ");
         String date = userInput.nextLine();
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         Date requiredDate = format.parse(date);
         maintenance.setRequiredDate(requiredDate);
@@ -75,6 +80,7 @@ public class MaintenanceManagement { //read and write to file
 
         if (appointmentQueue.enqueue(maintenance)) {
             System.out.println("\nAppointment added successfully!");
+            System.out.println(appointmentQueue.getTotalEntry());
         }
 
         pressAnyKeyToContinue();
@@ -82,6 +88,7 @@ public class MaintenanceManagement { //read and write to file
 
     //serve appointment
     public void serveFront() {
+
         Maintenance maintenance = new Maintenance();
         char ch;
         displayQueue();
@@ -97,25 +104,24 @@ public class MaintenanceManagement { //read and write to file
                 ch = userInput.next().charAt(0);
 
                 switch (Character.toUpperCase(ch)) {
-                    case 'Y':
+                    case 'Y' -> {
                         appointmentQueue.dequeue();
-                        //write to andrew's list
-                        //......
+                        ListInter<Maintenance> maintenanceHistory = new ArrList<>();
+                        //maintenanceHistory.add(appointmentQueue.dequeue());
                         GregorianCalendar startDate = new GregorianCalendar();
                         Date now = startDate.getTime();
                         maintenance.setStartDate(now);
                         facility.setStatus(false);
 
                         System.out.println("Facility is currently undergoing maintenance!");
-
-                        break;
-                    case 'N':
-                        break;
-                    default:
+                    }
+                    case 'N' -> {
+                    }
+                    default -> {
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
                         System.out.println();
-                        break;
+                    }
                 }
             } while (ch != 'N');
 
@@ -125,7 +131,8 @@ public class MaintenanceManagement { //read and write to file
 
     //cancel appointment
     public void cancelAppt() throws ParseException {
-        Maintenance maintenance = new Maintenance();
+
+        Maintenance maintenance;
 
         displayQueue();
 
@@ -134,22 +141,22 @@ public class MaintenanceManagement { //read and write to file
 
         } else {
             System.out.println("\nCancel an appointment - ");
-            
+
             boolean remove = false;
-            
+
             do {
 
                 System.out.print("\nEnter your choice: ");
                 int position = userInput.nextInt();
-                
+
                 maintenance = appointmentQueue.getElement(position);
-                
+
                 remove = appointmentQueue.remove(maintenance);
-  
+
                 if (remove == true) {
                     System.out.println("\nAppointment is cancelled.");
                 } else {
-                    System.out.println("\nPlease ensure all the information of the appointment is entered correctly.");
+                    System.out.println("Error. Invalid selection.");
                 }
 
             } while (remove != true);
@@ -159,15 +166,92 @@ public class MaintenanceManagement { //read and write to file
     }
 
     //edit appointment details
-    public void editAppt() {
-        Maintenance maintenance = new Maintenance();
-        //no idea how to do yet
+    public void editAppt() throws ParseException {
+
+        Maintenance maintenance;
+
+        displayQueue();
+
+        System.out.println("\nEdit an appointment - ");
+
+        if (appointmentQueue.isEmpty()) {
+            System.out.println("\nThere is nothing to be edited in the queue.");
+
+        } else {
+
+            System.out.print("\nEnter your choice: ");
+            int position = userInput.nextInt();
+
+            maintenance = appointmentQueue.getElement(position);
+
+            System.out.println("\n[1] Facility ID");
+            System.out.println("[2] Maintenance type");
+            System.out.println("[3] Maintenance description");
+            System.out.println("[4] Required date");
+            System.out.println("[5] Done");
+
+            char field;
+            do {
+                System.out.print("\nSelect a field to edit: ");
+                field = userInput.next().charAt(0);
+
+                switch (field) {
+                    case '1' -> {
+                        String newID;
+                        do {
+                            System.out.print("\nNew facility ID: ");
+                            newID = userInput.nextLine();
+                            //validID(newID) == false; does not work charAt(0) == 'B' also does not work
+                            if (newID.length() != 4) {
+                                System.out.println("Invalid facility ID.");
+                            } else {
+                                maintenance.setFacilityID(newID);
+                                System.out.println("\nFacility ID updated!");
+                            }
+                        } while (newID.length() != 4);
+                        break;
+                    }
+                    case '2' -> {
+                        System.out.print("New maintenance type: ");
+                        String newType = userInput.nextLine();
+                        maintenance.setMaintenanceType(newType);
+                        userInput.nextLine();
+                        break;
+                    }
+                    case '3' -> {
+                        System.out.print("New maintenance description: ");
+                        String newDesc = userInput.nextLine();
+                        maintenance.setMaintenanceDesc(newDesc);
+                        userInput.nextLine();
+                        break;
+                    }
+                    case '4' -> {
+                        System.out.print("New date required (yyyy-mm-dd): ");
+                        String date = userInput.nextLine();
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+                        Date requiredDate = format.parse(date);
+                        maintenance.setRequiredDate(requiredDate);
+                        break;
+                    }
+                    case '5' -> {
+                        break;
+                    }
+                    default -> {
+                        System.out.println();
+                        System.out.println("Error. Please select a correct choice.");
+                        System.out.println();
+                        break;
+                    }
+                }
+            } while (field != '5');
+        }
     }
 
     //manage completed maintenance (write endDate, set status = true, calcDuration & cost)
     public void manageCompletion() {
+
         Maintenance maintenance = new Maintenance();
-        
+
         GregorianCalendar endDate = new GregorianCalendar();
         Date now = endDate.getTime();
         maintenance.setEndDate(now);
@@ -176,43 +260,37 @@ public class MaintenanceManagement { //read and write to file
         maintenance.calcCost();
     }
 
-    //ARE THESE NECCESSARY? --->
-    //sort in descending order
-    public void sortDesc() {
-        appointmentQueue.desc();
-        System.out.println(appointmentQueue);
-        //turn back
-    }
-
-    public void sortAsc() {
-
-    }
-
-    //check the position of element in the queue
-    private void checkPosition() {
-
-    }
-
-    //check element at the front of the queue
-    private void checkFront() {
-
-    }
-
     public static void pressAnyKeyToContinue() {
         System.out.println("\nPress Enter key to continue...");
         try {
             System.in.read();
-        } catch (Exception e) {
+        } catch (IOException e) {
         }
+    }
+
+    public static boolean validID(String facilityID) {
+        return !(facilityID.length() == 4); //facilityID.charAt(0) != 'B' || facilityID.charAt(0) != 'T'
     }
 }
 
-//        System.out.println("[1] Check position");
-//        System.out.println("[2] Check front");
-//        System.out.println("[3] Check length of queue");
-//        System.out.println("[4] Back");
-//        
-//        System.out.println("Get position of maintenance 1: " + appointmentQueue.getPosition(maintenance));
-//        System.out.println("Queue is empty: " + appointmentQueue.isEmpty());
-//        System.out.println("Total elements in queue: " + appointmentQueue.getTotalEntry());
-//        System.out.println("Element at front: " + appointmentQueue.getFront());
+//ARE THESE NECCESSARY? --->
+//sort in descending order
+//    public void sortDesc() {
+//        appointmentQueue.desc();
+//        System.out.println(appointmentQueue);
+//        //turn back
+//    }
+//
+//    public void sortAsc() {
+//
+//    }
+//
+//    //check the position of element in the queue
+//    private void checkPosition() {
+//
+//    }
+//
+//    //check element at the front of the queue
+//    private void checkFront() {
+//
+//    }

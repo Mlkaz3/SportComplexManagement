@@ -108,34 +108,15 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
     }
 
     @Override
-    public int getPosition(T anElement) {
-        boolean found = false;
-        Node currentNode = firstNode;
-        for (int i = 1; i <= length; i++) {
-            if (currentNode.data.compareTo(anElement) == 0) { // loop to find the position of given element
-                return i; // position found
-            } else {
-                currentNode = currentNode.next; // move to the next node
-            }
-        }
-        if (!found) { // return -1 if element doesn't exist in the queue
-            return -1;
-        }
-        return -1;
-    }
-
-    @Override
     public T getElement(int position) {
         T result = null;
-        
-        if (!isEmpty()) {
-            if ((position >= 1) && (position <= length)) {
-                Node currentNode = firstNode;
-                for (int i = 1; i < position - 1; i++) {
-                    currentNode = currentNode.next; // move to the next node
-                }
-                result = (T) currentNode.data; // currentNode is pointing to the node at given position
+
+        if ((position >= 1) && (position <= length)) {
+            Node currentNode = firstNode;
+            for (int i = 0; i < position - 1; ++i) {
+                currentNode = currentNode.next;		// advance currentNode to next node
             }
+            result = currentNode.data;	// currentNode is pointing to the node at givenPosition
         }
         return result;
     }
@@ -144,20 +125,6 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
     public final void clear() {
         firstNode = null; // remove the reference to the first node
         length = 0; // clear the number of elements
-    }
-
-    @Override
-    public void desc() { // sort in descending order of priority
-        Node previous = null;
-        Node current = this.firstNode;
-        Node next;
-        while (current != null) {
-            next = current.next;
-            current.next = previous; // reversed assignment
-            previous = current;
-            current = next;
-        }
-        this.firstNode = previous;
     }
 
     @Override
@@ -205,6 +172,35 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
 }
 
 //    @Override
+//    public void desc() { // sort in descending order of priority
+//        Node previous = null;
+//        Node current = this.firstNode;
+//        Node next;
+//        while (current != null) {
+//            next = current.next;
+//            current.next = previous; // reversed assignment
+//            previous = current;
+//            current = next;
+//        }
+//        this.firstNode = previous;
+//    }
+//    @Override
+//    public int getPosition(T anElement) {
+//        boolean found = false;
+//        Node currentNode = firstNode;
+//        for (int i = 1; i <= length; i++) {
+//            if (currentNode.data.compareTo(anElement) == 0) { // loop to find the position of given element
+//                return i; // position found
+//            } else {
+//                currentNode = currentNode.next; // move to the next node
+//            }
+//        }
+//        if (!found) { // return -1 if element doesn't exist in the queue
+//            return -1;
+//        }
+//        return -1;
+//    }
+//
 //    public T remove(int position) {
 //        T result = null;
 //

@@ -39,28 +39,28 @@ public class TestMaintenanceManagement {
                 ch = input.nextInt();
 
                 switch (ch) {
-                    case 1:
+                    case 1 -> {
                         System.out.println();
                         manageAppt();
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         System.out.println();
                         maintenanceMgmt.addAppt();
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         System.out.println();
                         maintenanceMgmt.cancelAppt(); //use row num to access maintenance object
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         System.out.println();
-                        //Delivery();
-                        break;
-                    case 5:
-                        break;
-                    default:
+                        maintenanceMgmt.editAppt();
+                    }
+                    case 5 -> {
+                    }
+                    default -> {
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
-                        break;
+                    }
                 }
             } catch (InputMismatchException e) {
                 System.out.println();
@@ -91,23 +91,22 @@ public class TestMaintenanceManagement {
                 ch = input.nextInt();
 
                 switch (ch) {
-                    case 1:
+                    case 1 ->
                         maintenanceMgmt.serveFront();
-                        break;
-                    case 2:
+                    case 2 -> {
                         System.out.println();
                         maintenanceMgmt.manageCompletion();
-                        break;
-                    case 3:
-                        break;
-                    default:
+                    }
+                    case 3 -> {
+                    }
+                    default -> {
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
-                        break;
+                    }
                 }
             } catch (InputMismatchException e) {
                 System.out.println();
-                System.out.println("Error. Please enter an integer value within 1 and 5.");
+                System.out.println("Error. Please enter an integer value within 1 and 3.");
             }
 
         } while (ch != 3);

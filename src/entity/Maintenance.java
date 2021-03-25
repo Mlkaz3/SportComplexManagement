@@ -20,7 +20,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     private Facility facility; // need a facility class constructor with facilityID and facilityID getter method
 
-    private String facilityID; // temporary hardcode
+    private String facilityID;
     private static int next = 1000;
     private String maintenanceID;
     private String maintenanceType;
@@ -54,7 +54,8 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     }
 
     public String getMaintenanceID() {
-        return maintenanceID;
+        maintenanceID = Integer.toString(next);
+        return "D" + maintenanceID;
     }
 
     public void setMaintenanceID(String maintenanceID) {
@@ -163,7 +164,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     //Entity class methods
     public int calcDuration() { //end date - start date
-        return (int)(endDate.getTime() - startDate.getTime() / (1000 * 60 * 60 * 24));      
+        return (int) (endDate.getTime() - startDate.getTime() / (1000 * 60 * 60 * 24));
     }
 
     public double calcCost() { // duration x payment per day
