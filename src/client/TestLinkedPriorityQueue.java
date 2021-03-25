@@ -97,7 +97,7 @@ public class TestLinkedPriorityQueue {
         System.out.println(appointment);
 
         //schedule.desc();
-        System.out.println("Get position of maintenance 1: " + appointment.getPosition(maintenance));
+        //System.out.println("Get position of maintenance 1: " + appointment.getPosition(maintenance));
 
         System.out.println("Queue is empty: " + appointment.isEmpty());
 

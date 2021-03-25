@@ -11,28 +11,26 @@ package adt;
  * @param <T>
  */
 public interface PriorityQueueInterface<T extends Comparable<T>> {
-    
-    boolean enqueue (T newElement);
-    
+
+    boolean enqueue(T newElement);
+
     T dequeue();
-    
+
     boolean remove(T anElement);
-    
+
     T getFront();
-    
+
     int getTotalEntry();
-    
+
     boolean isEmpty();
-    
-    int getPosition(T anElement);
-    
+
     T getElement(int position);
-    
+
     void clear();
-    
-    void desc();
-    
+
     boolean contains(T newElement);
 }
 
-    //T remove(int position);
+//T remove(int position);
+//void desc();
+    //int getPosition(T anElement);
