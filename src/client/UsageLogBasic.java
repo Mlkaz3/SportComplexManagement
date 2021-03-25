@@ -45,6 +45,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -66,12 +68,12 @@ import javax.swing.JOptionPane;
  */
 public class UsageLogBasic {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
 
         Date now = new Date();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         int ch = 0;
         Scanner input = new Scanner(System.in);
@@ -91,29 +93,29 @@ public class UsageLogBasic {
         Facility facility = new Facility(); //facility havent done 
 
         //creating 4 record
-//        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 02:01"), (Date) myFormatObj.parse("02/02/2021 03:01"), user, equipment);
-//        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 03:11"), (Date) myFormatObj.parse("02/02/2021 04:12"), user1, equipment1);
-//        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 04:13"), (Date) myFormatObj.parse("02/02/2021 04:37"), user2, equipment2);
-//        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 05:01"), (Date) myFormatObj.parse("02/02/2021 06:00"), user3, equipment3);
-//        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 07:01"), (Date) myFormatObj.parse("02/02/2021 10:01"), user4, equipment3);
+        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 02:01"), (Date) myFormatObj.parse("02/02/2021 03:01"), user, equipment);
+        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 03:11"), (Date) myFormatObj.parse("02/02/2021 04:12"), user1, equipment2);
+        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 10:13"), (Date) myFormatObj.parse("02/02/2021 11:37"), user2, equipment3);
+        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 05:01"), (Date) myFormatObj.parse("02/02/2021 06:00"), user3, equipment3);
+        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 07:01"), (Date) myFormatObj.parse("02/02/2021 10:01"), user4, equipment3);
 
-        ReservationRecord record1_ = new entity.ReservationRecord(now, now, user, equipment);
-        ReservationRecord record2_ = new entity.ReservationRecord(now, now, user1, equipment1);
-        ReservationRecord record3_ = new entity.ReservationRecord(now, now, user2, equipment2);
-        ReservationRecord record4_ = new entity.ReservationRecord(now, now, user3, equipment3);
-        ReservationRecord record5_ = new entity.ReservationRecord(now, now, user4, equipment3);
+//        ReservationRecord record1_ = new entity.ReservationRecord(now, now, user, equipment);
+//        ReservationRecord record2_ = new entity.ReservationRecord(now, now, user1, equipment1);
+//        ReservationRecord record3_ = new entity.ReservationRecord(now, now, user2, equipment2);
+//        ReservationRecord record4_ = new entity.ReservationRecord(now, now, user3, equipment3);
+//        ReservationRecord record5_ = new entity.ReservationRecord(now, now, user4, equipment3);
         //implementing ADT
-//        reservationRecord.addFirst(record1);
-//        reservationRecord.addFirst(record2);
-//        reservationRecord.addFirst(record3);
-//        reservationRecord.addFirst(record4);
-//        reservationRecord.addFirst(record5);
+        reservationRecord.addFirst(record1);
+        reservationRecord.addFirst(record2);
+        reservationRecord.addFirst(record4);
+        reservationRecord.addFirst(record3);
+        reservationRecord.addFirst(record5);
 
-        reservationRecord.addFirst(record1_);
-        reservationRecord.addFirst(record2_);
-        reservationRecord.addFirst(record3_);
-        reservationRecord.addFirst(record4_);
-        reservationRecord.addFirst(record5_);
+//        reservationRecord.addFirst(record1_);
+//        reservationRecord.addFirst(record2_);
+//        reservationRecord.addFirst(record3_);
+//        reservationRecord.addFirst(record4_);
+//        reservationRecord.addFirst(record5_);
         Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
@@ -226,6 +228,7 @@ public class UsageLogBasic {
 
                                 //flow
                                 //get current row record 
+                                //extension got a bit error
                                 ReservationRecord currentRecord = reservationRecord.getEntry(row);
                                 String type = currentRecord.getReservationType();
                                 String booking_item;
@@ -251,13 +254,30 @@ public class UsageLogBasic {
                                         bookingitems.addFirst(record);
                                     }
                                 }
+
                                 System.out.println("Printing the booking items");
                                 System.out.println(bookingitems);
 
                                 //arrage in time, ascending order
                                 //no idea how to do so
-                                //Collections.sort(bookingitems);
+                                LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems);
+                                System.out.println(sortedBookings);
+                                //System.out.println("end");
+
+                                //compare the booking item with the next row booking item
+                                int new_row = bookingitems.getPosition(currentRecord);
+
                                 //use the next end time - start time 
+                                Date pre_endtime = bookingitems.getEntry(new_row).getReservationEndTime();
+                                Date next_starttime = bookingitems.getEntry(new_row + 1).getReservationStartTime(); //here got error cause no next row 
+       
+                                //if null then perform?? 
+                                
+                                
+                                double difference_In_Time = next_starttime.getTime() - pre_endtime.getTime();
+                               // double diff_hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
+                                double diff_mins = (difference_In_Time / (1000 * 60)) % 60;
+                                System.out.println("Duration that able to be extend is: " + diff_mins + "minute(s)");
                             }
                             case 2 -> {
                                 //Modify booking facility/equipment
@@ -363,7 +383,7 @@ public class UsageLogBasic {
         System.out.println("------------");
         System.out.println("From: " + reservationRecord.getEntry(row).getReservationStartTime());
         System.out.println("To: " + reservationRecord.getEntry(row).getReservationEndTime());
-        System.out.println("Duration: " + reservationRecord.getEntry(row).getReservationDuration() + " minutes");
+        System.out.println("Duration: " + reservationRecord.getEntry(row).getReservationDuration() + " Hour(s)");
 
         System.out.println("\nBooker Details");
         System.out.println("--------------");
@@ -511,15 +531,14 @@ public class UsageLogBasic {
         }
     }
 
-    public static class SortByID implements Comparator<ReservationRecord> {
-
-        public int compare(ReservationRecord a, ReservationRecord b) {
-            return a.getReservationStartTime().compareTo(b.getReservationStartTime());
-        }
-    }
-
+//    public static class SortByID implements Comparator<ReservationRecord> {
+//
+//        public int compare(ReservationRecord a, ReservationRecord b) {
+//            return a.getReservationStartTime().compareTo(b.getReservationStartTime());
+//        }
+//    }
     //i not sure this can work or not but er...
-    public LinkedList<ReservationRecord> sort(LinkedList<ReservationRecord> toSortList) {
+    private static LinkedList<ReservationRecord> sort(LinkedList<ReservationRecord> toSortList) {
         //Node current will point to head  
         int index = 1;
         ReservationRecord current;
@@ -528,6 +547,7 @@ public class UsageLogBasic {
         LinkedList<ReservationRecord> SortedList = toSortList;
 
         if (toSortList != null) {
+
             current = SortedList.getEntry(index);
             next = SortedList.getEntry(index + 1);
             while (current != null) { //ensuring n position is not null             
@@ -537,16 +557,40 @@ public class UsageLogBasic {
                     if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) > 0) {
                         temp = current;
                         current = next;
-                        SortedList.swap(index, index+1);
+                        SortedList.swap(index, index + 1);
                         next = temp;
                     }
                 }
-
+                index++;
                 //If current node's data is greater than index's node data, swap the data between them  
             }
         }
         return SortedList;
 
     }
+
+    private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
+        //Node current will point to head  
+        ReservationRecord current;
+        ReservationRecord next;
+        ReservationRecord temp;
+        LinkedList<ReservationRecord> SortedList = toSortList;
+        SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        for (int i = 1; i < SortedList.getLength() +1; i++) {
+            for (int j = 1; j < SortedList.getLength()+ 1; j++) {
+                current = SortedList.getEntry(i);
+                next = SortedList.getEntry(j);
+                if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) < 0) {
+                    temp = SortedList.getEntry(j);
+                    SortedList.replace(j, SortedList.getEntry(i));
+                    SortedList.replace(i, temp);
+                }
+            }
+        }
+        return SortedList;
+    }
+
+
 
 }

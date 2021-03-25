@@ -257,6 +257,25 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public int getPosition(T anEntry) {
+        if (contains(anEntry) != true){
+            return -1;
+        }
+        boolean found = false;
+        Node currentNode = head;
+        int count =1;
+        while (!found && currentNode != null) {
+            if (anEntry.equals(currentNode.data)) {
+                found = true;
+            } else {
+                currentNode = currentNode.next;
+                count++;
+            }
+        }
+        return count;
+    }
+
     private class Node<T> {
 
         T data; // entry in list

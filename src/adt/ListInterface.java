@@ -35,6 +35,7 @@ public interface ListInterface<T extends Comparable<T>> {
     public boolean replace(int givenPosition, T newEntry);
     
     public T getEntry(int givenPosition);
+    public int getPosition(T newEntry);
     
     public boolean contains(T anEntry);
     

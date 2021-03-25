@@ -47,8 +47,8 @@ public class ReservationRecord implements Comparable<ReservationRecord> {
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, User user, Facility facilities) {
         //Date date = new Date(); 
         this.reservationDateTime = new Date();
-        this.reservationStartTime = new Date();
-        this.reservationEndTime = new Date();
+        this.reservationStartTime = reservationStartTime;
+        this.reservationEndTime = reservationEndTime;
         this.reservationDuration = calculateDuration(this.reservationStartTime, this.reservationEndTime);
         this.user = user;
         this.facilities = facilities;
@@ -76,8 +76,8 @@ public class ReservationRecord implements Comparable<ReservationRecord> {
     //for equipment constructor 
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, User user, Equipment equipments) {
         this.reservationDateTime = new Date();
-        this.reservationStartTime = new Date();
-        this.reservationEndTime = reservationStartTime;
+        this.reservationStartTime = reservationStartTime;
+        this.reservationEndTime = reservationEndTime;
         this.reservationDuration = calculateDuration(this.reservationStartTime, this.reservationEndTime);
         this.user = user;
         this.equipments = equipments;

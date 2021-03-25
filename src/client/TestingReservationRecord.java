@@ -34,7 +34,7 @@ public class TestingReservationRecord {
         System.out.println("R0000002   Yap       Facilities-Gym2    01:25PM             01:25PM             02:25PM     ");
 
         System.out.println("");
-        
+
         //might import another Calender
         Date now = new Date();
 
@@ -51,7 +51,7 @@ public class TestingReservationRecord {
 
         //implementing ADT
         LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
-        reservationRecord.addAt(1,record1);
+        reservationRecord.addAt(1, record1);
         reservationRecord.addFirst(record2);
         reservationRecord.addFirst(record3);
         reservationRecord.addLast(record4);
@@ -154,6 +154,24 @@ public class TestingReservationRecord {
         System.out.println("----------------------");
         System.out.println(reservationRecord);
         System.out.println("");
+
+        System.out.println("");
+        System.out.println("SECTION 11");
+        System.out.println("");
+        System.out.println("Get position of element");
+        System.out.println("record 4" + record4);
+        System.out.println("--------------------------");
+        System.out.println("The position is at " + reservationRecord.getPosition(record4));
+        System.out.println("----------------------");
+
+        System.out.println("");
+        System.out.println("SECTION 12");
+        System.out.println("");
+        System.out.println("Get position of element");
+        System.out.println("record 2" + record2);
+        System.out.println("--------------------------");
+        System.out.println("The position is at " + reservationRecord.getPosition(record2));
+        System.out.println("----------------------");
 
 //        ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
 //        System.out.println("record3 " + record3);
