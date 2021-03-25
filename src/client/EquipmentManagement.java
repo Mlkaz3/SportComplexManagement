@@ -4,21 +4,28 @@ import adt.ArrayStack;
 import adt.StackInterface;
 import adt.ArrayStackWithIteratorInterface;
 import entity.Equipment;
+import entity.User;
 import java.util.Iterator;
 import java.util.Scanner;
 
 public class EquipmentManagement {
 
-    StackInterface<Equipment> equipmentStack;
+    StackInterface<Equipment> equipmentStack; //tennis only
 
     Scanner input = new Scanner(System.in);
-    //StackInterface<Equipment> badmintonStack = new ArrayStack<>();
+    StackInterface<Equipment> badmintonStack = new ArrayStack<>();
     //StackInterface<Equipment> squashStack = new ArrayStack<>();
 
     public EquipmentManagement() {
         equipmentStack = new ArrayStack<>();
     }
 
+    public void setStackType() {
+        //setting the stack based on user selection
+        //if else 
+        //equipmentStack = badmintonStack;
+    }
+    
 //    public void checkEmpty(StackInterface<Equipment> stackChoice) {
 //        if(stackChoice.isEmpty());
 //    }
@@ -43,24 +50,73 @@ public class EquipmentManagement {
     }
 
     public void borrowEquipment() {
+        User user = new User();
+        
         if (equipmentStack.isEmpty()) {
             System.out.println("Sorry. There are no racquet left.");
         } else {
+            System.out.print("Enter Name : ");
+            user.setUserName(input.nextLine());
+            
+            System.out.print("Enter ID : ");
+            user.setUserID(input.nextLine());
+            
+            System.out.print("Enter Category : ");
+            user.setUserCategory(input.nextLine());
+            
+            System.out.print("Enter Tel : ");
+            user.setUserTel(input.nextLine());
+            
             System.out.print("Enter Quantity : ");
-            int qty = input.nextInt();
+            String inputQty = input.nextLine();
+            int qty = Integer.parseInt(inputQty);
 
             if (equipmentStack.size() < qty) {
                 System.out.println("Insufficient racquet.");
                 System.out.println("There are only " + equipmentStack.size() + " racquet currently.");
             } else {
                 for (int i = 0; i < qty; i++) {
+                    Equipment equipment = equipmentStack.peek();
+                    equipment.setEquipmentStatus(false);
                     equipmentStack.pop();
+                    //Here should be writing to WINNIE part
                 }
             }
         }
     }
 
-    public void returnEquipment() {
+    public void returnEquipment() {//add
+        //Should be enter userid / equipmentId to retrieve all the info and put back to stack
+        System.out.print("Enter Quantity : ");
+        String inputQty = input.nextLine();
+        int qty = Integer.parseInt(inputQty);
+
+        for (int i = 0; i < qty; i++) {
+            Equipment equipment = new Equipment();
+
+            System.out.print("\nEquipment ID : ");
+            equipment.setEquipmentID(input.nextLine());
+
+            System.out.print("Equipment Brand : ");
+            equipment.setEquipmentBrand(input.nextLine());
+
+            System.out.print("Equipment Price : ");
+            equipment.setEquipmentPrice(input.nextLine());
+
+            System.out.print("Equipment Location : ");
+            equipment.setEquipmentLocation(input.nextLine());
+
+            System.out.print("Equipment Type : ");
+            equipment.setEquipmentType(input.nextLine());
+
+            equipment.setEquipmentStatus(true);
+            equipmentStack.push(equipment);
+
+            System.out.println("Equipment Returned.");
+        }
+    }
+    
+    public void stockIn() {
         System.out.print("Enter Quantity : ");
         String inputQty = input.nextLine();
         int qty = Integer.parseInt(inputQty);
@@ -89,11 +145,10 @@ public class EquipmentManagement {
 
             System.out.println("Equipment Returned.");
         }
-
     }
-
     
-    public void stockIn() {
-        Equipment e1 = new Equipment();
+    //validation for user input
+    public void stockOut() {
+        
     }
 }
