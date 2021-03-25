@@ -60,6 +60,7 @@ public class EquipmentDriver {
                 switch (ch) {
                     case 1:
                         System.out.println();
+                        //equipmentManagement.setStackType(equipType);
                         equipmentManagement.displayStack();
                         break;
                     case 2:
@@ -72,7 +73,7 @@ public class EquipmentDriver {
                         break;
                     case 4:
                         System.out.println();
-                        //stockManagement();
+                        stockManagementMenu();
                         break;
                     case 5:
                         break;
@@ -89,7 +90,49 @@ public class EquipmentDriver {
         } while (ch != 5);
     }
     
-    
+    public static void stockManagementMenu() {
+        int ch = 0;
+        do {
+            Scanner input = new Scanner(System.in);
+            try {
+                System.out.println();
+                System.out.println("***************************************************");
+                System.out.println("*                 Stock Management                *");
+                System.out.println("*                                                 *");
+                System.out.println("*    [1] Stock In                                 *");
+                System.out.println("*    [2] Clear All Equipmen                       *");
+                System.out.println("*    [3] Back                                     *");
+                System.out.println("*                                                 *");
+                System.out.println("***************************************************");
+                System.out.println();
+
+                System.out.print("Please select your choice: ");
+                ch = input.nextInt();
+
+                switch (ch) {
+                    case 1:
+                        System.out.println();
+                        equipmentManagement.stockIn();
+                        break;
+                    case 2:
+                        System.out.println();
+                        equipmentManagement.borrowEquipment();
+                        break;
+                    case 3:
+                        break;
+
+                    default:
+                        System.out.println();
+                        System.out.println("Error. Please select a correct choice.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println();
+                System.out.println("Error. Please enter an integer value within 1 and 3.");
+            }
+
+        } while (ch != 3);
+    }
     
     public static void main(String[] args) {
         EquipmentManagementMenu();

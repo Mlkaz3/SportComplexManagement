@@ -96,21 +96,21 @@ public class ArrayStack<T> implements StackInterface<T> {
         return this.array.length;
     }
 
-    @Override
-    //Pop evertyhing out and show
-    public String toString() {
-        String str = "";
-        T[] tempStack = (T[]) new Object[this.array.length];
-        tempStack = this.array;
-        if(!isEmpty()) {
-            int x = size();
-            for (int i = 0; i < x; i++) {
-                str += ("\n" + (i+1) + ". " + pop());
-            }
-        }
-        this.array = tempStack;
-        return str;
-    }
+//    @Override
+//    //Pop evertyhing out and show
+//    public String toString() {
+//        String str = "";
+//        T[] tempStack = (T[]) new Object[this.array.length];
+//        tempStack = this.array;
+//        if(!isEmpty()) {
+//            int x = size();
+//            for (int i = 0; i < x; i++) {
+//                str += ("\n" + (i+1) + ". " + pop());
+//            }
+//        }
+//        this.array = tempStack;
+//        return str;
+//    }
     
     //--------------------------UTILITY METHODS --------------------------------
     
@@ -153,7 +153,7 @@ public class ArrayStack<T> implements StackInterface<T> {
         @Override
         // Retrieve the value of next element
         public T next() {
-            System.out.println("iteratorIndex: " + iteratorIndex);
+            //System.out.println("iteratorIndex: " + iteratorIndex);
             if(hasNext())
                 return array[iteratorIndex++];
             else 
