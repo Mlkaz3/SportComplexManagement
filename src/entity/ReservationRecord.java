@@ -6,13 +6,17 @@
 package entity;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  *
  * @author winnieyap
  */
-public class ReservationRecord {
+public class ReservationRecord implements Comparable<ReservationRecord> {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     //registrations number start from 1000
     private static int nextNumber = 1000;
@@ -39,25 +43,53 @@ public class ReservationRecord {
         this.reservationID = String.valueOf(nextNumber++);
     }
 
-    //for facilities constructor
-    public ReservationRecord(Date reservationStartTime, Date reservationEndTime, Double reservationDuration, User user, Facility facilities) {
+    //for facilities constructor needa pass in start time and end time 
+    public ReservationRecord(Date reservationStartTime, Date reservationEndTime, User user, Facility facilities) {
         //Date date = new Date(); 
         this.reservationDateTime = new Date();
         this.reservationStartTime = new Date();
-        this.reservationEndTime = reservationEndTime;
-        this.reservationDuration = reservationDuration;
+        this.reservationEndTime = new Date();
+        this.reservationDuration = calculateDuration(this.reservationStartTime, this.reservationEndTime);
         this.user = user;
         this.facilities = facilities;
         this.reservationID = String.valueOf(nextNumber++);
         this.reservationType = "Facilities";
     }
 
+    public ReservationRecord(User user, Facility facilities) {
+        //Date date = new Date(); 
+        this.reservationDateTime = new Date();
+        this.reservationStartTime = new Date();
+        this.reservationEndTime = new Date();
+        this.reservationDuration = 10.0;
+        this.user = user;
+        this.facilities = facilities;
+        this.reservationID = String.valueOf(nextNumber++);
+        this.reservationType = "Facilities";
+    }
+
+    double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
+        double difference_In_Time = reservationEndTime.getTime() - reservationStartTime.getTime();
+        return (difference_In_Time / (1000 * 60 * 60)) % 24; //return in hour
+    }
+
     //for equipment constructor 
-    public ReservationRecord(Double reservationDuration, User user, Equipment equipments) {
+    public ReservationRecord(Date reservationStartTime, Date reservationEndTime, User user, Equipment equipments) {
         this.reservationDateTime = new Date();
         this.reservationStartTime = new Date();
         this.reservationEndTime = reservationStartTime;
-        this.reservationDuration = reservationDuration;
+        this.reservationDuration = calculateDuration(this.reservationStartTime, this.reservationEndTime);
+        this.user = user;
+        this.equipments = equipments;
+        this.reservationID = String.valueOf(nextNumber++);
+        this.reservationType = "Equipments";
+    }
+    
+        public ReservationRecord(User user, Equipment equipments) {
+        this.reservationDateTime = new Date();
+        this.reservationStartTime = new Date();
+        this.reservationEndTime = reservationStartTime;
+        this.reservationDuration = 10.0;
         this.user = user;
         this.equipments = equipments;
         this.reservationID = String.valueOf(nextNumber++);
@@ -71,7 +103,6 @@ public class ReservationRecord {
     public void setReservationType(String reservationType) {
         this.reservationType = reservationType;
     }
-
 
     public String getReservationID() {
         return reservationID;
@@ -142,10 +173,9 @@ public class ReservationRecord {
 
     @Override
     public String toString() {
-         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
- 
-       //formatting the date 
-     
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        //formatting the date 
         if (facilities == null) {
 //            return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
 //                    + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
@@ -155,26 +185,24 @@ public class ReservationRecord {
 //            return String.format(" %-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
 //            reservationDateTime,formatter.format(reservationStartTime),formatter.format(reservationEndTime),reservationDuration,
 //            user.getUserName(),equipments.getEquipmentType());
-            
-            return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #"+ reservationID + " of "+ equipments.getEquipmentBrand() + " "+ equipments.getEquipmentType(),"Pending",
-            formatter.format(reservationStartTime),formatter.format(reservationEndTime),formatter.format(reservationDateTime),user.getUserID());
-            
+            return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), "Pending",
+                    formatter.format(reservationStartTime), formatter.format(reservationEndTime), formatter.format(reservationDateTime), user.getUserID());
+
             /*expected output
             Booking                  Status          From                   To                      Date
             #ID of Items booked      Pending         22/3/2021 08:00AM      22/3/2021 09:00AM       2 mins ago
             
             
-            */
+             */
         }
-        
+
 //        return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
 //                + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
 //                + formatter.format(reservationStartTime) + ", reservationEndTime=" + formatter.format(reservationEndTime) + ", reservationDuration="
 //                + reservationDuration + ", user=" + user + ", facilities=" + facilities + '}';
-        
-        return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #"+reservationID + " of "+ facilities.getFacilityType(),"Pending",
-        formatter.format(reservationStartTime),formatter.format(reservationEndTime),formatter.format(reservationDateTime),user.getUserID());
-        
+        return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), "Pending",
+                formatter.format(reservationStartTime), formatter.format(reservationEndTime), formatter.format(reservationDateTime), user.getUserID());
+
     }
 
     //method
@@ -193,9 +221,6 @@ public class ReservationRecord {
     void cancel() {
     }
 
-    void calculateDuration() {
-    }
-
     void calculatePenalty() {
     }
 
@@ -210,5 +235,19 @@ public class ReservationRecord {
 
     void filterRecord() {
     }
+
+    @Override
+    public int compareTo(ReservationRecord o) {
+        return this.getReservationStartTime().compareTo(o.getReservationStartTime());
+    }
+//
+//    static class ReservedStartTimeSortingComparator implements Comparator<ReservationRecord> {
+//        // Used for sorting in ascending order of
+//        // Reservation Start Time
+//
+//        public int compare(ReservationRecord a, ReservationRecord b) {
+//            return a.getReservationStartTime().compareTo(b.getReservationStartTime());
+//        }
+//    }
 
 }

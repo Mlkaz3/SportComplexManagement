@@ -8,7 +8,7 @@ package entity;
 import java.util.Scanner;
 
 /**
- *
+ *String userName, String userID, String userCategory, String userTel
  * @author YJ
  */
 public class User {
