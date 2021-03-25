@@ -55,6 +55,24 @@ public class TestArrList {
         badmintonCourt2.setFacilityAvailability("Yes");
         badmintonCourt2.setTimeSlot("11.00");
         
+        badmintonCourt3.setFacilityID("B003");
+        badmintonCourt3.setFacilityName("Badminton Court 3");
+        badmintonCourt3.setFacilityType("Badminton");
+        badmintonCourt3.setFacilityAvailability("Yes");
+        badmintonCourt3.setTimeSlot("11.00");
+        
+        badmintonCourt4.setFacilityID("B004");
+        badmintonCourt4.setFacilityName("Badminton Court 4");
+        badmintonCourt4.setFacilityType("Badminton");
+        badmintonCourt4.setFacilityAvailability("Yes");
+        badmintonCourt4.setTimeSlot("11.00");
+        
+        badmintonCourt5.setFacilityID("B005");
+        badmintonCourt5.setFacilityName("Badminton Court 5");
+        badmintonCourt5.setFacilityType("Badminton");
+        badmintonCourt5.setFacilityAvailability("Yes");
+        badmintonCourt5.setTimeSlot("11.00");
+        
         tennisCourt1.setFacilityID("T001");
         tennisCourt1.setFacilityName("Tennis Court 1");
         tennisCourt1.setFacilityType("Tennis");
@@ -67,19 +85,42 @@ public class TestArrList {
         tennisCourt2.setFacilityAvailability("No");
         tennisCourt2.setTimeSlot("11.00");
         
+        tennisCourt3.setFacilityID("T003");
+        tennisCourt3.setFacilityName("Tennis Court 3");
+        tennisCourt3.setFacilityType("Tennis");
+        tennisCourt3.setFacilityAvailability("No");
+        tennisCourt3.setTimeSlot("11.00");
+        
+        tennisCourt4.setFacilityID("T004");
+        tennisCourt4.setFacilityName("Tennis Court 4");
+        tennisCourt4.setFacilityType("Tennis");
+        tennisCourt4.setFacilityAvailability("No");
+        tennisCourt4.setTimeSlot("11.00");
+        
+        tennisCourt5.setFacilityID("T005");
+        tennisCourt5.setFacilityName("Tennis Court 5");
+        tennisCourt5.setFacilityType("Tennis");
+        tennisCourt5.setFacilityAvailability("No");
+        tennisCourt5.setTimeSlot("11.00");
+        
         System.out.println("Choose the type of Court");
         input_Type = userInput.nextLine();
         System.out.println("Choose the ID of Court");
         input_ID = userInput.nextLine();
         
 
-        facility.add(0,badmintonCourt1);
+
+        facility.add(badmintonCourt1);
+        facility.add(badmintonCourt2);
+//        facility.add(2,badmintonCourt3);
         //facility.add(1,badmintonCourt2);
         //facility.get(1);
         System.out.println(facility.isEmpty());
-        System.out.println(facility.size());
+        System.out.println(facility.filledSize());
 
         System.out.println(facility.get(0));
+        System.out.println(facility.get(1));
+        System.out.println(facility.get(2));
         
         }
 }
