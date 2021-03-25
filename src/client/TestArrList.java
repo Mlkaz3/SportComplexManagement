@@ -43,13 +43,13 @@ public class TestArrList {
 
         Scanner userInput = new Scanner(System.in);
         
-        badmintonCourt1.setFacilityID("BT001");
+        badmintonCourt1.setFacilityID("B001");
         badmintonCourt1.setFacilityName("Badminton Court 1");
         badmintonCourt1.setFacilityType("Badminton");
         badmintonCourt1.setFacilityAvailability("Yes");
         badmintonCourt1.setTimeSlot("11.00");
         
-        badmintonCourt2.setFacilityID("BT002");
+        badmintonCourt2.setFacilityID("B002");
         badmintonCourt2.setFacilityName("Badminton Court 2");
         badmintonCourt2.setFacilityType("Badminton");
         badmintonCourt2.setFacilityAvailability("Yes");
