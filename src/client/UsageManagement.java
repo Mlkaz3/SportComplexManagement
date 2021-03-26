@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
+import client.EquipmentManagement;
 
 /**
  *
@@ -49,14 +50,16 @@ public class UsageManagement {
     public void displayReservation() {
         System.out.println("");
         System.out.println("Today's Bookings");
+        System.out.println("-".repeat(140));
         System.out.println(String.format("%-2s %-40s %-15s %-20s %-20s %-20s %-10s", "No.",
                 "Booking", "Status", "From", "To", "Date", "UserID"));
-        //System.out.println(reservationRecord);
+        System.out.println("-".repeat(120));
+        System.out.println(reservationRecord);
 
-        Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-        }
+//        Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
+//        while (iterator.hasNext()) {
+//            System.out.println(iterator.next());
+//        }
 
     }
 
