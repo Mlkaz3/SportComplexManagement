@@ -54,15 +54,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
@@ -161,18 +152,7 @@ public class UsageLogBasic {
                 printHeading();
                 System.out.println(reservationRecord);
 
-                //enable staff to choose a row to perform actions
-                do {
-                    try {
-                        System.out.print("Please select a row to perform actions: ");
-                        row = input.nextInt();
-                    } catch (InputMismatchException exception) {
-                        System.out.println("Not an valid choice, please try again.");
-                        if (input.next().isEmpty()) {
-                            break;
-                        }
-                    }
-                } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
+                row = getRow(row, input, reservationRecord);
 
                 bookingDetails(reservationRecord, row);
                 //then print selection of actions to be performed
@@ -234,6 +214,7 @@ public class UsageLogBasic {
                             case 2 -> {
                                 //display user profile 
                                 System.out.println("Print user info and the past reservation not sure how but ahha");
+                                //actually this part is sorting
                             }
                             case 3 -> {
                             }
@@ -416,6 +397,22 @@ public class UsageLogBasic {
             }
         }
 
+    }
+
+    private static int getRow(int row, Scanner input, LinkedList<ReservationRecord> reservationRecord) {
+        //enable staff to choose a row to perform actions
+        do {
+            try {
+                System.out.print("Please select a row to perform actions: ");
+                row = input.nextInt();
+            } catch (InputMismatchException exception) {
+                System.out.println("Not an valid choice, please try again.");
+                if (input.next().isEmpty()) {
+                    break;
+                }
+            }
+        } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
+        return row;
     }
 
     private static LinkedList<ReservationRecord> filterRecord(LinkedList<ReservationRecord> reservationRecord, ReservationRecord currentRecord) {

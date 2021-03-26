@@ -5,8 +5,14 @@
  */
 package client;
 
+import entity.Equipment;
 import entity.Facility;
+import entity.ReservationRecord;
+import entity.User;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -46,6 +52,31 @@ public class MainDriver {
         Data.court.add(tennisCourt4);
         Data.court.add(tennisCourt5);
 
+        User user = new User("Tan Pei Ling", "19119", "Student", "0123456789");
+        User user1 = new User("Ting Tin Tin", "19109", "Alumni", "0123456781");
+        User user2 = new User("Phea Lee Mai", "18119", "Student", "0123456782");
+        User user3 = new User("Lim Siew Mooi", "20119", "Student", "0123456783");
+        User user4 = new User("Kenneth", "20109", "Student", "0123456783");
+
+        Equipment equipment = new Equipment("001", "Yoonex", true, "12.00", "Shelf0123", "badminton racquet");
+        Equipment equipment1 = new Equipment("002", "Adidas", true, "12.00", "Shelf0122", "squash racquet");
+        Equipment equipment2 = new Equipment("003", "MsiaB", true, "12.00", "Shelf0121", "tennis ball");
+        Equipment equipment3 = new Equipment("004", "Nike", true, "12.00", "Shelf0120", "badminton racquet");
+
+        DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 02:01"), (Date) myFormatObj.parse("02/02/2021 03:01"), user, equipment);
+        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 03:11"), (Date) myFormatObj.parse("02/02/2021 04:12"), user1, equipment2);
+        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 10:13"), (Date) myFormatObj.parse("02/02/2021 11:37"), user2, equipment3);
+        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 05:01"), (Date) myFormatObj.parse("02/02/2021 06:00"), user3, equipment3);
+        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 07:01"), (Date) myFormatObj.parse("02/02/2021 10:01"), user4, equipment3);
+        
+        usageManagement.addReservation(record1);
+        usageManagement.addReservation(record2);
+        usageManagement.addReservation(record3);
+        usageManagement.addReservation(record4);
+        usageManagement.addReservation(record5);
+        
+        
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("WELCOME TO TARUC SPORT COMPLEX");
@@ -356,8 +387,10 @@ public class MainDriver {
     }
 
     private static void UsageManagementMenu() {
-
+        usageManagement.displayReservation();
         //print out the record == Today's record
+        int row = usageManagement.getRow();
+        usageManagement.displayBookingDetails(row);
         //and read row 
         int ch = 0;
         do {
@@ -379,20 +412,21 @@ public class MainDriver {
                 ch = input.nextInt();
 
                 switch (ch) {
-                    case 1 ->{
+                    case 1 -> {
                         //called viewBooking() function in Usage Management
-                        usageManagement.viewBooking(0);
-                        System.out.println("");}
+                        usageManagement.viewBooking(row);
+                        System.out.println("");
+                    }
 
                     case 2 -> {
                         //called updateBooking() function in Usage Management
-                        usageManagement.updateBooking(0);
+                        usageManagement.updateBooking(row);
                         System.out.println("");
 
                     }
                     case 3 -> {
                         //called deleteBooking() function in Usage Management which pass in the row number and 
-                        usageManagement.deleteBooking(0);
+                        usageManagement.deleteBooking(row);
                         System.out.println("");
 
                     }

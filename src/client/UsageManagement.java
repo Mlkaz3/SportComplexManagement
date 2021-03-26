@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -22,19 +23,27 @@ import java.util.Scanner;
 public class UsageManagement {
 
     LinkedList<ReservationRecord> reservationRecord;
-
-    public UsageManagement(LinkedList<ReservationRecord> reservationRecord) {
-        this.reservationRecord = reservationRecord;
-    }
+    Scanner input = new Scanner(System.in);
 
     public UsageManagement() {
-        this.reservationRecord = null;
+        this.reservationRecord = new LinkedList<>();
+    }
+
+    public void addReservation(ReservationRecord record) {
+        reservationRecord.addFirst(record);
+    }
+
+    public void displayReservation() {
+        System.out.println("");
+        System.out.println("Today's Bookings");
+        System.out.println(String.format("%-2s %-40s %-15s %-20s %-20s %-20s %-10s", "No.",
+                "Booking", "Status", "From", "To", "Date", "UserID"));
+        System.out.println(reservationRecord);
     }
 
     public void viewBooking(int row) {
         int ch = 0;
         do {
-            Scanner input = new Scanner(System.in);
             try {
                 System.out.println();
                 System.out.println("***************************************************");
@@ -51,12 +60,13 @@ public class UsageManagement {
                 ch = input.nextInt();
 
                 switch (ch) {
-                    case 1 ->
+                    case 1 -> {
                         //called a function named booking item which sort all the booking item X -->bookingItem()
-                        System.out.println("");
+                        displayBookingItem(row);
+                    }
                     case 2 -> {
                         //display booker profile with it's booking --> bookerProfile()
-                        System.out.println("");
+                        displayBookerProfile();
 
                     }
                     case 3 -> {
@@ -79,7 +89,6 @@ public class UsageManagement {
     public void updateBooking(int row) {
         int ch = 0;
         do {
-            Scanner input = new Scanner(System.in);
             try {
                 System.out.println();
                 System.out.println("***************************************************");
@@ -137,7 +146,6 @@ public class UsageManagement {
     }
 
     public void deleteBooking(int row) {
-        Scanner input = new Scanner(System.in);
         String deletion;
         //cancel facilities booking at position row
         System.out.println("Deleting this booking...");
@@ -161,7 +169,6 @@ public class UsageManagement {
     }
 
     public void updateBooker(int row) {
-        Scanner input = new Scanner(System.in);
         //Update booker information
         //get the object to update
         ReservationRecord currentRecord = reservationRecord.getEntry(row);
@@ -200,9 +207,130 @@ public class UsageManagement {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.FLOOR);
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Scanner input = new Scanner(System.in);
+
         long next_starttime = 0;
 
+    }
+
+    public int getRow() {
+        //enable staff to choose a row to perform actions
+        int row = 0;
+        do {
+            try {
+                System.out.print("Please select a row to perform actions: ");
+                row = input.nextInt();
+            } catch (InputMismatchException exception) {
+                System.out.println("Not an valid choice, please try again.");
+                if (input.next().isEmpty()) {
+                    break;
+                }
+            }
+        } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
+        return row;
+    }
+
+    private void displayBookingItem(int row) {
+        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
+        bookingitems = filterRecord(reservationRecord, currentRecord);
+        bookingitems = SortDateTime(bookingitems);
+        System.out.println(bookingitems);
+    }
+
+    private void displayBookerProfile() {
+        System.out.println("");
+    }
+
+    private static LinkedList<ReservationRecord> filterRecord(LinkedList<ReservationRecord> reservationRecord, ReservationRecord currentRecord) {
+        LinkedList<ReservationRecord> bookingitems = new LinkedList<>(); //is the list of items that have l;
+        Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+        String booking_item; //booking exact item (to sort a list based on the item) 
+        String type = currentRecord.getReservationType(); //get the type
+        if ("Facilities".equals(type)) {
+            //get the booking items
+            booking_item = currentRecord.getFacilities().getFacilityID();
+
+            while (newiterator.hasNext()) {
+                ReservationRecord record = newiterator.next();
+
+                if (record.getFacilities().getFacilityID() == booking_item) {
+                    bookingitems.addFirst(record);
+                }
+            }
+        } else {
+            booking_item = currentRecord.getEquipments().getEquipmentID();
+
+            while (newiterator.hasNext()) {
+                ReservationRecord record = newiterator.next();
+
+                if (record.getEquipments().getEquipmentID() == booking_item) {
+                    bookingitems.addFirst(record);
+                }
+            }
+        }
+        return bookingitems;
+    }
+
+    private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
+        //Node current will point to head  
+        ReservationRecord current;
+        ReservationRecord next;
+        ReservationRecord temp;
+        LinkedList<ReservationRecord> SortedList = toSortList;
+        SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        for (int i = 1; i < SortedList.getLength() + 1; i++) {
+            for (int j = 1; j < SortedList.getLength() + 1; j++) {
+                current = SortedList.getEntry(i);
+                next = SortedList.getEntry(j);
+                if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) < 0) {
+                    temp = SortedList.getEntry(j);
+//                    SortedList.replace(j, SortedList.getEntry(i));
+//                    SortedList.replace(i, temp);
+                    SortedList.swap(i, j);
+                }
+            }
+        }
+        return SortedList;
+    }
+
+    public void displayBookingDetails(int row) {
+        System.out.println("");
+       
+        System.out.println("-".repeat(80));
+        System.out.println("Booking #" + reservationRecord.getEntry(row).getReservationID() + " Details");
+        System.out.println("-".repeat(80));
+
+        System.out.println("General Details");
+        System.out.println("---------------");
+        System.out.println("Booking Creation Date: " + reservationRecord.getEntry(row).getReservationDate());
+        System.out.println("Booking Status: "); //status can be pending or success or cancelation
+
+        System.out.println("\nBooking Facilities/Equipment");
+        System.out.println("----------------------------");
+        System.out.println("Booking Type: " + reservationRecord.getEntry(row).getReservationType());
+
+        if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
+            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
+        } else {
+            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
+        }
+
+        System.out.println("\nBooking Date");
+        System.out.println("------------");
+        System.out.println("From: " + reservationRecord.getEntry(row).getReservationStartTime());
+        System.out.println("To: " + reservationRecord.getEntry(row).getReservationEndTime());
+        System.out.println("Duration: " + reservationRecord.getEntry(row).getReservationDuration() + " Hour(s)");
+
+        System.out.println("\nBooker Details");
+        System.out.println("--------------");
+        System.out.println("Booker ID: " + reservationRecord.getEntry(row).getUser().getUserID());
+        System.out.println("Booker Name: " + reservationRecord.getEntry(row).getUser().getUserName());
+        System.out.println("Booker Type: " + reservationRecord.getEntry(row).getUser().getUserCategory());
+        System.out.println("Booker Tel: " + reservationRecord.getEntry(row).getUser().getUserTel());
+
+        System.out.println("");
+        System.out.println("-".repeat(80));
     }
 
 }
