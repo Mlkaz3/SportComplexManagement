@@ -7,7 +7,6 @@ package entity;
 
 import adt.LinkedPriorityQueue;
 import adt.PriorityQueueInterface;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -18,9 +17,7 @@ import java.util.Objects;
  */
 public class Maintenance implements Comparable<Maintenance> {
 
-    private Facility facility; // need a facility class constructor with facilityID and facilityID getter method
-
-    private String facilityID;
+    private Facility facility;
     private static int next = 1000;
     private String maintenanceID;
     private String maintenanceType;
@@ -35,28 +32,18 @@ public class Maintenance implements Comparable<Maintenance> {
     public Maintenance() {
     } 
 
-    public Maintenance(String maintenanceID, String facilityID, String maintenanceType, String maintenanceDesc, Date startDate) {
+    public Maintenance(String maintenanceID, String maintenanceType, String maintenanceDesc, Date startDate) {
         this.maintenanceID = maintenanceID;
-        this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.startDate = startDate;
     }
   
-    public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
-        this.facilityID = facilityID;
+    public Maintenance(String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.requestDate = requestDate;
         this.requiredDate = requiredDate;
-    }
-
-    public String getFacilityID() {
-        return facilityID;
-    }
-
-    public void setFacilityID(String facilityID) {
-        this.facilityID = facilityID;
     }
 
     public String getMaintenanceID() {
@@ -66,6 +53,14 @@ public class Maintenance implements Comparable<Maintenance> {
 
     public void setMaintenanceID(String maintenanceID) {
         this.maintenanceID = maintenanceID;
+    }
+
+    public Facility getFacility() {
+        return facility;
+    }
+
+    public void setFacility(Facility facility) {
+        this.facility = facility;
     }
 
     public String getMaintenanceType() {
@@ -135,7 +130,7 @@ public class Maintenance implements Comparable<Maintenance> {
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-        return String.format("%-17s %-20s %-30s %-20s %-25s", facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestDate);
+        return String.format("%-17s %-20s %-30s %-20s %-25s", facility.getFacilityID(), maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestDate);
     }
 
     @Override

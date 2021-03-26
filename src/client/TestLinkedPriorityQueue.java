@@ -38,7 +38,7 @@ public class TestLinkedPriorityQueue {
         //Date requiredDate = format.parse(date);
 
         System.out.print("\nFacility ID: ");
-        maintenance.setFacilityID(userInput.nextLine());
+        //maintenance.setFacilityID(userInput.nextLine());
         System.out.print("Maintenance type: ");
         maintenance.setMaintenanceType(userInput.nextLine());
         System.out.print("Maintenance description: ");
@@ -55,7 +55,7 @@ public class TestLinkedPriorityQueue {
         maintenance.setRequestDate(now);
        
         System.out.print("\nFacility ID: ");
-        maintenance2.setFacilityID(userInput.nextLine());
+        //maintenance2.setFacilityID(userInput.nextLine());
         System.out.print("Maintenance type: ");
         maintenance2.setMaintenanceType(userInput.nextLine());
         System.out.print("Maintenance description: ");
@@ -69,7 +69,7 @@ public class TestLinkedPriorityQueue {
         //maintenance2.setRequestDate(now2);
 
         System.out.print("\nFacility ID: ");
-        maintenance3.setFacilityID(userInput.nextLine());
+        //maintenance3.setFacilityID(userInput.nextLine());
         System.out.print("Maintenance type: ");
         maintenance3.setMaintenanceType(userInput.nextLine());
         System.out.print("Maintenance description: ");

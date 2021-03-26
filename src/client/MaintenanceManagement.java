@@ -11,11 +11,6 @@ import adt.ListInter;
 import adt.PriorityQueueInterface;
 import entity.Facility;
 import entity.Maintenance;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,20 +38,19 @@ public class MaintenanceManagement { // read and write to file, manage completio
     //display
     public void displayQueue() {
 
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("queue.txt"));
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                System.out.println(line);
-                line = bufferedReader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-        } catch (IOException e) {
-            System.out.println("Failed to read from file.");
-        }
-
-        System.out.println("                                            Maintenance Appointment Queue\n");
+//        try {
+//            BufferedReader bufferedReader = new BufferedReader(new FileReader("queue.txt"));
+//            String line = bufferedReader.readLine();
+//            while (line != null) {
+//                System.out.println(line);
+//                line = bufferedReader.readLine();
+//            }
+//        } catch (FileNotFoundException e) {
+//            System.out.println("File not found.");
+//        } catch (IOException e) {
+//            System.out.println("Failed to read from file.");
+//        }
+        System.out.println("                                             Maintenance Appointment Queue\n");
         System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
         System.out.println("--------------------------------------------------------------------------------------------------------------------------");
         System.out.println(appointmentQueue);
@@ -93,17 +87,20 @@ public class MaintenanceManagement { // read and write to file, manage completio
             System.out.print("\nFacility ID: ");
             facilityID = userInput.nextLine();
 
+            Facility selectedFacility = new Facility();
+
             int count = 0;
             for (int i = 0; i < Data.court.filledSize(); i++) {
                 if (facilityID == null ? Data.court.get(i) == null : facilityID.equals(Data.court.get(i).getFacilityID())) {
                     count = 1;
+                    selectedFacility = Data.court.get(i);
                 }
             }
             if (count == 0) {
                 System.out.println("\nError. Invalid facility ID.");
                 validID = false;
             } else {
-                maintenance.setFacilityID(facilityID);
+                maintenance.setFacility(selectedFacility);
                 validID = true;
             }
         } while (validID != true);
@@ -138,12 +135,12 @@ public class MaintenanceManagement { // read and write to file, manage completio
 
         if (appointmentQueue.enqueue(maintenance)) {
             System.out.println("\nAppointment added successfully!");
-            try {
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("queue.txt", true));
-                bufferedWriter.write(maintenance.getFacilityID() + ", " + maintenance.getMaintenanceType() + ", " + maintenance.getMaintenanceDesc() + ", " + maintenance.getRequiredDate() + ", " + maintenance.getRequestDate());
-            } catch (IOException e) {
-                System.out.println("Failed to write to file.");
-            }
+//            try {
+//                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("queue.txt", true));
+//                bufferedWriter.write(maintenance.getFacilityID() + ", " + maintenance.getMaintenanceType() + ", " + maintenance.getMaintenanceDesc() + ", " + maintenance.getRequiredDate() + ", " + maintenance.getRequestDate());
+//            } catch (IOException e) {
+//                System.out.println("Failed to write to file.");
+//            }
         }
 
         pressAnyKeyToContinue();
@@ -176,7 +173,7 @@ public class MaintenanceManagement { // read and write to file, manage completio
 
                             int i;
                             for (i = 0; i < Data.court.filledSize(); i++) {
-                                if (maintenance.getFacilityID() == null ? Data.court.get(i) == null : maintenance.getFacilityID().equals(Data.court.get(i).getFacilityID())) {
+                                if (maintenance.getFacility() == null ? Data.court.get(i) == null : maintenance.getFacility().equals(Data.court.get(i))) {
                                     int index = i;
                                 }
                                 Data.court.get(i).setStatus(false);
@@ -186,10 +183,8 @@ public class MaintenanceManagement { // read and write to file, manage completio
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
 
-                            maintenanceHistory.add(maintenance);
-                            //System.out.println(maintenanceHistory);
-
                             maintenance = appointmentQueue.dequeue();
+                            maintenanceHistory.add(maintenance);
 
                             System.out.println("\nFacility is currently undergoing maintenance!");
                             break;
@@ -303,7 +298,7 @@ public class MaintenanceManagement { // read and write to file, manage completio
             maintenance = appointmentQueue.getElement(position);
 
             System.out.println();
-            System.out.println("[1] Facility ID             :" + maintenance.getFacilityID());
+            System.out.println("[1] Facility ID             :" + maintenance.getFacility().getFacilityID());
             System.out.println("[2] Maintenance type        :" + maintenance.getMaintenanceType());
             System.out.println("[3] Maintenance description :" + maintenance.getMaintenanceDesc());
             System.out.println("[4] Required date           :" + formatter.format(maintenance.getRequiredDate()));
@@ -326,29 +321,33 @@ public class MaintenanceManagement { // read and write to file, manage completio
 
                 switch (num) {
                     case 1 -> {
+
                         String newID;
                         boolean validID;
                         do {
                             System.out.print("\nNew facility ID: ");
                             newID = userInput.nextLine();
 
+                            Facility selectedFacility = new Facility();
+
                             int count = 0;
                             for (int i = 0; i < Data.court.filledSize(); i++) {
                                 if (newID == null ? Data.court.get(i) == null : newID.equals(Data.court.get(i).getFacilityID())) {
                                     count = 1;
+                                    selectedFacility = Data.court.get(i);
                                 }
                             }
                             if (count == 0) {
                                 System.out.println("\nError. Invalid facility ID.");
                                 validID = false;
                             } else {
-                                maintenance.setFacilityID(newID);
+                                maintenance.setFacility(selectedFacility);
+                                System.out.println("\nFacility ID updated!");
                                 validID = true;
                             }
                         } while (validID != true);
                         break;
                     }
-
                     case 2 -> {
                         System.out.print("\nNew maintenance type: ");
                         String newType = userInput.nextLine();
@@ -401,7 +400,11 @@ public class MaintenanceManagement { // read and write to file, manage completio
 
         //Maintenance maintenance = new Maintenance();
         printHistory();
-
+        
+        System.out.println("\n[1] Complete a maintenance");
+        System.out.println("[2] View Report");
+        
+        
 //        GregorianCalendar endDate = new GregorianCalendar();
 //        Date now = endDate.getTime();
 //        maintenance.setEndDate(now);
@@ -411,7 +414,18 @@ public class MaintenanceManagement { // read and write to file, manage completio
     }
 
     public void printHistory() {
+        System.out.println("                                                Maintenance History\n");
+        System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
         System.out.println(maintenanceHistory);
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+        if (maintenanceHistory.isEmpty()) {
+            System.out.println("The queue is currently empty.");
+        } else {
+            System.out.println("======================");
+            System.out.println("Total records: " + maintenanceHistory.getfilledSize());
+            System.out.println("======================");
+        }
     }
 
     public static void pressAnyKeyToContinue() {

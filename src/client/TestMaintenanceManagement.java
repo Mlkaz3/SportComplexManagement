@@ -27,11 +27,12 @@ public class TestMaintenanceManagement {
                 System.out.println("***************************************************");
                 System.out.println("*              Maintenance Management             *");
                 System.out.println("*                                                 *");
-                System.out.println("*    [1] Manage Appointments                      *");
+                System.out.println("*    [1] View Appointments                        *");
                 System.out.println("*    [2] Add Appointment                          *");
                 System.out.println("*    [3] Cancel Appointment                       *");
                 System.out.println("*    [4] Edit Appointment                         *");
-                System.out.println("*    [5] Back                                     *");
+                System.out.println("*    [5] Manage Appointments                      *");
+                System.out.println("*    [6] Back                                     *");
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
                 System.out.println();
@@ -41,7 +42,8 @@ public class TestMaintenanceManagement {
 
                 switch (ch) {
                     case 1 -> {
-                        manageAppt();
+                       maintenanceMgmt.displayQueue();
+                       maintenanceMgmt.pressAnyKeyToContinue();
                     }
                     case 2 -> {
                         maintenanceMgmt.addAppt();
@@ -53,6 +55,10 @@ public class TestMaintenanceManagement {
                         maintenanceMgmt.editAppt();
                     }
                     case 5 -> {
+                        manageAppt();
+                    }
+                    case 6 -> {
+                        
                     }
                     default -> {
                         System.out.println();
@@ -64,13 +70,10 @@ public class TestMaintenanceManagement {
                 System.out.println("Error. Please enter an integer value within 1 and 5.");
             }
 
-        } while (ch != 5);
-
+        } while (ch != 6);
     }
 
     public static void manageAppt() {
-        
-        maintenanceMgmt.displayQueue();
         
         int ch = 0;
         do {
@@ -136,6 +139,20 @@ public class TestMaintenanceManagement {
         Data.court.add(tennisCourt3);
         Data.court.add(tennisCourt4);
         Data.court.add(tennisCourt5);
+      
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+//        Maintenance maintenance1 = new Maintenance("B001", "Replace", "Broken net", formatter.parse("2021-04-22"));
+//        Maintenance maintenance2 = new Maintenance("T005", "Repair", "Broken fence", formatter.parse("2021-04-25"));
+//        Maintenance maintenance3= new Maintenance("B004", "Repair", "Broken net", formatter.parse("2021-04-12"));
+//        GregorianCalendar requestDate = new GregorianCalendar();
+//        Date now = requestDate.getTime();
+//        maintenance1.setRequestDate(now);
+//        maintenance2.setRequestDate(now);
+//        maintenance3.setRequestDate(now);
+//        
+//        maintenanceMgmt.appointmentQueue.enqueue(maintenance1);
+//        maintenanceMgmt.appointmentQueue.enqueue(maintenance2);
+//        maintenanceMgmt.appointmentQueue.enqueue(maintenance3);
         
         MaintenanceManagementMenu();
     }
