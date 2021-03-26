@@ -7,9 +7,9 @@ package client;
 
 import entity.Equipment;
 import entity.Facility;
-import entity.Maintenance;
 import entity.ReservationRecord;
 import entity.User;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,9 +67,9 @@ public class MainDriver {
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 02:01"), (Date) myFormatObj.parse("02/02/2021 03:01"), user, equipment);
         ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 03:11"), (Date) myFormatObj.parse("02/02/2021 04:12"), user1, equipment2);
-        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 10:13"), (Date) myFormatObj.parse("02/02/2021 11:37"), user2, equipment3);
-        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 05:01"), (Date) myFormatObj.parse("02/02/2021 06:00"), user3, equipment3);
-        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 07:01"), (Date) myFormatObj.parse("02/02/2021 10:01"), user4, equipment3);
+        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2022 10:13"), (Date) myFormatObj.parse("02/02/2022 11:37"), user2, equipment3);
+        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 09:00"), (Date) myFormatObj.parse("27/03/2021 10:00"), user3, equipment3);
+        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 03:01"), (Date) myFormatObj.parse("27/03/2021 07:01"), user4, equipment3);
 
         usageManagement.addReservation(record1);
         usageManagement.addReservation(record2);
@@ -394,15 +394,17 @@ public class MainDriver {
 //        } while (ch != 3);
 //    }
     private static void UsageManagementMenu() throws ParseException {
-        usageManagement.displayReservation();
-        //print out the record == Today's record
-        int row = usageManagement.getRow();
-        usageManagement.displayBookingDetails(row);
+
         //and read row 
         int ch = 0;
         do {
             Scanner input = new Scanner(System.in);
             try {
+                usageManagement.displayReservation();
+
+                //print out the record == Today's record
+                int row = usageManagement.getRow();
+
                 System.out.println();
                 System.out.println("***************************************************");
                 System.out.println("*                  Usage Management               *");
@@ -421,6 +423,8 @@ public class MainDriver {
                 switch (ch) {
                     case 1 -> {
                         //called viewBooking() function in Usage Management
+                        usageManagement.displayBookingDetails(row);
+                        pressEnterKeyToContinue();
                         usageManagement.viewBooking(row);
                         System.out.println("");
                     }
@@ -437,6 +441,9 @@ public class MainDriver {
                         System.out.println("");
 
                     }
+                    case 4 -> {
+                      
+                    }
                     default -> {
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
@@ -448,6 +455,14 @@ public class MainDriver {
             }
 
         } while (ch != 4);
+    }
+    
+        public static void pressEnterKeyToContinue() {
+        System.out.print("\nPress Enter Key to Continue.");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+        }
     }
 
 }
