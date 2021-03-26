@@ -33,7 +33,7 @@ public class TestArrList {
         Facility badmintonCourt3 = new Facility();
         Facility badmintonCourt4 = new Facility();
         Facility badmintonCourt5 = new Facility();
-        Facility badmintonCourt6 = new Facility();
+        
         Facility tennisCourt1 = new Facility(); //"F002", "replace", "abc", 400.00, 06-06-2000
         Facility tennisCourt2 = new Facility();
         Facility tennisCourt3 = new Facility();
