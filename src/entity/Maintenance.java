@@ -5,8 +5,6 @@
  */
 package entity;
 
-import adt.LinkedPriorityQueue;
-import adt.PriorityQueueInterface;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -30,16 +28,11 @@ public class Maintenance implements Comparable<Maintenance> {
     private Date requiredDate; // This determines the priority
 
     public Maintenance() {
-    } 
-
-    public Maintenance(String maintenanceID, String maintenanceType, String maintenanceDesc, Date startDate) {
-        this.maintenanceID = maintenanceID;
-        this.maintenanceType = maintenanceType;
-        this.maintenanceDesc = maintenanceDesc;
-        this.startDate = startDate;
+        this.maintenanceID = String.valueOf(next++);
     }
-  
+
     public Maintenance(String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
+        //this.maintenanceID = "M" + String.valueOf(next++);
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.requestDate = requestDate;
@@ -47,8 +40,7 @@ public class Maintenance implements Comparable<Maintenance> {
     }
 
     public String getMaintenanceID() {
-        maintenanceID = Integer.toString(next++);
-        return "M" + maintenanceID;
+        return maintenanceID;
     }
 
     public void setMaintenanceID(String maintenanceID) {
@@ -168,15 +160,8 @@ public class Maintenance implements Comparable<Maintenance> {
     public double calcCost() { // duration x payment per day
         return calcDuration() * costPerDay;
     }
-    
+
     public double calcWaitingTime() {
-        return startDate.getTime() - requestDate.getTime();
+        return (int) (startDate.getTime() - requestDate.getTime() / (1000 * 60 * 60 * 24));
     }
-
-    public boolean checkStatus(Maintenance m) { // do i need this?
-        PriorityQueueInterface<Maintenance> appointment = new LinkedPriorityQueue<>();
-        return !appointment.contains(m);
-    }
-
 }
-

@@ -9,6 +9,7 @@ package entity;
  *
  * @author andre
  */
+import java.util.Locale;
 import java.util.Objects;
 
 public class Facility {
@@ -105,8 +106,7 @@ public class Facility {
 
     @Override
     public String toString() {
-        return "Facility ID:" + facilityID + "\n Facility Name: " + facilityName + "\n Facility Type:" + facilityType
-                + "\n Facility Availability: " + facilityAvailability;
+        return String.format("%-10s %-20s %-15s %-10s", facilityID, facilityName, facilityType, facilityAvailability);
     }
 
 }
