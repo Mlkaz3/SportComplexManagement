@@ -32,7 +32,16 @@ public class UsageManagement {
     }
 
     public void addReservation(ReservationRecord record) {
-        reservationRecord.addFirst(record);
+//        //checking to ensure the duration does not more than 2 hours 
+//        if (record.getReservationDuration() > 2) {
+//            return "The maximum hour to use an equipment/facilities is 2 hours only";
+//        } else {
+//           
+//        }
+//
+//        return "Booking added successfully.";
+         reservationRecord.addLast(record);
+
     }
 
     public void displayReservation() {
@@ -40,7 +49,13 @@ public class UsageManagement {
         System.out.println("Today's Bookings");
         System.out.println(String.format("%-2s %-40s %-15s %-20s %-20s %-20s %-10s", "No.",
                 "Booking", "Status", "From", "To", "Date", "UserID"));
-        System.out.println(reservationRecord);
+        //System.out.println(reservationRecord);
+
+        Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+
     }
 
     public void viewBooking(int row) {
@@ -126,6 +141,7 @@ public class UsageManagement {
                     }
                     case 4 -> {
                         //alter reservation time
+                        alterBookingDateTime(row);
                         System.out.println();
 
                     }
@@ -203,6 +219,7 @@ public class UsageManagement {
         System.out.println("Booker Info Successfully Update.");
     }
 
+    //success
     public void extendBooking(LinkedList<ReservationRecord> reservationRecord, int row) throws ParseException {
         DecimalFormat df = new DecimalFormat("#.####"); //4sf
         df.setRoundingMode(RoundingMode.FLOOR);
@@ -232,7 +249,7 @@ public class UsageManagement {
             long datediff = endDate.getTime() - currentRecord.getReservationEndTime().getTime();
             if ((datediff / (1000 * 60 * 60)) % 24 > 2) {
                 System.out.println("Maximum time allow to extend is only 2 hours.");
-            }else if (new_row + 1 <= sortedBookings.getLength()) { //there is a next row
+            } else if (new_row + 1 <= sortedBookings.getLength()) { //there is a next row
                 comingBooking = sortedBookings.getEntry(new_row + 1);
                 //System.out.println("compare updatedate with next reservation " + endDate.compareTo(comingBooking.getReservationStartTime()));
                 if (endDate.compareTo(comingBooking.getReservationStartTime()) > 0) {
@@ -376,6 +393,72 @@ public class UsageManagement {
 
         System.out.println("");
         System.out.println("-".repeat(80));
+    }
+
+    public void alterBookingDateTime(int row) throws ParseException {
+        //validation of new startDate and endDate
+        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+        ReservationRecord previousRecord;
+        ReservationRecord nextRecord;
+        LinkedList<ReservationRecord> bookingitems; //is the list of items that have XX items;
+        bookingitems = filterRecord(reservationRecord, currentRecord);
+        bookingitems = SortDateTime(bookingitems);
+        int new_row = bookingitems.getPosition(currentRecord);
+
+        System.out.println(bookingitems);
+
+        Scanner in = new Scanner(System.in);
+        String start_date, end_date; //for user imput
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        boolean loop = false;
+        do {
+
+            System.out.println("Altering Booking Start Time & End Time ");
+            System.out.println("Caution: Enter date time in the format of dd/MM/yyyy HH:mm");
+            System.out.print("New Start Time: ");
+            start_date = in.nextLine();
+            System.out.print("New End Time: ");
+            end_date = in.nextLine();
+            Date startDate = (Date) format.parse(start_date);
+            Date endDate = (Date) format.parse(end_date);
+
+            //ensure it has not exceed current time
+            Date currentDate = new Date();
+            Date booking_oriDate = currentRecord.getReservationStartTime();
+            long datediff = endDate.getTime() - startDate.getTime();
+
+            if (currentDate.compareTo(booking_oriDate) == 1) {
+                System.out.println("Alter failed. The booking is either expired or ongoing");
+            } else if (datediff < 0) {
+                System.out.println("The booking duration is invalid, start time should not greater than end time ");
+            } else if ((datediff / (1000 * 60 * 60)) % 24 > 2) {
+                System.out.println("Maximum time allow to book is only 2 hours.");
+            }
+
+            if (new_row - 1 != 0) { //indicate there are items before this record
+                previousRecord = bookingitems.getEntry(new_row - 1);
+                System.out.println(bookingitems);
+                System.out.println(previousRecord);
+                System.out.println(startDate.compareTo(previousRecord.getReservationEndTime()));
+                if (startDate.compareTo(previousRecord.getReservationEndTime()) < 0) {
+                    System.out.println("The updation is clash with previous booking");
+                }
+            }
+            if (new_row + 1 <= bookingitems.getLength()) { //indicate there are items after this record
+                nextRecord = bookingitems.getEntry(new_row + 1);
+                System.out.println(bookingitems);
+                System.out.println(nextRecord);
+                System.out.println(startDate.compareTo(nextRecord.getReservationEndTime()));
+                //System.out.println("compare updatedate with next reservation " + endDate.compareTo(comingBooking.getReservationStartTime()));
+                if (endDate.compareTo(nextRecord.getReservationStartTime()) > 0) {
+                    System.out.println("The updation is clash with next booking");
+
+                } else {
+                    loop = true;
+                }
+            } 
+        } while (loop == false);
     }
 
 }

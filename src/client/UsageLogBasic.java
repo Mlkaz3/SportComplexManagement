@@ -96,29 +96,19 @@ public class UsageLogBasic {
         Facility facility = new Facility(); //facility havent done 
 
         //creating 4 record
-        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 02:01"), (Date) myFormatObj.parse("02/02/2021 03:01"), user, equipment);
-        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 03:11"), (Date) myFormatObj.parse("02/02/2021 04:12"), user1, equipment2);
-        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 10:13"), (Date) myFormatObj.parse("02/02/2021 11:37"), user2, equipment3);
-        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 05:01"), (Date) myFormatObj.parse("02/02/2021 06:00"), user3, equipment3);
-        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 07:01"), (Date) myFormatObj.parse("02/02/2021 10:01"), user4, equipment3);
+        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 02:01"), (Date) myFormatObj.parse("02/04/2021 03:01"), user, equipment);
+        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 03:11"), (Date) myFormatObj.parse("02/04/2021 04:12"), user1, equipment2);
+        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 10:13"), (Date) myFormatObj.parse("02/04/2021 11:37"), user2, equipment3);
+        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 05:01"), (Date) myFormatObj.parse("02/04/2021 06:00"), user3, equipment3);
+        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 07:01"), (Date) myFormatObj.parse("02/04/2021 10:01"), user4, equipment3);
 
-//        ReservationRecord record1_ = new entity.ReservationRecord(now, now, user, equipment);
-//        ReservationRecord record2_ = new entity.ReservationRecord(now, now, user1, equipment1);
-//        ReservationRecord record3_ = new entity.ReservationRecord(now, now, user2, equipment2);
-//        ReservationRecord record4_ = new entity.ReservationRecord(now, now, user3, equipment3);
-//        ReservationRecord record5_ = new entity.ReservationRecord(now, now, user4, equipment3);
-        //implementing ADT
+
         reservationRecord.addFirst(record1);
         reservationRecord.addFirst(record2);
         reservationRecord.addFirst(record4);
         reservationRecord.addFirst(record3);
         reservationRecord.addFirst(record5);
 
-//        reservationRecord.addFirst(record1_);
-//        reservationRecord.addFirst(record2_);
-//        reservationRecord.addFirst(record3_);
-//        reservationRecord.addFirst(record4_);
-//        reservationRecord.addFirst(record5_);
         Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
@@ -309,73 +299,75 @@ public class UsageLogBasic {
 
                             }
                             case 4 -> {
-                                // Alter booking duration}
+                                // Alter booking datetime}
                                 //this similar as case 1 
                                 //i also dk how 
                                 Scanner in = new Scanner(System.in);
 
-                                String start_date, end_date;
-                                //DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                                System.out.println("Altering Start Time & End Time ");
-                                System.out.println("Caution: Enter date time in the format of dd/MM/yyyy HH:mm");
-                                System.out.print("New Start Time: ");
-                                start_date = in.nextLine();
-                                System.out.print("New End Time: ");
-                                end_date = in.nextLine();
-                                Date startDate = (Date) myFormatObj.parse(start_date);
-                                Date endDate = (Date) myFormatObj.parse(end_date);
+                                alterBookingDateTime(reservationRecord, row);
 
-                                //validation of new startDate and endDate
-                                ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
-                                ReservationRecord previousRecord;
-                                ReservationRecord nextRecord;
-                                LinkedList<ReservationRecord> bookingitems; //is the list of items that have XX items;
-                                bookingitems = filterRecord(reservationRecord, currentRecord);
-                                bookingitems = SortDateTime(bookingitems);
-
-                                int new_row = bookingitems.getPosition(currentRecord);
-                                long pre_endtime;
-                                long current_starttime;
-                                long current_endtime;
-                                long next_starttime;
-
-                                if (new_row + 1 > bookingitems.getLength() && new_row - 1 == 0) {
-                                    //indicate no previous or next booking 
-
-                                    System.out.println("Successfully updated.");
-
-                                } else {
-
-                                    if (new_row + 1 > bookingitems.getLength()) {
-
-                                    } else if (new_row - 1 == 0) {
-
-                                    } else {
-                                        previousRecord = bookingitems.getEntry(new_row - 1);
-                                        nextRecord = bookingitems.getEntry(new_row + 1);
-
-                                        //check new booking start date clash with previous end
-                                        //if previous dont have record then yes 
-                                        pre_endtime = previousRecord.getReservationEndTime().getTime();
-                                        current_starttime = startDate.getTime();
-
-                                        //check new booking end date clash with next start
-                                        //if next dont have record then yes 
-                                        current_endtime = endDate.getTime();
-                                        next_starttime = nextRecord.getReservationStartTime().getTime();
-
-                                        double difference_before = current_starttime - pre_endtime;
-                                        double difference_after = next_starttime - current_endtime;
-
-                                        if (difference_before >= 0 && difference_after >= 0) {
-                                            System.out.println("Able to change");
-                                        } else {
-                                            System.out.println("Disable to change");
-                                        }
-
-                                    }
-                                }
-
+//                                String start_date, end_date;
+//                                //DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+//                                System.out.println("Altering Start Time & End Time ");
+//                                System.out.println("Caution: Enter date time in the format of dd/MM/yyyy HH:mm");
+//                                System.out.print("New Start Time: ");
+//                                start_date = in.nextLine();
+//                                System.out.print("New End Time: ");
+//                                end_date = in.nextLine();
+//                                Date startDate = (Date) myFormatObj.parse(start_date);
+//                                Date endDate = (Date) myFormatObj.parse(end_date);
+//
+//                                //validation of new startDate and endDate
+//                                ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+//                                ReservationRecord previousRecord;
+//                                ReservationRecord nextRecord;
+//                                LinkedList<ReservationRecord> bookingitems; //is the list of items that have XX items;
+//                                bookingitems = filterRecord(reservationRecord, currentRecord);
+//                                bookingitems = SortDateTime(bookingitems);
+//
+//                                int new_row = bookingitems.getPosition(currentRecord);
+//                                long pre_endtime;
+//                                long current_starttime;
+//                                long current_endtime;
+//                                long next_starttime;
+//
+//                                //needa check duration 
+//                                if (new_row + 1 > bookingitems.getLength() && new_row - 1 == 0) {
+//                                    //indicate no previous or next booking 
+//
+//                                    System.out.println("Successfully updated.");
+//
+//                                } else {
+//
+//                                    if (new_row + 1 > bookingitems.getLength()) {
+//
+//                                    } else if (new_row - 1 == 0) {
+//
+//                                    } else {
+//                                        previousRecord = bookingitems.getEntry(new_row - 1);
+//                                        nextRecord = bookingitems.getEntry(new_row + 1);
+//
+//                                        //check new booking start date clash with previous end
+//                                        //if previous dont have record then yes 
+//                                        pre_endtime = previousRecord.getReservationEndTime().getTime();
+//                                        current_starttime = startDate.getTime();
+//
+//                                        //check new booking end date clash with next start
+//                                        //if next dont have record then yes 
+//                                        current_endtime = endDate.getTime();
+//                                        next_starttime = nextRecord.getReservationStartTime().getTime();
+//
+//                                        double difference_before = current_starttime - pre_endtime;
+//                                        double difference_after = next_starttime - current_endtime;
+//
+//                                        if (difference_before >= 0 && difference_after >= 0) {
+//                                            System.out.println("Able to change");
+//                                        } else {
+//                                            System.out.println("Disable to change");
+//                                        }
+//
+//                                    }
+//                                }
                             }
                         }
 
@@ -784,6 +776,74 @@ public class UsageLogBasic {
         //currentRecord.setReservationEndTime(reservationEndTime.getTime());
         reservationRecord.replace(row, currentRecord);
 
+    }
+
+    private static void alterBookingDateTime(LinkedList<ReservationRecord> reservationRecord, int row) throws ParseException {
+        //validation of new startDate and endDate
+        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+        ReservationRecord previousRecord;
+        ReservationRecord nextRecord;
+        LinkedList<ReservationRecord> bookingitems; //is the list of items that have XX items;
+        bookingitems = filterRecord(reservationRecord, currentRecord);
+        bookingitems = SortDateTime(bookingitems);
+        int new_row = bookingitems.getPosition(currentRecord);
+
+        System.out.println(bookingitems);
+
+        Scanner in = new Scanner(System.in);
+        String start_date, end_date; //for user imput
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        boolean loop = false;
+        do {
+
+            System.out.println("Altering Booking Start Time & End Time ");
+            System.out.println("Caution: Enter date time in the format of dd/MM/yyyy HH:mm");
+            System.out.print("New Start Time: ");
+            start_date = in.nextLine();
+            System.out.print("New End Time: ");
+            end_date = in.nextLine();
+            Date startDate = (Date) format.parse(start_date);
+            Date endDate = (Date) format.parse(end_date);
+
+            //ensure it has not exceed current time
+            Date currentDate = new Date();
+            Date booking_oriDate = currentRecord.getReservationStartTime();
+            long datediff = endDate.getTime() - startDate.getTime();
+
+            if (currentDate.compareTo(booking_oriDate) == 1) {
+                System.out.println("Alter failed. The booking is either expired or ongoing");
+            } else if (datediff < 0) {
+                System.out.println("The booking duration is invalid, start time should not greater than end time ");
+            } else if ((datediff / (1000 * 60 * 60)) % 24 > 2) {
+                System.out.println("Maximum time allow to book is only 2 hours.");
+            }
+
+            if (new_row - 1 != 0) { //indicate there are items before this record
+                previousRecord = bookingitems.getEntry(new_row - 1);
+                System.out.println(bookingitems);
+                System.out.println(previousRecord);
+                System.out.println(startDate.compareTo(previousRecord.getReservationEndTime()));
+                if (startDate.compareTo(previousRecord.getReservationEndTime()) < 0) {
+                    System.out.println("The updation is clash with previous booking");
+                }
+            }
+            if (new_row + 1 <= bookingitems.getLength()) { //indicate there are items after this record
+                nextRecord = bookingitems.getEntry(new_row + 1);
+                System.out.println(bookingitems);
+                System.out.println(nextRecord);
+                System.out.println(startDate.compareTo(nextRecord.getReservationEndTime()));
+                //System.out.println("compare updatedate with next reservation " + endDate.compareTo(comingBooking.getReservationStartTime()));
+                if (endDate.compareTo(nextRecord.getReservationStartTime()) > 0) {
+                    System.out.println("The updation is clash with next booking");
+
+                } else {
+                    loop = true;
+                }
+            } else {
+                loop = true;
+            }
+        } while (loop == false);
     }
 
 }
