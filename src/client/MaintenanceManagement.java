@@ -69,11 +69,11 @@ public class MaintenanceManagement {
         System.out.println("\nAdd an appointment -> ");
 
         //print list of facilities
-        System.out.println("-----------------------------------------------------");
-        System.out.println("               - List of Facilities -                ");
-        System.out.println("-----------------------------------------------------");
+        System.out.println("---------------------------------------------------------");
+        System.out.println("                  - List of Facilities -                 ");
+        System.out.println("---------------------------------------------------------");
         System.out.println(Data.court);
-        System.out.println("-----------------------------------------------------");
+        System.out.println("---------------------------------------------------------");
 
         String facilityID;
         boolean validID;

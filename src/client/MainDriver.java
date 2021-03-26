@@ -7,6 +7,7 @@ package client;
 
 import entity.Equipment;
 import entity.Facility;
+import entity.Maintenance;
 import entity.ReservationRecord;
 import entity.User;
 import java.text.DateFormat;
