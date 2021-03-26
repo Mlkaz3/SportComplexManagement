@@ -1,17 +1,20 @@
 package entity;
 
-public class Equipment {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Equipment implements Serializable{
     private String equipmentID;
     private String equipmentBrand;
     private Boolean equipmentStatus;
-    private String equipmentPrice;
+    private double equipmentPrice;
     private String equipmentLocation;
     private String equipmentType;
 
     public Equipment() {
     }
 
-    public Equipment(String equipmentID, String equipmentBrand, Boolean equipmentStatus, String equipmentPrice, String equipmentLocation, String equipmentType) {
+    public Equipment(String equipmentID, String equipmentBrand, Boolean equipmentStatus, double equipmentPrice, String equipmentLocation, String equipmentType) {
         this.equipmentID = equipmentID;
         this.equipmentBrand = equipmentBrand;
         this.equipmentStatus = equipmentStatus;
@@ -44,11 +47,11 @@ public class Equipment {
         this.equipmentStatus = equipmentStatus;
     }
 
-    public String getEquipmentPrice() {
+    public double getEquipmentPrice() {
         return equipmentPrice;
     }
 
-    public void setEquipmentPrice(String equipmentPrice) {
+    public void setEquipmentPrice(double equipmentPrice) {
         this.equipmentPrice = equipmentPrice;
     }
 
@@ -70,8 +73,34 @@ public class Equipment {
 
     @Override
     public String toString() {
-        return String.format("%-15s %-20s %-20b %-20s %-20s %-20s",equipmentID , equipmentBrand , equipmentStatus , equipmentPrice , equipmentLocation , equipmentType);
+        return String.format("%-15s %-20s %-20b %-20.2f %-20s %-20s",equipmentID , equipmentBrand , equipmentStatus , equipmentPrice , equipmentLocation , equipmentType);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.equipmentID);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Equipment other = (Equipment) obj;
+        if (!Objects.equals(this.equipmentID, other.equipmentID)) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
 }

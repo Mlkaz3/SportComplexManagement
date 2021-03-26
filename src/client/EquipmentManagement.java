@@ -6,6 +6,11 @@ import adt.ArrayStackWithIteratorInterface;
 import entity.Equipment;
 import entity.User;
 import entity.ReservationRecord;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
@@ -13,41 +18,40 @@ import java.util.Date;
 
 public class EquipmentManagement {
 
-    StackInterface<Equipment> equipmentStack; //tennis only
+    StackInterface<Equipment> equipmentStack = new ArrayStack<>(); //tennis only
 
     Scanner input = new Scanner(System.in);
-    StackInterface<Equipment> badmintonStack = new ArrayStack<>();
-    StackInterface<Equipment> tennisStack = new ArrayStack<>();
+    //StackInterface<Equipment> badmintonStack = new ArrayStack<>();
+    //StackInterface<Equipment> tennisStack = new ArrayStack<>();
 
     public EquipmentManagement() {
-        equipmentStack = new ArrayStack<>();
+        //equipmentStack = new ArrayStack<>();
     }
 
-//    public void checkEmpty(StackInterface<Equipment> stackChoice) {
-//        if(stackChoice.isEmpty());
-//    }
-//    public void setStack(int equipType) {
-//        //set stack according to user choice.
-//    }
     public void displayStack() {
+        serFileReader();
         Iterator<Equipment> it = equipmentStack.getIterator();
 
         if (equipmentStack.isEmpty()) {
             System.out.println("Sorry. There are no racquet left.");
         } else {
-            System.out.println("                                                            Tennis");
+            System.out.println("                                                            Racquet");
             System.out.printf("%-15s %-20s %-20s %-20s %-20s %-20s\n",
                     "Equipment ID", "Equipment Brand", "Equipment Status", "Equipment Price", "Equipment Location", "Equipment Type");
             System.out.println("------------------------------------------------------------------------------------------------------------------------");
             while (it.hasNext()) {
                 System.out.println(it.next());
             }
-            System.out.println("There are currently " + equipmentStack.size() + " in stock.");
+            System.out.println("There are currently " + equipmentStack.size() + " racquet.");
         }
         //returnStackType(choice);
     }
 
     public void borrowEquipment() {
+        //Read file
+        serFileReader();
+        boolean valid;
+        
         User user = new User();
         ReservationRecord reservationRecord = new ReservationRecord();
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
@@ -59,7 +63,7 @@ public class EquipmentManagement {
             System.out.print("Enter Name : ");
             user.setUserName(input.nextLine());
 
-            System.out.print("Enter ID : ");
+            System.out.print("Enter User ID : ");
             user.setUserID(input.nextLine());
 
             System.out.print("Enter Category : ");
@@ -96,13 +100,16 @@ public class EquipmentManagement {
             }
         }
         //returnStackType(choice);
+        serFileWriter();
     }
 
-    public void returnEquipment() {//add
+    public void returnEquipment() {
         //Should be enter userid / equipmentId to retrieve all the info and put back to stack
+        serFileWriter();
+        
         System.out.print("Enter Quantity : ");
-        String inputQty = input.nextLine();
-        int qty = Integer.parseInt(inputQty);
+        int qty = input.nextInt();
+        input.nextLine();
 
         for (int i = 0; i < qty; i++) {
             Equipment equipment = new Equipment();
@@ -114,7 +121,11 @@ public class EquipmentManagement {
             equipment.setEquipmentBrand(input.nextLine());
 
             System.out.print("Equipment Price : ");
-            equipment.setEquipmentPrice(input.nextLine());
+            String inputPrice = input.nextLine();
+            equipment.setEquipmentPrice(input.nextDouble());
+
+            
+            input.nextLine();
 
             System.out.print("Equipment Location : ");
             equipment.setEquipmentLocation(input.nextLine());
@@ -128,9 +139,14 @@ public class EquipmentManagement {
             System.out.println("Equipment Returned.");
         }
         //returnStackType(choice);
+        serFileWriter();
     }
 
     public void stockIn() {
+        String id, brand, location, type;
+        double price;
+        serFileReader();
+        
         System.out.print("Enter Quantity : ");
         String inputQty = input.nextLine();
         int qty = Integer.parseInt(inputQty);
@@ -141,44 +157,87 @@ public class EquipmentManagement {
 
             //System.out.println("Equipment To Return : ");
             System.out.print("\nEquipment ID : ");
-            equipment.setEquipmentID(input.nextLine());
+            id = input.nextLine();
+            //equipment.setEquipmentID(input.nextLine());
 
             System.out.print("Equipment Brand : ");
-            equipment.setEquipmentBrand(input.nextLine());
+            brand = input.nextLine();
+            //equipment.setEquipmentBrand(input.nextLine());
 
             System.out.print("Equipment Price : ");
-            equipment.setEquipmentPrice(input.nextLine());
+            price = input.nextDouble();
+            input.nextLine();
+            //equipment.setEquipmentPrice(input.nextLine());
 
             System.out.print("Equipment Location : ");
-            equipment.setEquipmentLocation(input.nextLine());
+            location = input.nextLine();
+            //equipment.setEquipmentLocation(input.nextLine());
 
             System.out.print("Equipment Type : ");
-            equipment.setEquipmentType(input.nextLine());
-
-            equipment.setEquipmentStatus(true);
+            type = input.nextLine();
+            //equipment.setEquipmentType(input.nextLine());
             
-            System.out.println(equipment);
-            Iterator<Equipment> it = equipmentStack.getIterator();
-            while(it.hasNext()) {
-                System.out.println(it.next());
-            }
-            System.out.println(equipmentStack.contains(equipment));
+            //equipment.setEquipmentStatus(true);
+            boolean status = true;
             
-            if(equipmentStack.contains(equipment) == true)
+            //Equipment e = new Equipment(id, brand, status, price, location, type);
+            //equipmentStack.push(new Equipment(id, brand, status, price, location, type));
+            
+//            System.out.println(equipment);
+//            Iterator<Equipment> it = equipmentStack.getIterator();
+//            while(it.hasNext()) {
+//                System.out.println(it.next());
+//            }
+//            System.out.println(equipmentStack.contains(equipment));
+            Equipment e = new Equipment(id, brand, status, price, location, type);
+            if(equipmentStack.contains(e) == true)
             {
                 System.out.println("This element is already in stack.");
             }
             else {
-                equipmentStack.push(equipment);
+                equipmentStack.push(e);
+                //equipmentStack.push(equipment);
                 System.out.println("Equipment Inserted.");
             }
+            serFileWriter();
         }
     }
 
-    //validation for user input
+    //Read file
+    public void serFileReader() {
+        try {
+            FileInputStream fileIn = new FileInputStream("src/EquipmentRecord.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            equipmentStack = (ArrayStack<Equipment>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("No Equipment Record is found!");
+            c.printStackTrace();
+        }
+    }
+    
+    //Write file
+    public void serFileWriter() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src/EquipmentRecord.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(equipmentStack);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+    
+    
     public void clearAll() {
+        serFileReader();
         equipmentStack.clear();
         System.out.println("All equipment is removed.");
+        serFileWriter();
     }
 
 //    public void setStackType(int ch) {
