@@ -6,7 +6,9 @@
 package client;
 
 import adt.ArrList;
+import adt.LinkedList;
 import entity.Facility;
+import entity.ReservationRecord;
 
 
 
@@ -19,5 +21,7 @@ public class Data {
     public static ArrList<Facility> court = new ArrList<Facility>();
     
     public static Facility facility = new Facility();
+    
+    public static LinkedList<ReservationRecord> reservationRecord = new LinkedList<>();
    
 }

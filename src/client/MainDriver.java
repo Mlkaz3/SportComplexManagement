@@ -224,7 +224,7 @@ public class MainDriver {
                             System.out.println(currentUser);
 
                             //add record
-                            ReservationRecord record1 = new ReservationRecord(duration, user, equipment);
+                            ReservationRecord record1 = new ReservationRecord(user, equipment);
                             System.out.println("user1:" + user);
                             System.out.println("equipment1: " + equipment);
                             System.out.println("record1: " + record1);

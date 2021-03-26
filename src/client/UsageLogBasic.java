@@ -45,9 +45,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.math.RoundingMode;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -74,6 +77,11 @@ public class UsageLogBasic {
 
         Date now = new Date();
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        //DecimalFormat df = new DecimalFormat("#.##");
+        //DecimalFormat df = new DecimalFormat();
+        //df.setMaximumFractionDigits(2);
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.FLOOR);
 
         int ch = 0;
         Scanner input = new Scanner(System.in);
@@ -225,83 +233,69 @@ public class UsageLogBasic {
 
                         switch (update_selection) {
                             case 1 -> {
-
-                                //flow
-                                //get current row record 
-                                //extension got a bit error
-                                ReservationRecord currentRecord = reservationRecord.getEntry(row);
-                                String type = currentRecord.getReservationType();
-                                String booking_item;
-                                LinkedList<ReservationRecord> bookingitems = new LinkedList<>();
-                                System.out.println(type);
-                                System.out.println(bookingitems);
-
-                                if ("Facilities".equals(type)) {
-                                    //get the booking items
-                                    booking_item = currentRecord.getFacilities().getFacilityID();
-                                } else {
-                                    booking_item = currentRecord.getEquipments().getEquipmentID();
-                                }
-
-                                System.out.println("booking item id: " + booking_item);
-
-                                Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
-                                while (newiterator.hasNext()) {
-                                    ReservationRecord record = newiterator.next();
-                                    System.out.println(record);
-
-                                    if (record.getEquipments().getEquipmentID() == booking_item) {
-                                        bookingitems.addFirst(record);
-                                    }
-                                }
-
-                                System.out.println("Printing the booking items");
-                                System.out.println(bookingitems);
+                                //extension of booking
+                                ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+                                LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
+                                bookingitems = filterRecord(reservationRecord, currentRecord);
 
                                 //arrage in time, ascending order
-                                //no idea how to do so
                                 LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems);
-                                System.out.println(sortedBookings);
-                                //System.out.println("end");
 
                                 //compare the booking item with the next row booking item
-                                int new_row = bookingitems.getPosition(currentRecord);
+                                //doing this cause when we sort and filter the new list will have new sequence
+                                int new_row = sortedBookings.getPosition(currentRecord);
 
                                 //use the next end time - start time 
-                                ReservationRecord currentBooking = bookingitems.getEntry(new_row);
+                                ReservationRecord currentBooking = sortedBookings.getEntry(new_row);
                                 ReservationRecord comingBooking;
+                                double diff_hours = 0.0;
 
-                                if (new_row + 1 >= bookingitems.getLength()) {
+                                if (new_row + 1 > sortedBookings.getLength()) {
                                     //indicate no coming booking 
                                     System.out.println("Duration is able to be extend.");
                                     System.out.println("Please enter new extend duration: ");
+                                    diff_hours = 2.0; //setting max as max limit
 
                                 } else {
-                                    comingBooking = bookingitems.getEntry(new_row + 1);
-                                    Date pre_endtime = currentBooking.getReservationEndTime();
-                                    Date next_starttime = comingBooking.getReservationStartTime(); //here got error cause no next row 
-                                   
-                                    double difference_In_Time = next_starttime.getTime() - pre_endtime.getTime();
-                                  
-                                    double diff_mins = (difference_In_Time / (1000 * 60)) % 60;
-                                    System.out.println("Duration that able to be extend is: " + diff_mins + "minute(s)");
+                                    comingBooking = sortedBookings.getEntry(new_row + 1);
+                                    long pre_endtime = currentBooking.getReservationEndTime().getTime();
+                                    long next_starttime = comingBooking.getReservationStartTime().getTime(); //here got error cause no next row 
+
+                                    double difference_In_Time = next_starttime - pre_endtime;
+                                    diff_hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
+                                    //double diff_mins = (difference_In_Time / (1000 * 60)) % 60;
+                                    System.out.println("Duration that able to be extend is: " + df.format(diff_hours) + " hours ");
+
                                 }
-                                
+
+                                double extend_duration;
                                 //prompt user do you want to be extend? 
-                                //or cancel extension 
-                                //1- continue to extend 
-                                //2- cancel extension
-                                System.out.println("");
+                                System.out.println("How long to be extend? (in hour)");
+                                extend_duration = input.nextDouble();
+
+                                while (extend_duration > diff_hours) {
+                                    System.out.println("Invalid extend duration");
+                                    extend_duration = input.nextDouble();
+
+                                }
+
+                                System.out.println("Booking successfully extended.");
 
                             }
+
                             case 2 -> {
                                 //Modify booking facility/equipment
+                                
+                                
                                 ReservationRecord modifyBookingItem = reservationRecord.getEntry(row);
                                 String modifyitem;
                                 System.out.println("Modify booking items to");
                                 modifyitem = input.next();
-
+                               
                                 //needa do validation 
+                                //here needa use data 
+                                
+                                
                                 //either equipment/facilities
                                 System.out.println("Enter booking items to be edit");
 
@@ -314,6 +308,70 @@ public class UsageLogBasic {
                                 // Alter booking duration}
                                 //this similar as case 1 
                                 //i also dk how 
+                                Scanner in = new Scanner(System.in);
+                                
+                                String start_date, end_date;
+                                //DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                System.out.println("Altering Start Time & End Time ");
+                                System.out.println("Caution: Enter date time in the format of dd/MM/yyyy HH:mm");
+                                System.out.print("New Start Time: ");
+                                start_date = in.nextLine();
+                                System.out.print("New End Time: ");
+                                end_date = in.nextLine();
+                                Date startDate = (Date)myFormatObj.parse(start_date);
+                                Date endDate = (Date)myFormatObj.parse(end_date);
+
+                                //validation of new startDate and endDate
+                                ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+                                ReservationRecord previousRecord;
+                                ReservationRecord nextRecord;
+                                LinkedList<ReservationRecord> bookingitems; //is the list of items that have XX items;
+                                bookingitems = filterRecord(reservationRecord, currentRecord);
+                                bookingitems = SortDateTime(bookingitems);
+
+                                int new_row = bookingitems.getPosition(currentRecord);
+                                long pre_endtime;
+                                long current_starttime;
+                                long current_endtime;
+                                long next_starttime;
+
+                                if (new_row + 1 > bookingitems.getLength() && new_row - 1 == 0) {
+                                    //indicate no previous or next booking 
+
+                                    System.out.println("Successfully updated.");
+
+                                } else {
+
+                                    if (new_row + 1 > bookingitems.getLength()) {
+
+                                    } else if (new_row - 1 == 0) {
+
+                                    } else {
+                                        previousRecord = bookingitems.getEntry(new_row - 1);
+                                        nextRecord = bookingitems.getEntry(new_row + 1);
+
+                                        //check new booking start date clash with previous end
+                                        //if previous dont have record then yes 
+                                        pre_endtime = previousRecord.getReservationEndTime().getTime();
+                                        current_starttime = startDate.getTime();
+
+                                        //check new booking end date clash with next start
+                                        //if next dont have record then yes 
+                                        current_endtime = endDate.getTime();
+                                        next_starttime = nextRecord.getReservationStartTime().getTime();
+
+                                        double difference_before = current_starttime - pre_endtime;
+                                        double difference_after = next_starttime - current_endtime;
+                                        
+                                        if(difference_before>=0 && difference_after>=0){
+                                            System.out.println("Able to change");
+                                        }else{
+                                            System.out.println("Disable to change");
+                                        }
+
+                                    }
+                                }
+
                             }
                         }
 
@@ -336,6 +394,36 @@ public class UsageLogBasic {
             }
         }
 
+    }
+
+    private static LinkedList<ReservationRecord> filterRecord(LinkedList<ReservationRecord> reservationRecord, ReservationRecord currentRecord) {
+        LinkedList<ReservationRecord> bookingitems = new LinkedList<>(); //is the list of items that have l;
+        Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+        String booking_item; //booking exact item (to sort a list based on the item) 
+        String type = currentRecord.getReservationType(); //get the type
+        if ("Facilities".equals(type)) {
+            //get the booking items
+            booking_item = currentRecord.getFacilities().getFacilityID();
+
+            while (newiterator.hasNext()) {
+                ReservationRecord record = newiterator.next();
+
+                if (record.getFacilities().getFacilityID() == booking_item) {
+                    bookingitems.addFirst(record);
+                }
+            }
+        } else {
+            booking_item = currentRecord.getEquipments().getEquipmentID();
+
+            while (newiterator.hasNext()) {
+                ReservationRecord record = newiterator.next();
+
+                if (record.getEquipments().getEquipmentID() == booking_item) {
+                    bookingitems.addFirst(record);
+                }
+            }
+        }
+        return bookingitems;
     }
 
     private static void updateBooker(LinkedList<ReservationRecord> reservationRecord, int row) {
@@ -553,7 +641,7 @@ public class UsageLogBasic {
 //        }
 //    }
     //i not sure this can work or not but er...
-    private static LinkedList<ReservationRecord> sort(LinkedList<ReservationRecord> toSortList) {
+    private static LinkedList<ReservationRecord> sortThatNotWorking(LinkedList<ReservationRecord> toSortList) {
         //Node current will point to head  
         int index = 1;
         ReservationRecord current;
@@ -598,8 +686,9 @@ public class UsageLogBasic {
                 next = SortedList.getEntry(j);
                 if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) < 0) {
                     temp = SortedList.getEntry(j);
-                    SortedList.replace(j, SortedList.getEntry(i));
-                    SortedList.replace(i, temp);
+//                    SortedList.replace(j, SortedList.getEntry(i));
+//                    SortedList.replace(i, temp);
+                    SortedList.swap(i, j);
                 }
             }
         }

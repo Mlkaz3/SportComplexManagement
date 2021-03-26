@@ -9,7 +9,7 @@ package client;
  *
  * @author winnie <winnieyap20@gmail.com>
  */
-public class Booking {
+public class UsageManagement {
     public static void main(String[] args) {
         //implementation of client side 
         
