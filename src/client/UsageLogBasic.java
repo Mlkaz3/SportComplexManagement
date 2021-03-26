@@ -88,10 +88,10 @@ public class UsageLogBasic {
         User user3 = new User("Lim Siew Mooi", "20119", "Student", "0123456783");
         User user4 = new User("Kenneth", "20109", "Student", "0123456783");
 
-        Equipment equipment = new Equipment("001", "Yoonex", true, "12.00", "Shelf0123", "badminton racquet");
-        Equipment equipment1 = new Equipment("002", "Adidas", true, "12.00", "Shelf0122", "squash racquet");
-        Equipment equipment2 = new Equipment("003", "MsiaB", true, "12.00", "Shelf0121", "tennis ball");
-        Equipment equipment3 = new Equipment("004", "Nike", true, "12.00", "Shelf0120", "badminton racquet");
+        Equipment equipment = new Equipment("001", "Yoonex", true, 12.00, "Shelf0123", "badminton racquet");
+        Equipment equipment1 = new Equipment("002", "Adidas", true, 12.00, "Shelf0122", "squash racquet");
+        Equipment equipment2 = new Equipment("003", "MsiaB", true, 12.00, "Shelf0121", "tennis ball");
+        Equipment equipment3 = new Equipment("004", "Nike", true, 12.00, "Shelf0120", "badminton racquet");
 
         Facility facility = new Facility(); //facility havent done 
 

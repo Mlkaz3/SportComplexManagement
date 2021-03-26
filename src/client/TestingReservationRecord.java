@@ -40,7 +40,7 @@ public class TestingReservationRecord {
 
         //hc!!
         User user = new User("Winnie", "19119", "Student", "0123456789");
-        Equipment equipment = new Equipment("001", "Yoonex", true, "12.00", "Shelf0123", "badminton racquet");
+        Equipment equipment = new Equipment("001", "Yoonex", true, 12.00, "Shelf0123", "badminton racquet");
         Facility facility = new Facility();
 
         //creating 4 record
