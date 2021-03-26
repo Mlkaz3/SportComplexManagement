@@ -24,15 +24,18 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
 
     @Override
     public boolean addFirst(T newEntry) {
+        boolean status = false;
         Node node = new Node(newEntry);
         if (isEmpty()) {
             head = node;
+            status = true;
         } else {
             node.next = head;
             head = node;
+            status =true;
         }
         length++;
-        return true;
+        return status;
     }
 
     @Override
