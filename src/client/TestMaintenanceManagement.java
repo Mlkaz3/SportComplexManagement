@@ -6,7 +6,6 @@
 package client;
 
 import entity.Facility;
-import entity.Maintenance;
 import java.text.ParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -111,7 +110,6 @@ public class TestMaintenanceManagement {
             }
 
         } while (ch != 3);
-
     }
 
     public static void main(String[] args) throws ParseException {
@@ -139,10 +137,6 @@ public class TestMaintenanceManagement {
         Data.court.add(tennisCourt4);
         Data.court.add(tennisCourt5);
         
-        Maintenance maintenance1 = new Maintenance();
-        Maintenance maintenance2 = new Maintenance();
-        Maintenance maintenance3 = new Maintenance();
-
         MaintenanceManagementMenu();
     }
 }

@@ -11,6 +11,11 @@ import adt.ListInter;
 import adt.PriorityQueueInterface;
 import entity.Facility;
 import entity.Maintenance;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +28,7 @@ import java.util.Scanner;
  *
  * @author YJ
  */
-public class MaintenanceManagement { //read and write to file, manage completion
+public class MaintenanceManagement { // read and write to file, manage completion
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
     ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
@@ -37,6 +42,20 @@ public class MaintenanceManagement { //read and write to file, manage completion
 
     //display
     public void displayQueue() {
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("queue.txt"));
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                System.out.println(line);
+                line = bufferedReader.readLine();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            System.out.println("Failed to read from file.");
+        }
+
         System.out.println("                                            Maintenance Appointment Queue\n");
         System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
         System.out.println("--------------------------------------------------------------------------------------------------------------------------");
@@ -50,6 +69,7 @@ public class MaintenanceManagement { //read and write to file, manage completion
             System.out.println("Current queue size: " + appointmentQueue.getTotalEntry());
             System.out.println("======================");
         }
+
     }
 
     //insert appointment
@@ -118,6 +138,12 @@ public class MaintenanceManagement { //read and write to file, manage completion
 
         if (appointmentQueue.enqueue(maintenance)) {
             System.out.println("\nAppointment added successfully!");
+            try {
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("queue.txt", true));
+                bufferedWriter.write(maintenance.getFacilityID() + ", " + maintenance.getMaintenanceType() + ", " + maintenance.getMaintenanceDesc() + ", " + maintenance.getRequiredDate() + ", " + maintenance.getRequestDate());
+            } catch (IOException e) {
+                System.out.println("Failed to write to file.");
+            }
         }
 
         pressAnyKeyToContinue();
@@ -140,6 +166,7 @@ public class MaintenanceManagement { //read and write to file, manage completion
             do {
                 try {
                     ch = userInput.next().charAt(0);
+                    userInput.nextLine();
 
                     switch (Character.toUpperCase(ch)) {
                         case 'Y' -> {
@@ -159,11 +186,9 @@ public class MaintenanceManagement { //read and write to file, manage completion
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
 
-                            if (maintenanceHistory.add(maintenance)) {
-                                System.out.println("Success");
-                            }
+                            maintenanceHistory.add(maintenance);
                             //System.out.println(maintenanceHistory);
-                            
+
                             maintenance = appointmentQueue.dequeue();
 
                             System.out.println("\nFacility is currently undergoing maintenance!");
@@ -384,7 +409,7 @@ public class MaintenanceManagement { //read and write to file, manage completion
 //        maintenance.calcDuration();
 //        maintenance.calcCost();
     }
-    
+
     public void printHistory() {
         System.out.println(maintenanceHistory);
     }

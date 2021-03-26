@@ -5,6 +5,8 @@
  */
 package adt;
 
+import java.io.Serializable;
+
 /**
  *
  * @author YJ

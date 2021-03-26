@@ -16,7 +16,7 @@ import java.util.Objects;
  *
  * @author YJ
  */
-public class Maintenance implements Comparable<Maintenance>, Serializable {
+public class Maintenance implements Comparable<Maintenance> {
 
     private Facility facility; // need a facility class constructor with facilityID and facilityID getter method
 
@@ -179,10 +179,6 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     
     public double calcWaitingTime() {
         return startDate.getTime() - requestDate.getTime();
-    }
-
-    public boolean updateStatus() { // update status of facility
-        return true;
     }
 
     public boolean checkStatus(Maintenance m) { // do i need this?
