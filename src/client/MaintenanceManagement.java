@@ -68,16 +68,25 @@ public class MaintenanceManagement { //read and write to file, manage completion
         System.out.println("Tennis Court   |T001|T002|T003|T004|T005|");
 
         String facilityID;
+        boolean validID;
         do {
             System.out.print("\nFacility ID: ");
             facilityID = userInput.nextLine();
 
-            if (validID(facilityID) == false) {
+            int count = 0;
+            for (int i = 0; i < Data.court.filledSize(); i++) {
+                if (facilityID == null ? Data.court.get(i) == null : facilityID.equals(Data.court.get(i).getFacilityID())) {
+                    count = 1;
+                }
+            }
+            if (count == 0) {
                 System.out.println("\nError. Invalid facility ID.");
+                validID = false;
             } else {
                 maintenance.setFacilityID(facilityID);
+                validID = true;
             }
-        } while (validID(facilityID) != true);
+        } while (validID != true);
 
         System.out.print("Maintenance type: ");
         maintenance.setMaintenanceType(userInput.nextLine());
@@ -117,7 +126,7 @@ public class MaintenanceManagement { //read and write to file, manage completion
     //send for maintenance, set maintenance ID
     public void serveFront() {
 
-        Maintenance maintenance;
+        Maintenance maintenance = new Maintenance();
         char ch = 0;
         displayQueue();
 
@@ -130,35 +139,34 @@ public class MaintenanceManagement { //read and write to file, manage completion
             boolean validInput = true;
             do {
                 try {
-//                    String input = userInput.nextLine();
-//                    ch = input.charAt(0);
                     ch = userInput.next().charAt(0);
 
                     switch (Character.toUpperCase(ch)) {
                         case 'Y' -> {
+
+                            String maintenanceID = maintenance.getMaintenanceID();
+                            maintenance.setMaintenanceID(maintenanceID);
+
+                            int i;
+                            for (i = 0; i < Data.court.filledSize(); i++) {
+                                if (maintenance.getFacilityID() == null ? Data.court.get(i) == null : maintenance.getFacilityID().equals(Data.court.get(i).getFacilityID())) {
+                                    int index = i;
+                                }
+                                Data.court.get(i).setStatus(false);
+                            }
+
+                            GregorianCalendar startDate = new GregorianCalendar();
+                            Date now = startDate.getTime();
+                            maintenance.setStartDate(now);
+
+                            if (maintenanceHistory.add(maintenance)) {
+                                System.out.println("Success");
+                            }
+                            //System.out.println(maintenanceHistory);
+                            
                             maintenance = appointmentQueue.dequeue();
 
-//                            Maintenance maintenance1 = new Maintenance();
-//                            
-//                            String maintenanceID = maintenance1.getMaintenanceID();
-//                            String facilityID = maintenance.getFacilityID();
-//                            String maintenanceType = maintenance.getMaintenanceType();
-//                            String maintenanceDesc = maintenance.getMaintenanceDesc();
-//                            
-//                            GregorianCalendar startDate = new GregorianCalendar();
-//                            Date now = startDate.getTime();
-//                            maintenance1.setStartDate(now);
-//                            
-//                            maintenance1.setMaintenanceID(maintenanceID);
-//                            maintenance1.setFacilityID(facilityID);
-//                            maintenance1.setMaintenanceType(maintenanceType);
-//                            maintenance1.setMaintenanceDesc(maintenanceDesc);
-//                            maintenance1.setEndDate(now);
-//                            maintenance1.setMaintenanceCost(0.00);
-                            maintenanceHistory.add(maintenance);
-
-                            //facility.setStatus(false);
-                            System.out.println("Facility is currently undergoing maintenance!");
+                            System.out.println("\nFacility is currently undergoing maintenance!");
                             break;
                         }
                         case 'N' -> {
@@ -294,19 +302,28 @@ public class MaintenanceManagement { //read and write to file, manage completion
                 switch (num) {
                     case 1 -> {
                         String newID;
+                        boolean validID;
                         do {
                             System.out.print("\nNew facility ID: ");
                             newID = userInput.nextLine();
 
-                            if (validID(newID) == false) {
-                                System.out.println("Error. Invalid facility ID.");
+                            int count = 0;
+                            for (int i = 0; i < Data.court.filledSize(); i++) {
+                                if (newID == null ? Data.court.get(i) == null : newID.equals(Data.court.get(i).getFacilityID())) {
+                                    count = 1;
+                                }
+                            }
+                            if (count == 0) {
+                                System.out.println("\nError. Invalid facility ID.");
+                                validID = false;
                             } else {
                                 maintenance.setFacilityID(newID);
-                                System.out.println("\nFacility ID updated!");
+                                validID = true;
                             }
-                        } while (validID(newID) != true);
+                        } while (validID != true);
                         break;
                     }
+
                     case 2 -> {
                         System.out.print("\nNew maintenance type: ");
                         String newType = userInput.nextLine();
@@ -353,12 +370,12 @@ public class MaintenanceManagement { //read and write to file, manage completion
         }
         pressAnyKeyToContinue();
     }
-
     //manage completed maintenance (write endDate, set status = true, calcDuration & cost)
+
     public void manageCompletion() {
 
         //Maintenance maintenance = new Maintenance();
-        System.out.println(maintenanceHistory);
+        printHistory();
 
 //        GregorianCalendar endDate = new GregorianCalendar();
 //        Date now = endDate.getTime();
@@ -366,6 +383,10 @@ public class MaintenanceManagement { //read and write to file, manage completion
 //        facility.setStatus(true);
 //        maintenance.calcDuration();
 //        maintenance.calcCost();
+    }
+    
+    public void printHistory() {
+        System.out.println(maintenanceHistory);
     }
 
     public static void pressAnyKeyToContinue() {
@@ -376,7 +397,13 @@ public class MaintenanceManagement { //read and write to file, manage completion
         }
     }
 
-    private boolean validID(String facilityID) {
-        return (facilityID.charAt(0) == 'B' || facilityID.charAt(0) == 'T') && facilityID.length() == 4;
-    }
 }
+
+//    private boolean validID(String facilityID) {
+//        return (facilityID.charAt(0) == 'B' || facilityID.charAt(0) == 'T') && facilityID.length() == 4;
+//    }
+//            if (validID(facilityID) == false) {
+//                System.out.println("\nError. Invalid facility ID.");
+//            } else {
+//                maintenance.setFacilityID(facilityID);
+//            }

@@ -16,6 +16,8 @@ import entity.Facility;
  */
 public class Data {
     
-    public static ArrList<Facility> facility = new ArrList<Facility>();
+    public static ArrList<Facility> court = new ArrList<Facility>();
+    
+    public static Facility facility = new Facility();
    
 }

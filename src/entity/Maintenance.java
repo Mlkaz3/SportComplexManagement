@@ -33,19 +33,16 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     private Date requiredDate; // This determines the priority
 
     public Maintenance() {
-    }
+    } 
 
-    public Maintenance(String maintenanceID, String facilityID, String maintenanceType, String maintenanceDesc, Date startDate, Date endDate, double maintenanceCost) {
+    public Maintenance(String maintenanceID, String facilityID, String maintenanceType, String maintenanceDesc, Date startDate) {
         this.maintenanceID = maintenanceID;
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.maintenanceCost = maintenanceCost;
     }
-    
-
+  
     public Maintenance(String facilityID, String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
         this.facilityID = facilityID;
         this.maintenanceType = maintenanceType;
@@ -179,6 +176,10 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     public double calcCost() { // duration x payment per day
         return calcDuration() * costPerDay;
     }
+    
+    public double calcWaitingTime() {
+        return startDate.getTime() - requestDate.getTime();
+    }
 
     public boolean updateStatus() { // update status of facility
         return true;
@@ -190,3 +191,4 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     }
 
 }
+

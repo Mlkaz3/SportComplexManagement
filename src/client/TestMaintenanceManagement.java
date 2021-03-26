@@ -5,6 +5,8 @@
  */
 package client;
 
+import entity.Facility;
+import entity.Maintenance;
 import java.text.ParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -113,6 +115,34 @@ public class TestMaintenanceManagement {
     }
 
     public static void main(String[] args) throws ParseException {
+        
+        Facility badmintonCourt1 = new Facility("B001", "Badmintion Court 1", "Badmintion", true);
+        Facility badmintonCourt2 = new Facility("B002", "Badmintion Court 2", "Badmintion", true);
+        Facility badmintonCourt3 = new Facility("B003", "Badmintion Court 3", "Badmintion", true);
+        Facility badmintonCourt4 = new Facility("B004", "Badmintion Court 4", "Badmintion", true);
+        Facility badmintonCourt5 = new Facility("B005", "Badmintion Court 5", "Badmintion", true);
+        Facility tennisCourt1 = new Facility("T001", "Tennie Court 1", "Tennis", true);
+        Facility tennisCourt2 = new Facility("T002", "Tennie Court 2", "Tennis", true);
+        Facility tennisCourt3 = new Facility("T003", "Tennie Court 3", "Tennis", true);
+        Facility tennisCourt4 = new Facility("T004", "Tennie Court 4", "Tennis", true);
+        Facility tennisCourt5 = new Facility("T005", "Tennie Court 5", "Tennis", true);
+
+        Data.court.add(badmintonCourt1);
+        Data.court.add(badmintonCourt2);
+        Data.court.add(badmintonCourt3);
+        Data.court.add(badmintonCourt4);
+        Data.court.add(badmintonCourt5);
+
+        Data.court.add(tennisCourt1);
+        Data.court.add(tennisCourt2);
+        Data.court.add(tennisCourt3);
+        Data.court.add(tennisCourt4);
+        Data.court.add(tennisCourt5);
+        
+        Maintenance maintenance1 = new Maintenance();
+        Maintenance maintenance2 = new Maintenance();
+        Maintenance maintenance3 = new Maintenance();
+
         MaintenanceManagementMenu();
     }
 }

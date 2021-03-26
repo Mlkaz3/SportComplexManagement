@@ -21,20 +21,32 @@ import java.util.Scanner;
  */
 public class MainDriver {
 
-    Facility badmintonCourt1 = new Facility("B001", "Badmintion Court 1", "Badmintion", true);
-    Facility badmintonCourt2 = new Facility("B002", "Badmintion Court 2", "Badmintion", true);
-    Facility badmintonCourt3 = new Facility("B003", "Badmintion Court 3", "Badmintion", true);
-    Facility badmintonCourt4 = new Facility("B004", "Badmintion Court 4", "Badmintion", true);
-    Facility badmintonCourt5 = new Facility("B005", "Badmintion Court 5", "Badmintion", true);
-    Facility tennisCourt1 = new Facility("T001", "Tennie Court 1", "Tennis", true);
-    Facility tennisCourt2 = new Facility("T002", "Tennie Court 2", "Tennis", true);
-    Facility tennisCourt3 = new Facility("T003", "Tennie Court 3", "Tennis", true);
-    Facility tennisCourt4 = new Facility("T004", "Tennie Court 4", "Tennis", true);
-    Facility tennisCourt5 = new Facility("T005", "Tennie Court 5", "Tennis", true);
-
-    //Data.facility.add(badmintonCourt1);
-    
     public static void main(String[] args) {
+
+        //hard code faciliies
+        Facility badmintonCourt1 = new Facility("B001", "Badmintion Court 1", "Badmintion", true);
+        Facility badmintonCourt2 = new Facility("B002", "Badmintion Court 2", "Badmintion", true);
+        Facility badmintonCourt3 = new Facility("B003", "Badmintion Court 3", "Badmintion", true);
+        Facility badmintonCourt4 = new Facility("B004", "Badmintion Court 4", "Badmintion", true);
+        Facility badmintonCourt5 = new Facility("B005", "Badmintion Court 5", "Badmintion", true);
+        Facility tennisCourt1 = new Facility("T001", "Tennie Court 1", "Tennis", true);
+        Facility tennisCourt2 = new Facility("T002", "Tennie Court 2", "Tennis", true);
+        Facility tennisCourt3 = new Facility("T003", "Tennie Court 3", "Tennis", true);
+        Facility tennisCourt4 = new Facility("T004", "Tennie Court 4", "Tennis", true);
+        Facility tennisCourt5 = new Facility("T005", "Tennie Court 5", "Tennis", true);
+
+        Data.court.add(badmintonCourt1);
+        Data.court.add(badmintonCourt2);
+        Data.court.add(badmintonCourt3);
+        Data.court.add(badmintonCourt4);
+        Data.court.add(badmintonCourt5);
+
+        Data.court.add(tennisCourt1);
+        Data.court.add(tennisCourt2);
+        Data.court.add(tennisCourt3);
+        Data.court.add(tennisCourt4);
+        Data.court.add(tennisCourt5);
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("WELCOME TO TARUC SPORT COMPLEX");
@@ -116,18 +128,17 @@ public class MainDriver {
                 System.out.println("");
 
                 switch (ch) {
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-                        break;
-                    default:
+                    case 1 -> {
+                    }
+                    case 2 -> {
+                    }
+                    case 3 -> {
+                    }
+                    default -> {
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
                         System.out.println();
+                    }
                 }
 
             } catch (InputMismatchException e) {
@@ -158,10 +169,8 @@ public class MainDriver {
                 System.out.println("");
 
                 switch (ch) {
-                    case 1:
-                        System.out.println("Havent implement gomennasaaii");
-                        break;
-                    case 2:
+                    case 1 -> System.out.println("Havent implement gomennasaaii");
+                    case 2 -> {
                         //when user wanna borrow stg 
                         //hardcode a equipment (user want)
                         Equipment equipment = new Equipment("Testing001", "Badminton Racquet", true, "23.00", "somewhere", "racquet");
@@ -220,13 +229,14 @@ public class MainDriver {
                             System.out.println("equipment1: " + equipment);
                             System.out.println("record1: " + record1);
                         }
-                        break;
-                    case 3:
-                        break;
-                    default:
+                    }
+                    case 3 -> {
+                    }
+                    default -> {
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
                         System.out.println();
+                    }
                 }
 
             } catch (InputMismatchException e) {
