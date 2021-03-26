@@ -13,20 +13,16 @@ import entity.Facility;
  */
 public interface ListInter<T> {
 
-  public boolean add(T newEntry);
+  public void add(T newEntry);
 
 
-  public boolean add(int newPosition, T newEntry);
-
+  public void add(int newPosition, T newEntry);
 
   public T remove(int atPosition);
 
-
   public void clear();
 
- 
   public boolean replace(int atPosition, T newEntry);
-
 
   public T getEntry(int atPosition);
 
@@ -44,5 +40,10 @@ public interface ListInter<T> {
   public int filledSize();
   
   public T get(int index);
+  
+  //public void grow();
+
+    public int size();
 }
+
 
