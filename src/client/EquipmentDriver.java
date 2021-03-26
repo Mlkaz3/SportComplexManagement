@@ -7,7 +7,7 @@ public class EquipmentDriver {
     public static EquipmentManagement equipmentManagement = new EquipmentManagement();
     
 //    public static void EquipmentMenu() {
-//        int equipChoice = 0;
+//        int ch = 0;
 //        do {
 //            Scanner input = new Scanner(System.in);
 //            try {
@@ -24,16 +24,35 @@ public class EquipmentDriver {
 //                System.out.println();
 //
 //                System.out.print("Please select your choice: ");
-//                equipChoice = input.nextInt();
+//                ch = input.nextInt();
 //                
-//                EquipmentManagementMenu(equipChoice);
+//                switch (ch) {
+//                    case 1:
+//                        equipmentManagement.setStackType(ch);
+//                        EquipmentManagementMenu(ch);
+//                        break;
+//                    case 2:
+//                        equipmentManagement.setStackType(ch);
+//                        EquipmentManagementMenu(ch);
+//                        break;
+//                    case 3:
+//                        equipmentManagement.setStackType(ch);
+//                        EquipmentManagementMenu(ch);
+//                        break;
+//                    case 4:
+//                        break;
+//                    default:
+//                        System.out.println();
+//                        System.out.println("Error. Please select a correct choice.");
+//                        break;
+//                }
 //
 //            } catch (InputMismatchException e) {
 //                System.out.println();
 //                System.out.println("Error. Please enter an integer value within 1 and 4.");
 //            }
 //
-//        } while (equipChoice != 4);
+//        } while (ch != 4);
 //    }
 //    
     public static void EquipmentManagementMenu() {
@@ -60,7 +79,6 @@ public class EquipmentDriver {
                 switch (ch) {
                     case 1:
                         System.out.println();
-                        //equipmentManagement.setStackType(equipType);
                         equipmentManagement.displayStack();
                         break;
                     case 2:
@@ -70,6 +88,7 @@ public class EquipmentDriver {
                     case 3:
                         System.out.println();
                         equipmentManagement.returnEquipment();
+
                         break;
                     case 4:
                         System.out.println();
@@ -100,7 +119,7 @@ public class EquipmentDriver {
                 System.out.println("*                 Stock Management                *");
                 System.out.println("*                                                 *");
                 System.out.println("*    [1] Stock In                                 *");
-                System.out.println("*    [2] Clear All Equipmen                       *");
+                System.out.println("*    [2] Clear All Equipment                      *");
                 System.out.println("*    [3] Back                                     *");
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
@@ -116,7 +135,7 @@ public class EquipmentDriver {
                         break;
                     case 2:
                         System.out.println();
-                        equipmentManagement.borrowEquipment();
+                        equipmentManagement.stockOut();
                         break;
                     case 3:
                         break;
@@ -135,6 +154,7 @@ public class EquipmentDriver {
     }
     
     public static void main(String[] args) {
+        //EquipmentManagementMenu();
         EquipmentManagementMenu();
     }
 }
