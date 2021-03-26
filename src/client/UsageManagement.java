@@ -40,7 +40,7 @@ public class UsageManagement {
 //        }
 //
 //        return "Booking added successfully.";
-         reservationRecord.addLast(record);
+        reservationRecord.addLast(record);
 
     }
 
@@ -82,12 +82,13 @@ public class UsageManagement {
                     }
                     case 2 -> {
                         //display booker profile with it's booking --> bookerProfile()
-                        displayBookerProfile(row);
+                        filterBookerRecord(row);
 
                     }
                     case 3 -> {
                         //back so do ntg
                         System.out.println();
+
                     }
                     default -> {
                         System.out.println();
@@ -294,15 +295,6 @@ public class UsageManagement {
         System.out.println(bookingitems);
     }
 
-    private void displayBookerProfile(int row) {
-        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
-        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
-        bookingitems = filterRecord(reservationRecord, currentRecord);
-        bookingitems = SortDateTime(bookingitems);
-        System.out.println(bookingitems);
-
-    }
-
     private static LinkedList<ReservationRecord> filterRecord(LinkedList<ReservationRecord> reservationRecord, ReservationRecord currentRecord) {
         LinkedList<ReservationRecord> bookingitems = new LinkedList<>(); //is the list of items that have l;
         Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
@@ -331,6 +323,23 @@ public class UsageManagement {
             }
         }
         return bookingitems;
+    }
+
+    public LinkedList<ReservationRecord> filterBookerRecord(int row) {
+        LinkedList<ReservationRecord> bookerRecord = new LinkedList<>(); //list to store the booking record for user 
+        Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+        ReservationRecord currentRecord = reservationRecord.getEntry(row);
+        String user_id = currentRecord.getUser().getUserID();
+
+        while (newiterator.hasNext()) {
+            ReservationRecord record = newiterator.next();
+
+            if (record.getUser().getUserID() == null ? user_id == null : record.getUser().getUserID().equals(user_id)) {
+                bookerRecord.addFirst(record);
+            }
+        }
+
+        return bookerRecord;
     }
 
     private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
@@ -457,7 +466,7 @@ public class UsageManagement {
                 } else {
                     loop = true;
                 }
-            } 
+            }
         } while (loop == false);
     }
 

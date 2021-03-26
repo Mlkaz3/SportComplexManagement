@@ -101,13 +101,13 @@ public class UsageLogBasic {
         ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 10:13"), (Date) myFormatObj.parse("02/04/2021 11:37"), user2, equipment3);
         ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 05:01"), (Date) myFormatObj.parse("02/04/2021 06:00"), user3, equipment3);
         ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 07:01"), (Date) myFormatObj.parse("02/04/2021 10:01"), user4, equipment3);
-
-
-        reservationRecord.addFirst(record1);
-        reservationRecord.addFirst(record2);
-        reservationRecord.addFirst(record4);
-        reservationRecord.addFirst(record3);
-        reservationRecord.addFirst(record5);
+        ReservationRecord record6 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 12:01"), (Date) myFormatObj.parse("02/04/2021 13:01"), user4, equipment2);
+        reservationRecord.addLast(record1);
+        reservationRecord.addLast(record2);
+        reservationRecord.addLast(record4);
+        reservationRecord.addLast(record3);
+        reservationRecord.addLast(record5);
+        reservationRecord.addLast(record6);
 
         Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
         while (iterator.hasNext()) {
@@ -204,7 +204,11 @@ public class UsageLogBasic {
                             case 2 -> {
                                 //display user profile 
                                 System.out.println("Print user info and the past reservation not sure how but ahha");
-
+                                ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+                                LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
+                                bookingitems = filterBookerRecord(reservationRecord, currentRecord);
+                                bookingitems = SortDateTime(bookingitems);
+                                System.out.println(bookingitems);
                                 //actually this part is sorting
                             }
                             case 3 -> {
@@ -436,6 +440,22 @@ public class UsageLogBasic {
             }
         }
         return bookingitems;
+    }
+
+    private static LinkedList<ReservationRecord> filterBookerRecord(LinkedList<ReservationRecord> reservationRecord, ReservationRecord currentRecord) {
+        LinkedList<ReservationRecord> bookerRecord = new LinkedList<>(); //is the list of items that have l;
+        Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+        String user_id = currentRecord.getUser().getUserID();
+
+        while (newiterator.hasNext()) {
+            ReservationRecord record = newiterator.next();
+
+            if (record.getUser().getUserID() == user_id) {
+                bookerRecord.addFirst(record);
+            }
+        }
+
+        return bookerRecord;
     }
 
     private static void updateBooker(LinkedList<ReservationRecord> reservationRecord, int row) {
