@@ -9,10 +9,11 @@ package entity;
  *
  * @author andre
  */
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Facility {
+public class Facility implements Serializable {
 
     private String facilityID;
     private String facilityName;

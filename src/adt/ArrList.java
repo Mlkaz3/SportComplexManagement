@@ -16,7 +16,7 @@ public class ArrList<T> implements ListInter<T>, Serializable {
   private T[] array;
   private int filledSize;
   private int totalSize =5;
-  private static final int DEFAULT_CAPACITY = 5;
+  private static final int DEFAULT_CAPACITY = 10;
   private static int FACTOR = 2;
 
   public ArrList() {
@@ -162,7 +162,7 @@ public class ArrList<T> implements ListInter<T>, Serializable {
  //   return outputStr;
     String outputStr = "";
     for (int index = 0; index < filledSize; ++index) {
-      outputStr += array[index] + "\n";
+      outputStr += (index + 1) + ". " + array[index] + "\n";
     }
     return outputStr;
   }
