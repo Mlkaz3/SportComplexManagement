@@ -26,8 +26,8 @@ public class ArrayStack<T> implements StackInterface<T> {
     public void push(T newEntry) {
         topIndex++; //Increment topIndex value
 
-        if (!isFull()) { // check if the array is full,proceed to adding only when its not full
-            array[topIndex] = newEntry;  //assigning the new entry value at the location indicated by topIndex
+        if (!isFull()) {// check if the array is full,proceed to adding only when its not full
+                array[topIndex] = newEntry;  //assigning the new entry value at the location indicated by topIndex  
         }
         else {
                         //System.out.println("Stack capcity expanded.");

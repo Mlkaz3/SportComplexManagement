@@ -75,13 +75,13 @@ public class EquipmentManagement {
             SimpleDateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             System.out.print("Enter Start Time: ");
             String start_date = input.nextLine();
-            Date startDate = (Date) myFormatObj.parse(start_date); //help winnie
-            reservationRecord.setReservationStartTime(startDate);
+            //Date startDate = (Date) myFormatObj.parse(start_date); //help winnie
+            //reservationRecord.setReservationStartTime(startDate);
             
             System.out.print("Enter End Time: ");
             String end_date = input.nextLine();
-            Date endDate = (Date) myFormatObj.parse(end_date); //help winnie
-            reservationRecord.setReservationStartTime(endDate);
+            //Date endDate = (Date) myFormatObj.parse(end_date); //help winnie
+            //reservationRecord.setReservationStartTime(endDate);
 
             if (equipmentStack.size() < qty) {
                 System.out.println("Insufficient racquet.");
@@ -156,9 +156,22 @@ public class EquipmentManagement {
             equipment.setEquipmentType(input.nextLine());
 
             equipment.setEquipmentStatus(true);
-            equipmentStack.push(equipment);
-
-            System.out.println("Equipment Returned.");
+            
+            System.out.println(equipment);
+            Iterator<Equipment> it = equipmentStack.getIterator();
+            while(it.hasNext()) {
+                System.out.println(it.next());
+            }
+            System.out.println(equipmentStack.contains(equipment));
+            
+            if(equipmentStack.contains(equipment) == true)
+            {
+                System.out.println("This element is already in stack.");
+            }
+            else {
+                equipmentStack.push(equipment);
+                System.out.println("Equipment Inserted.");
+            }
         }
     }
 
