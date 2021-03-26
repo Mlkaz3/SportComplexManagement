@@ -386,7 +386,7 @@ public class MainDriver {
         } while (ch != 3);
     }
 
-    private static void UsageManagementMenu() {
+    private static void UsageManagementMenu() throws ParseException {
         usageManagement.displayReservation();
         //print out the record == Today's record
         int row = usageManagement.getRow();

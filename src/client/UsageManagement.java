@@ -11,7 +11,9 @@ import entity.User;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -61,12 +63,11 @@ public class UsageManagement {
 
                 switch (ch) {
                     case 1 -> {
-                        //called a function named booking item which sort all the booking item X -->bookingItem()
                         displayBookingItem(row);
                     }
                     case 2 -> {
                         //display booker profile with it's booking --> bookerProfile()
-                        displayBookerProfile();
+                        displayBookerProfile(row);
 
                     }
                     case 3 -> {
@@ -86,7 +87,7 @@ public class UsageManagement {
         } while (ch != 3);
     }
 
-    public void updateBooking(int row) {
+    public void updateBooking(int row) throws ParseException {
         int ch = 0;
         do {
             try {
@@ -202,14 +203,53 @@ public class UsageManagement {
         System.out.println("Booker Info Successfully Update.");
     }
 
-    public void extendBooking(LinkedList<ReservationRecord> reservationRecord, int row) {
-
-        DecimalFormat df = new DecimalFormat("#.##");
+    public void extendBooking(LinkedList<ReservationRecord> reservationRecord, int row) throws ParseException {
+        DecimalFormat df = new DecimalFormat("#.####"); //4sf
         df.setRoundingMode(RoundingMode.FLOOR);
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
+        Scanner input = new Scanner(System.in);
         long next_starttime = 0;
 
+        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
+        bookingitems = filterRecord(reservationRecord, currentRecord);
+        LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems); //sorted list
+
+        int new_row = sortedBookings.getPosition(currentRecord); //get the current booking to update in sortedBookings
+        ReservationRecord comingBooking; //refer to next booking
+        double diff_hours = 0.0;
+        double extend_duration;
+        String end_time;
+        Date endDate;
+
+        boolean loop = false;
+        System.out.println("Extension");
+        do {
+            System.out.print("New End Time(dd/MM/yyyy HH:mm) :");
+            end_time = input.nextLine();
+            endDate = (Date) myFormatObj.parse(end_time);
+
+            long datediff = endDate.getTime() - currentRecord.getReservationEndTime().getTime();
+            if ((datediff / (1000 * 60 * 60)) % 24 > 2) {
+                System.out.println("Maximum time allow to extend is only 2 hours.");
+            }else if (new_row + 1 <= sortedBookings.getLength()) { //there is a next row
+                comingBooking = sortedBookings.getEntry(new_row + 1);
+                //System.out.println("compare updatedate with next reservation " + endDate.compareTo(comingBooking.getReservationStartTime()));
+                if (endDate.compareTo(comingBooking.getReservationStartTime()) > 0) {
+                    System.out.println("The updation is clash with next booking");
+                } else {
+                    loop = true;
+                }
+            } else {
+                loop = true;
+            }
+
+        } while (loop == false);
+
+        System.out.println("Booking successfully extended.");
+        //here need to update booking table/record
+        currentRecord.setReservationEndTime(endDate);
+        reservationRecord.replace(row, currentRecord);
     }
 
     public int getRow() {
@@ -237,8 +277,13 @@ public class UsageManagement {
         System.out.println(bookingitems);
     }
 
-    private void displayBookerProfile() {
-        System.out.println("");
+    private void displayBookerProfile(int row) {
+        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
+        bookingitems = filterRecord(reservationRecord, currentRecord);
+        bookingitems = SortDateTime(bookingitems);
+        System.out.println(bookingitems);
+
     }
 
     private static LinkedList<ReservationRecord> filterRecord(LinkedList<ReservationRecord> reservationRecord, ReservationRecord currentRecord) {
@@ -296,7 +341,7 @@ public class UsageManagement {
 
     public void displayBookingDetails(int row) {
         System.out.println("");
-       
+
         System.out.println("-".repeat(80));
         System.out.println("Booking #" + reservationRecord.getEntry(row).getReservationID() + " Details");
         System.out.println("-".repeat(80));

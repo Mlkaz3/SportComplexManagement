@@ -214,6 +214,7 @@ public class UsageLogBasic {
                             case 2 -> {
                                 //display user profile 
                                 System.out.println("Print user info and the past reservation not sure how but ahha");
+
                                 //actually this part is sorting
                             }
                             case 3 -> {
@@ -239,53 +240,53 @@ public class UsageLogBasic {
                         switch (update_selection) {
                             case 1 -> {
                                 //extension of booking
-
-                                ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
-                                LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
-                                bookingitems = filterRecord(reservationRecord, currentRecord);
-
-                                //arrage in time, ascending order
-                                LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems);
-
-                                //compare the booking item with the next row booking item
-                                //doing this cause when we sort and filter the new list will have new sequence
-                                int new_row = sortedBookings.getPosition(currentRecord);
-
-                                //use the next end time - start time 
-                                ReservationRecord currentBooking = sortedBookings.getEntry(new_row);
-                                ReservationRecord comingBooking;
-                                double diff_hours = 0.0;
-
-                                if (new_row + 1 > sortedBookings.getLength()) {
-                                    //indicate no coming booking 
-                                    System.out.println("Duration is able to be extend.");
-                                    System.out.println("Please enter new extend duration: ");
-                                    diff_hours = 2.0; //setting max as max limit
-
-                                } else {
-                                    comingBooking = sortedBookings.getEntry(new_row + 1);
-                                    long pre_endtime = currentBooking.getReservationEndTime().getTime();
-                                    long next_starttime = comingBooking.getReservationStartTime().getTime(); //here got error cause no next row 
-
-                                    double difference_In_Time = next_starttime - pre_endtime;
-                                    diff_hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
-                                    //double diff_mins = (difference_In_Time / (1000 * 60)) % 60;
-                                    System.out.println("Duration that able to be extend is: " + df.format(diff_hours) + " hours ");
-
-                                }
-
-                                double extend_duration;
-                                //prompt user do you want to be extend? 
-                                System.out.println("How long to be extend? (in hour)");
-                                extend_duration = input.nextDouble();
-
-                                while (extend_duration > diff_hours) {
-                                    System.out.println("Invalid extend duration");
-                                    extend_duration = input.nextDouble();
-
-                                }
-
-                                System.out.println("Booking successfully extended.");
+                                extendBooking(reservationRecord, row);
+//                                ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+//                                LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
+//                                bookingitems = filterRecord(reservationRecord, currentRecord);
+//
+//                                //arrage in time, ascending order
+//                                LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems);
+//
+//                                //compare the booking item with the next row booking item
+//                                //doing this cause when we sort and filter the new list will have new sequence
+//                                int new_row = sortedBookings.getPosition(currentRecord);
+//
+//                                //use the next end time - start time 
+//                                ReservationRecord currentBooking = sortedBookings.getEntry(new_row);
+//                                ReservationRecord comingBooking;
+//                                double diff_hours = 0.0;
+//
+//                                if (new_row + 1 > sortedBookings.getLength()) {
+//                                    //indicate no coming booking 
+//                                    System.out.println("Duration is able to be extend.");
+//                                    System.out.println("Please enter new extend duration: ");
+//                                    diff_hours = 2.0; //setting max as max limit
+//
+//                                } else {
+//                                    comingBooking = sortedBookings.getEntry(new_row + 1);
+//                                    long pre_endtime = currentBooking.getReservationEndTime().getTime();
+//                                    long next_starttime = comingBooking.getReservationStartTime().getTime(); //here got error cause no next row 
+//
+//                                    double difference_In_Time = next_starttime - pre_endtime;
+//                                    diff_hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
+//                                    //double diff_mins = (difference_In_Time / (1000 * 60)) % 60;
+//                                    System.out.println("Duration that able to be extend is: " + df.format(diff_hours) + " hours ");
+//
+//                                }
+//
+//                                double extend_duration;
+//                                //prompt user do you want to be extend? 
+//                                System.out.println("How long to be extend? (in hour)");
+//                                extend_duration = input.nextDouble();
+//
+//                                while (extend_duration > diff_hours) {
+//                                    System.out.println("Invalid extend duration");
+//                                    extend_duration = input.nextDouble();
+//
+//                                }
+//
+//                                System.out.println("Booking successfully extended.");
 
                             }
 
@@ -719,7 +720,7 @@ public class UsageLogBasic {
         df.setRoundingMode(RoundingMode.FLOOR);
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Scanner input = new Scanner(System.in);
-        long next_starttime = 0 ;
+        long next_starttime = 0;
 
         ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
         LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
@@ -747,7 +748,7 @@ public class UsageLogBasic {
         } else {
             comingBooking = sortedBookings.getEntry(new_row + 1);
             long pre_endtime = currentRecord.getReservationEndTime().getTime();
-            next_starttime = comingBooking.getReservationStartTime().getTime(); 
+            next_starttime = comingBooking.getReservationStartTime().getTime();
 
             double difference_In_Time = next_starttime - pre_endtime;
             diff_hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
@@ -762,13 +763,18 @@ public class UsageLogBasic {
         System.out.print("New End Time(dd/MM/yyyy HH:mm) :");
         String end_time = input.nextLine();
         Date endDate = (Date) myFormatObj.parse(end_time);
-        extend_duration = next_starttime - endDate.getTime(); //needa minus
 
-        while (extend_duration != 0) {
+        boolean loop = false;
+        while (loop == false) {
+            System.out.println("Please enter extended time");
+            System.out.print("New End Time(dd/MM/yyyy HH:mm) :");
+            end_time = input.nextLine();
+            comingBooking = sortedBookings.getEntry(new_row + 1);
+            if (endDate.compareTo(comingBooking.getReservationEndTime()) > 0) {
 
-            if (extend_duration > diff_hours) {
-                System.out.println("Invalid extend duration");
-                extend_duration = input.nextDouble();
+                loop = false;
+            } else {
+                loop = true;
             }
 
         }
