@@ -9,7 +9,6 @@ package entity;
  *
  * @author andre
  */
-import java.util.Date;
 import java.util.Objects;
 
 public class Facility {
