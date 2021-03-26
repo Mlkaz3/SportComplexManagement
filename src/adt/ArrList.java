@@ -87,6 +87,14 @@ public class ArrList<T> implements ListInter<T>, Serializable {
     }
 
     return result;
+   /*if(atPosition<0 || atPosition>=this.filledSize) throw new IndexOutOfBoundsException();
+	T returnElement = array[atPosition];
+	for(int i = atPosition+1;i<this.filledSize;i++){
+            array[i-1]=array[i];
+}
+	array[this.filledSize]=null;
+	this.filledSize--;
+	return returnElement; */
   }
 
   @Override

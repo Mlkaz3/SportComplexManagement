@@ -173,39 +173,90 @@ public class TestArrList {
                 Facility newFacility = new Facility(facilityID,facilityName,facilityType,facilityAvailability);
                 facility.add(newFacility);
                 
+                for(int i = 0; i < facility.filledSize() ; i++){
+                    System.out.println(i);
+                    System.out.println(facility.get(i));}
+                
 
                 break;
             case 3:
                 
-                String facilityRemove;
+
                 System.out.println("Enter remove facility ID: ");
+                String facilityRemove = userInput.nextLine();
                 facilityRemove = userInput.nextLine();
                 
-                System.out.println("Enter remove facility ID: ");
-                facilityRemove = userInput.nextLine();
+                
+                
                 
                 for(int i = 0; i < facility.filledSize() ; i++){
-  
+                    String currentID = facility.get(i).getFacilityID();
+                    if(currentID.equals(facilityRemove)){
+                        facility.remove(i+1);
+                    }
+                }
+                for(int i = 0; i < facility.filledSize() ; i++){
+                    System.out.println(i);
+                    System.out.println(facility.get(i));}
+                /*for(int i = 0; i < facility.filledSize() ; i++){
                     String currentID = facility.get(i).getFacilityID();
                     if(currentID == facilityRemove){
                         facility.remove(i);
-                    };
-}
+                    };         }
+                for(int i = 0; i < facility.filledSize() ; i++){
+                    System.out.println(i);
+                    System.out.println(facility.get(i));}*/
                 break;
             case 4:
-            String requestID;
-            System.out.println("Enter request facility ID: ");
-            requestID = userInput.nextLine();
+                
+            System.out.println("Kindly insert ur personal info: ");
+            System.out.println("Enter username: ");
+            String userName = userInput.nextLine();
+            userName = userInput.nextLine();
+            System.out.println("Enter user ID: ");
+            String userID = userInput.nextLine();
+            System.out.println("Enter user category: ");
+            String userCategory = userInput.nextLine();
+            System.out.println("Enter user tel: ");
+            String userTel = userInput.nextLine();
             
+            //User newuser = new User();
+           // String requestID;
             System.out.println("Enter request facility ID: ");
-            requestID = userInput.nextLine();
+            String requestID = userInput.nextLine();
+            
             
             for(int i = 0; i < facility.filledSize() ; i++){
-                System.out.println(i);
-                System.out.println(facility.get(i));}
+                String checkID = facility.get(i).getFacilityID() ;
+                Boolean currentCourtAvai = facility.get(i).getFacilityAvailability();
+                
+                if(currentCourtAvai == true && checkID.equals(requestID)){
+                    facility.get(i).setFacilityAvailability(false);
+                    System.out.println("room hab been successfully registered");
+                }
+                else if(currentCourtAvai == false && checkID.equals(requestID)){
+                System.out.println("the room is not available");}
+                    }
                 
                 break; 
             case 5:
+            System.out.println("Enter request facility ID: ");
+            requestID = userInput.nextLine();
+            requestID = userInput.nextLine();
+            
+            for(int i = 0; i < facility.filledSize() ; i++){
+                String checkID = facility.get(i).getFacilityID() ;
+                Boolean currentCourtAvai = facility.get(i).getFacilityAvailability();
+                
+                if(currentCourtAvai == false && checkID.equals(requestID)){
+                    facility.get(i).setFacilityAvailability(true);
+                    System.out.println("Court successfully booked out");
+                }
+                else if(currentCourtAvai == true && checkID.equals(requestID)){
+                System.out.println("Room is not booked no booking out require");}
+                    }    
+            
+            
                 break;
             case 6:
                 break;
