@@ -21,6 +21,8 @@ import java.util.Scanner;
  */
 public class MainDriver {
 
+    public static EquipmentManagement equipmentManagement = new EquipmentManagement();
+
     public static void main(String[] args) {
 
         //hard code faciliies
@@ -84,7 +86,7 @@ public class MainDriver {
                         break;
                     case 2:
                         System.out.println();
-                        Equipment();
+                        EquipmentManagementMenu();
                         break;
                     case 3:
                         System.out.println();
@@ -132,20 +134,20 @@ public class MainDriver {
                 switch (ch) {
                     case 1 -> {
                         //display function to be code in facility management class
-                        
+
                     }
                     case 2 -> {
                         //add court
-                        
+
                     }
                     case 3 -> {
-                        
+
                     }
-                    case 4 ->{
-                    
+                    case 4 -> {
+
                     }
-                    case 5 ->{
-                    
+                    case 5 -> {
+
                     }
                     default -> {
                         System.out.println();
@@ -163,106 +165,103 @@ public class MainDriver {
         } while (ch != 6 || invalidInput);
     }
 
-    private static void Equipment() {
+    public static void EquipmentManagementMenu() {
         int ch = 0;
-        boolean invalidInput;
         do {
-            invalidInput = false;
             Scanner input = new Scanner(System.in);
-            
-           
-
-            System.out.println("\nEQUIPMENT");
-            System.out.println("---------");
-            System.out.println("(1) View Equipment");
-            System.out.println("(2) Borrow");
-            System.out.println("(3) Return");
-
             try {
+                System.out.println();
+                System.out.println("***************************************************");
+                System.out.println("*               Equipment Management              *");
+                System.out.println("*                                                 *");
+                System.out.println("*    [1] View Equipment                           *");
+                System.out.println("*    [2] Borrow Equipment                         *");
+                System.out.println("*    [3] Return Equipment                         *");
+                System.out.println("*    [4] Stock Management                         *");
+                System.out.println("*    [5] Back                                     *");
+                System.out.println("*                                                 *");
+                System.out.println("***************************************************");
+                System.out.println();
+
                 System.out.print("Please select your choice: ");
                 ch = input.nextInt();
-                System.out.println("");
 
                 switch (ch) {
-                    case 1 ->
-                        System.out.println("Havent implement gomennasaaii");
-                    case 2 -> {
-                        //when user wanna borrow stg 
-                        //hardcode a equipment (user want)
-                        Equipment equipment = new Equipment("Testing001", "Badminton Racquet", true, "23.00", "somewhere", "racquet");
+                    case 1:
+                        System.out.println();
+                        equipmentManagement.displayStack();
+                        break;
+                    case 2:
+                        System.out.println();
+                        equipmentManagement.borrowEquipment();
+                        break;
+                    case 3:
+                        System.out.println();
+                        equipmentManagement.returnEquipment();
 
-                        //hardcode a user
-                        User user = new User("taruc", "taruc1234", "admin", "0123568975");
-
-                        //prompt user for what they wanna borrow
-                        System.out.println("What do you wanna borrow?");
-                        System.out.println("Badminton Racquet will be borrow. This is a hardcode.");
-                        //String choice = input.next();
-
-                        //check availability
-                        if (equipment.getEquipmentStatus()) {
-                            //if true
-                            System.out.println("Racquet is available now.");
-                            //prompt for duration
-                            System.out.println("How long u wan to borrow? (in minutes)");
-                            double duration = input.nextInt();
-
-                            //user and validation
-                            //this case no cause we hardcode
-                            System.out.println("User Validation on going (5s)");
-                            System.out.println("User Validation on going (4s)");
-                            System.out.println("User Validation on going (3s)");
-                            System.out.println("User Validation on going (2s)");
-                            System.out.println("User Validation on going (1s)");
-
-                            String name;
-                            String id;
-                            String cat;
-                            String con;
-
-                            User currentUser = new User();
-
-                            System.out.println("---------");
-                            System.out.println("User Info");
-                            System.out.println("---------");
-                            System.out.println("User Name: ");
-                            currentUser.setUserName(input.nextLine());
-                            System.out.println("User ID: ");
-                            id = input.nextLine();
-                            currentUser.setUserID(id);
-                            System.out.println("User Category: ");
-                            cat = input.nextLine();
-                            currentUser.setUserCategory(cat);
-                            System.out.println("User Contact: ");
-                            con = input.nextLine();
-                            currentUser.setUserTel(cat);
-
-                            System.out.println(currentUser);
-
-                            //add record
-                            ReservationRecord record1 = new ReservationRecord(user, equipment);
-                            System.out.println("user1:" + user);
-                            System.out.println("equipment1: " + equipment);
-                            System.out.println("record1: " + record1);
-                        }
-                    }
-                    case 3 -> {
-                    }
-                    default -> {
+                        break;
+                    case 4:
+                        System.out.println();
+                        stockManagementMenu();
+                        break;
+                    case 5:
+                        break;
+                    default:
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
-                        System.out.println();
-                    }
+                        break;
                 }
-
             } catch (InputMismatchException e) {
                 System.out.println();
-                System.out.println("Error. Please enter an integer value within 1 and 3");
-                System.out.println();
-                invalidInput = true;
+                System.out.println("Error. Please enter an integer value within 1 and 5.");
             }
-        } while (ch != 3 || invalidInput);
+
+        } while (ch != 5);
     }
+
+    public static void stockManagementMenu() {
+        int ch = 0;
+        do {
+            Scanner input = new Scanner(System.in);
+            try {
+                System.out.println();
+                System.out.println("***************************************************");
+                System.out.println("*                 Stock Management                *");
+                System.out.println("*                                                 *");
+                System.out.println("*    [1] Stock In                                 *");
+                System.out.println("*    [2] Clear All Equipment                      *");
+                System.out.println("*    [3] Back                                     *");
+                System.out.println("*                                                 *");
+                System.out.println("***************************************************");
+                System.out.println();
+
+                System.out.print("Please select your choice: ");
+                ch = input.nextInt();
+
+                switch (ch) {
+                    case 1:
+                        System.out.println();
+                        equipmentManagement.stockIn();
+                        break;
+                    case 2:
+                        System.out.println();
+                        equipmentManagement.stockOut();
+                        break;
+                    case 3:
+                        break;
+
+                    default:
+                        System.out.println();
+                        System.out.println("Error. Please select a correct choice.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println();
+                System.out.println("Error. Please enter an integer value within 1 and 3.");
+            }
+
+        } while (ch != 3);
+    }    
 
     private static void Maintenance() {
         int ch = 0;
@@ -403,6 +402,7 @@ public class MainDriver {
         } else {
             //end this process
         }
+        
 
 //            try {
 //                System.out.print("Please select your choice: ");
