@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author YJ
  */
-public class Maintenance implements Comparable<Maintenance> {
+public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     private Facility facility;
     private static int next = 1000;
@@ -28,11 +29,11 @@ public class Maintenance implements Comparable<Maintenance> {
     private Date requiredDate; // This determines the priority
 
     public Maintenance() {
-        this.maintenanceID = String.valueOf(next++);
+        this.maintenanceID = "M" + String.valueOf(next++);
     }
 
     public Maintenance(String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
-        //this.maintenanceID = "M" + String.valueOf(next++);
+        this.maintenanceID = "M" + String.valueOf(next++);
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
         this.requestDate = requestDate;
@@ -153,15 +154,17 @@ public class Maintenance implements Comparable<Maintenance> {
     }
 
     //Entity class methods
-    public int calcDuration() { //end date - start date
-        return (int) (endDate.getTime() - startDate.getTime() / (1000 * 60 * 60 * 24));
+    public long calcDuration() { //end date - start date
+        long duration = endDate.getTime() - startDate.getTime();
+        return duration / 1000;
     }
 
-    public double calcCost() { // duration x payment per day
+    public double calcCost() { // duration x payment per day (use seconds for demonstration)
         return calcDuration() * costPerDay;
     }
 
-    public double calcWaitingTime() {
-        return (int) (startDate.getTime() - requestDate.getTime() / (1000 * 60 * 60 * 24));
+    public long calcWaitingTime() { //request date - start date
+        long waitingTime = startDate.getTime() - requestDate.getTime();
+        return waitingTime / 1000;
     }
 }

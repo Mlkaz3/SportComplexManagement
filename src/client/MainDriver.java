@@ -69,14 +69,13 @@ public class MainDriver {
         ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 10:13"), (Date) myFormatObj.parse("02/02/2021 11:37"), user2, equipment3);
         ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 05:01"), (Date) myFormatObj.parse("02/02/2021 06:00"), user3, equipment3);
         ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 07:01"), (Date) myFormatObj.parse("02/02/2021 10:01"), user4, equipment3);
-        
+
         usageManagement.addReservation(record1);
         usageManagement.addReservation(record2);
         usageManagement.addReservation(record3);
         usageManagement.addReservation(record4);
         usageManagement.addReservation(record5);
-        
-        
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("WELCOME TO TARUC SPORT COMPLEX");
@@ -271,7 +270,7 @@ public class MainDriver {
                     }
                     case 2 -> {
                         System.out.println();
-                        equipmentManagement.stockOut();
+                        equipmentManagement.clearAll();
                     }
                     case 3 -> {
                     }
@@ -302,8 +301,10 @@ public class MainDriver {
                 System.out.println("*    [2] Add Appointment                          *");
                 System.out.println("*    [3] Cancel Appointment                       *");
                 System.out.println("*    [4] Edit Appointment                         *");
-                System.out.println("*    [5] Manage Appointments                      *");
-                System.out.println("*    [6] Back                                     *");
+                System.out.println("*    [5] Commence a maintenance                   *");
+                System.out.println("*    [6] Complete a maintenance                   *");
+                System.out.println("*    [7] View report                              *");
+                System.out.println("*    [8] Back                                     *");
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
                 System.out.println();
@@ -326,9 +327,15 @@ public class MainDriver {
                         maintenanceMgmt.editAppt();
                     }
                     case 5 -> {
-                        manageAppt();
+                        maintenanceMgmt.serveFront();
                     }
                     case 6 -> {
+                        maintenanceMgmt.completeMaintenance();
+                    }
+                    case 7 -> {
+                        maintenanceMgmt.viewReport();
+                    }
+                    case 8 -> {
 
                     }
                     default -> {
@@ -338,54 +345,53 @@ public class MainDriver {
                 }
             } catch (InputMismatchException e) {
                 System.out.println();
-                System.out.println("Error. Please enter an integer value within 1 and 5.");
+                System.out.println("Error. Please enter an integer value within 1 and 7.");
             }
 
-        } while (ch != 6);
+        } while (ch != 8);
     }
 
-    public static void manageAppt() {
-
-        int ch = 0;
-        do {
-            Scanner input = new Scanner(System.in);
-            try {
-                System.out.println();
-                System.out.println("***************************************************");
-                System.out.println("*               Manage Appointments               *");
-                System.out.println("*                                                 *");
-                System.out.println("*    [1] Send for maintenance                     *");
-                System.out.println("*    [2] Manage completion                        *");
-                System.out.println("*    [3] Back                                     *");
-                System.out.println("*                                                 *");
-                System.out.println("***************************************************");
-                System.out.println();
-
-                System.out.print("Please select your choice: ");
-                ch = input.nextInt();
-
-                switch (ch) {
-                    case 1 ->
-                        maintenanceMgmt.serveFront();
-                    case 2 -> {
-                        System.out.println();
-                        maintenanceMgmt.manageCompletion();
-                    }
-                    case 3 -> {
-                    }
-                    default -> {
-                        System.out.println();
-                        System.out.println("Error. Please select a correct choice.");
-                    }
-                }
-            } catch (InputMismatchException e) {
-                System.out.println();
-                System.out.println("Error. Please enter an integer value within 1 and 3.");
-            }
-
-        } while (ch != 3);
-    }
-
+//    public static void manageAppt() {
+//
+//        int ch = 0;
+//        do {
+//            Scanner input = new Scanner(System.in);
+//            try {
+//                System.out.println();
+//                System.out.println("***************************************************");
+//                System.out.println("*               Manage Appointments               *");
+//                System.out.println("*                                                 *");
+//                System.out.println("*    [1] Send for maintenance                     *");
+//                System.out.println("*    [2] Manage completion                        *");
+//                System.out.println("*    [3] Back                                     *");
+//                System.out.println("*                                                 *");
+//                System.out.println("***************************************************");
+//                System.out.println();
+//
+//                System.out.print("Please select your choice: ");
+//                ch = input.nextInt();
+//
+//                switch (ch) {
+//                    case 1 ->
+//                        maintenanceMgmt.serveFront();
+//                    case 2 -> {
+//                        System.out.println();
+//                        maintenanceMgmt.manageCompletion();
+//                    }
+//                    case 3 -> {
+//                    }
+//                    default -> {
+//                        System.out.println();
+//                        System.out.println("Error. Please select a correct choice.");
+//                    }
+//                }
+//            } catch (InputMismatchException e) {
+//                System.out.println();
+//                System.out.println("Error. Please enter an integer value within 1 and 3.");
+//            }
+//
+//        } while (ch != 3);
+//    }
     private static void UsageManagementMenu() throws ParseException {
         usageManagement.displayReservation();
         //print out the record == Today's record

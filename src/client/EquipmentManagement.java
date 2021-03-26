@@ -176,7 +176,7 @@ public class EquipmentManagement {
     }
 
     //validation for user input
-    public void stockOut() {
+    public void clearAll() {
         equipmentStack.clear();
         System.out.println("All equipment is removed.");
     }

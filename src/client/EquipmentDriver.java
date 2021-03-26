@@ -135,7 +135,7 @@ public class EquipmentDriver {
                         break;
                     case 2:
                         System.out.println();
-                        equipmentManagement.stockOut();
+                        equipmentManagement.clearAll();
                         break;
                     case 3:
                         break;

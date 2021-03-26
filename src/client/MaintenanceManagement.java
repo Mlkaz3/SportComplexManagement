@@ -23,7 +23,10 @@ import java.util.Scanner;
  *
  * @author YJ
  */
-public class MaintenanceManagement { //add keep prompting duplicated, manage completion - view report calc methods return null, check if alrd completed, display end date, maintenance ID
+public class MaintenanceManagement {
+    // display end date, maintenance ID
+    // optimize code
+    // loop within page/method (see if got time)
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
     ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
@@ -37,10 +40,13 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
 
     //display
     public void displayQueue() {
-        System.out.println("                                             Maintenance Appointment Queue\n");
+
+        System.out.println("                                             Maintenance Appointment Queue");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
         System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
         System.out.println("--------------------------------------------------------------------------------------------------------------------------");
         System.out.println(appointmentQueue);
+        //serFileReader();
         System.out.println("--------------------------------------------------------------------------------------------------------------------------");
 
         if (appointmentQueue.isEmpty()) {
@@ -62,10 +68,12 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
 
         System.out.println("\nAdd an appointment -> ");
 
-        //print ist of facilities
-        System.out.println("\n                 - List of Facilities -         ");
-        System.out.println("-------------------------------------------------------");
+        //print list of facilities
+        System.out.println("-----------------------------------------------------");
+        System.out.println("               - List of Facilities -                ");
+        System.out.println("-----------------------------------------------------");
         System.out.println(Data.court);
+        System.out.println("-----------------------------------------------------");
 
         String facilityID;
         boolean validID;
@@ -119,18 +127,17 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
         Date now = requestDate.getTime();
         maintenance.setRequestDate(now);
 
-        System.out.println(appointmentQueue.enqueue(maintenance));
-//        
-//        if (appointmentQueue.enqueue(maintenance)) {
-//            System.out.println("\nAppointment added successfully!");
-//        } else {
-//            System.out.println("\nDuplicated appointment found!");
-//        }
+        if (appointmentQueue.enqueue(maintenance)) {
+            //serFileWriter();
+            System.out.println("\nAppointment added successfully!");
+        } else {
+            System.out.println("\nDuplicated appointment found!");
+        }
 
         pressAnyKeyToContinue();
     }
 
-    //send for maintenance, set maintenance ID
+    //send for maintenance, generate a maintenance ID
     public void serveFront() {
 
         Maintenance maintenance = appointmentQueue.getFront();
@@ -155,17 +162,9 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
                             String maintenanceID = maintenance.getMaintenanceID();
                             maintenance.setMaintenanceID(maintenanceID);
 
-//                            int index = 0;
-//                            for (int i = 0; i < Data.court.filledSize(); i++) {
-//                                if (maintenance.getFacility() == null ? Data.court.get(i) == null : maintenance.getFacility().equals(Data.court.get(i))) {
-//                                    index = i;
-//                                }
-//                            }
-
                             maintenance.getFacility().setFacilityAvailability(false);
-                            
-                            //Data.court.get(index).setFacilityAvailability(false);
 
+                            //Data.court.get(index).setFacilityAvailability(false);
                             GregorianCalendar startDate = new GregorianCalendar();
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
@@ -182,8 +181,7 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
                         default -> {
                             System.out.println();
                             System.out.println("Error. Please select a correct choice.");
-                            System.out.println();
-                            validInput = true;
+                            validInput = false;
                             break;
                         }
                     }
@@ -193,8 +191,8 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
                     validInput = true;
                 }
             } while (validInput != true);
-            pressAnyKeyToContinue();
         }
+        pressAnyKeyToContinue();
     }
 
     //cancel appointment
@@ -382,146 +380,155 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
         pressAnyKeyToContinue();
     }
 
-    public void manageCompletion() {
+    //set end date, calculate waiting time, duration, cost
+    public void completeMaintenance() {
 
-        Maintenance maintenance;
         printHistory();
 
         if (maintenanceHistory.isEmpty()) {
-            System.out.println("There is no record to view.");
+            System.out.println("There is no record.");
+
         } else {
 
-            System.out.println("\n[1] Complete a maintenance");
-            System.out.println("[2] View Report");
-            System.out.println("[3] Back");
+            System.out.println("\nComplete a maintenance -> ");
 
-            int num = 0;
+            Maintenance maintenance;
+
             boolean valid;
+            int position = 0;
             do {
-                System.out.print("\nSelect an action: ");
-                String choice = userInput.nextLine();
+                System.out.print("\nEnter your choice: ");
+                String input = userInput.nextLine();
 
                 try {
-                    num = Integer.parseInt(choice);
-                    valid = true;
+                    position = Integer.parseInt(input);
+                    if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
+                        valid = false;
+                        System.out.println("\nError. Maintenance record not found.");
+                    } else {
+                        valid = true;
+                    }
                 } catch (NumberFormatException e) {
                     System.out.println("\nError. Invalid input.");
                     valid = false;
                 }
             } while (valid != true);
 
-            switch (num) {
-                case 1 -> {
-                    int position = 0;
-                    do {
-                        System.out.print("\nEnter your choice: ");
-                        String input = userInput.nextLine();
+            maintenance = maintenanceHistory.getEntry(position);
 
-                        try {
-                            position = Integer.parseInt(input);
-                            if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
-                                valid = false;
-                                System.out.println("\nError. Maintenance record not found.");
-                            } else {
-                                valid = true;
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("\nError. Invalid input.");
-                            valid = false;
-                        }
-                    } while (valid != true);
+            if (maintenance.getEndDate() != null) {
+                System.out.println("\nThe maintenance is already completed.");
+            } else {
+                maintenance.getFacility().setFacilityAvailability(true);
 
-                    maintenance = maintenanceHistory.getEntry(position);
+                GregorianCalendar endDate = new GregorianCalendar();
+                Date now = endDate.getTime();
+                maintenance.setEndDate(now);
 
-//                    int index = 0;
-//                    for (int i = 0; i < Data.court.filledSize(); i++) {
-//                        if (maintenance.getFacility() == null ? Data.court.get(i) == null : maintenance.getFacility().equals(Data.court.get(i))) {
-//                            index = i;
-//                        }
-//                    }
-//                    Data.court.get(index).setFacilityAvailability(true);
-                    
-                    maintenance.getFacility().setFacilityAvailability(true);
+                do {
+                    System.out.print("\nEnter maintenance cost per day: ");
+                    String input = userInput.nextLine();
 
-                    GregorianCalendar endDate = new GregorianCalendar();
-                    Date now = endDate.getTime();
-                    maintenance.setEndDate(now);
+                    try {
+                        double cost = Double.parseDouble(input);
+                        maintenance.setCostPerDay(cost);
+                        valid = true;
+                    } catch (NumberFormatException e) {
+                        System.out.println("\nError. Invalid input.");
+                        valid = false;
+                    }
+                } while (valid != true);
 
-                    do {
-                        System.out.print("\nEnter maintenance cost per day: ");
-                        String input = userInput.nextLine();
-
-                        try {
-                            double cost = Double.parseDouble(input);
-                            maintenance.setCostPerDay(cost);
-                            valid = true;
-                        } catch (NumberFormatException e) {
-                            System.out.println("\nError. Invalid input.");
-                            valid = false;
-                        }
-                    } while (valid != true);
-
-                    System.out.println("\nMaintenance completed!"); //check if alrd completed
-
-                    break;
-                }
-                case 2 -> {
-                    int position = 0;
-                    do {
-                        System.out.print("\nEnter your choice: ");
-                        String input = userInput.nextLine();
-
-                        try {
-                            position = Integer.parseInt(input);
-                            if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
-                                valid = false;
-                                System.out.println("\nError. Maintenance record not found.");
-                            } else {
-                                valid = true;
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("\nError. Invalid input.");
-                            valid = false;
-                        }
-                    } while (valid != true);
-
-                    maintenance = maintenanceHistory.getEntry(position);
-
-                    System.out.println("\nMaintenance ID: " + maintenance.getMaintenanceID());
-                    System.out.println("Facility ID: " + maintenance.getFacility().getFacilityID());
-                    System.out.println("Maintenance type: " + maintenance.getMaintenanceType());
-                    System.out.println("Maintenance description: " + maintenance.getMaintenanceDesc());
-                    System.out.println("------------------------------------------");
-                    //System.out.println("Waiting time: " + maintenance.calcWaitingTime());
-                    //System.out.println("Duration of maintenance: " + maintenance.calcDuration());
-                    //System.out.println("Total cost of maintenance: " + maintenance.calcCost());
-                }
-                case 3 -> {
-
-                }
-                default -> {
-                    System.out.println();
-                    System.out.println("Error. Please select a correct choice.");
-                    break;
-                } // TRY CATCH HERE
+                System.out.println("\nMaintenance completed!"); //check if alrd completed
             }
         }
         pressAnyKeyToContinue();
     }
 
-    public void printHistory() {
-        System.out.println("                                                Maintenance History\n");
-        System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
-        System.out.println(maintenanceHistory);
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+    //display report of chosen record
+    public void viewReport() {
+
+        printHistory();
+
         if (maintenanceHistory.isEmpty()) {
             System.out.println("There is no record.");
+
         } else {
-            System.out.println("======================");
+            System.out.println("==================");
             System.out.println("Total records: " + maintenanceHistory.getfilledSize());
-            System.out.println("======================");
+            System.out.println("==================");
+
+            System.out.println("\nView report of a completed maintenance -> ");
+
+            Maintenance maintenance;
+
+            boolean valid;
+            int position = 0;
+            do {
+                System.out.print("\nEnter your choice: ");
+                String input = userInput.nextLine();
+
+                try {
+                    position = Integer.parseInt(input);
+                    if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
+                        valid = false;
+                        System.out.println("\nError. Maintenance record not found.");
+                    } else {
+                        valid = true;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("\nError. Invalid input.");
+                    valid = false;
+                }
+            } while (valid != true);
+
+            maintenance = maintenanceHistory.getEntry(position);
+
+            if (maintenance.getEndDate() == null) {
+                System.out.println("\nMaintenance is still going on...");
+            } else {
+                System.out.println("-------------------------------------------------------");
+                System.out.println("              Maintenance report of " + maintenance.getMaintenanceID());
+                System.out.println("-------------------------------------------------------");
+                System.out.println("Facility ID              : " + maintenance.getFacility().getFacilityID());
+                System.out.println("Maintenance type         : " + maintenance.getMaintenanceType());
+                System.out.println("Maintenance description  : " + maintenance.getMaintenanceDesc());
+                System.out.println("-------------------------------------------------------");
+                System.out.println("Total waiting time       : " + maintenance.calcWaitingTime() + " s");
+                System.out.println("Duration of maintenance  : " + maintenance.calcDuration() + " s");
+                System.out.printf("Total cost of maintenance: RM%.2f", maintenance.calcCost());
+                System.out.println("\n-------------------------------------------------------");
+            }
         }
+
+        pressAnyKeyToContinue();
+
+    }
+
+    public void printHistory() {
+        Maintenance maintenance;
+
+        System.out.println("                                                Maintenance Records");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+//        for (int i = 0; i < maintenanceHistory.filledSize(); i++) {
+//            maintenance = maintenanceHistory.getEntry(i);
+//            String maintenanceID = maintenance.getMaintenanceID();
+//            String facilityID = maintenance.getFacility().getFacilityID();
+//            String maintenanceType = maintenance.getMaintenanceType();
+//            String maintenanceDesc = maintenance.getMaintenanceDesc();
+//            Date startDate = maintenance.getStartDate();
+//            Date endDate = maintenance.getEndDate();
+//            
+//            if (endDate != null) {
+//                System.out.printf("%-17s %-20s %-30s %-20s %-25s %-25s\n", maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(startDate), formatter.format(endDate));
+//            } else {
+//            System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(startDate));
+//            }
+//        }
+        System.out.println(maintenanceHistory);
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
     }
 
     public static void pressAnyKeyToContinue() {
@@ -534,11 +541,141 @@ public class MaintenanceManagement { //add keep prompting duplicated, manage com
 
 }
 
-//    private boolean validID(String facilityID) {
-//        return (facilityID.charAt(0) == 'B' || facilityID.charAt(0) == 'T') && facilityID.length() == 4;
+//  public void serFileReader() {
+//        try {
+//            FileInputStream fileIn = new FileInputStream("src/MaintenanceQueue.ser");
+//            ObjectInputStream in = new ObjectInputStream(fileIn);
+//            appointmentQueue = (LinkedPriorityQueue<Maintenance>) in.readObject();
+//            in.close();
+//            fileIn.close();
+//        } catch (IOException i) {
+//            i.printStackTrace();
+//        } catch (ClassNotFoundException c) {
+//            System.out.println("No record found!");
+//            c.printStackTrace();
+//        }
 //    }
-//            if (validID(facilityID) == false) {
-//                System.out.println("\nError. Invalid facility ID.");
-//            } else {
-//                maintenance.setFacilityID(facilityID);
+//    
+//     public void serFileWriter() {
+//        try {
+//            FileOutputStream fileOut = new FileOutputStream("src/MaintenanceQueue.ser");
+//            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//            out.writeObject(appointmentQueue);
+//            out.close();
+//            fileOut.close();
+//        } catch (IOException i) {
+//            i.printStackTrace();
+//        }
+//    }
+//    public void manageCompletion() {
+//
+//        Maintenance maintenance;
+//        printHistory();
+//
+//        System.out.println("\n[1] Complete a maintenance");
+//        System.out.println("[2] View Report");
+//        System.out.println("[3] Back");
+//
+//        int num = 0;
+//        boolean valid;
+//        do {
+//            System.out.print("\nSelect an action: ");
+//            String choice = userInput.nextLine();
+//
+//            try {
+//                num = Integer.parseInt(choice);
+//                valid = true;
+//            } catch (NumberFormatException e) {
+//                System.out.println("\nError. Invalid input.");
+//                valid = false;
 //            }
+//        } while (valid != true);
+//
+//        switch (num) {
+//            case 1 -> {
+//                int position = 0;
+//                do {
+//                    System.out.print("\nEnter your choice: ");
+//                    String input = userInput.nextLine();
+//
+//                    try {
+//                        position = Integer.parseInt(input);
+//                        if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
+//                            valid = false;
+//                            System.out.println("\nError. Maintenance record not found.");
+//                        } else {
+//                            valid = true;
+//                        }
+//                    } catch (NumberFormatException e) {
+//                        System.out.println("\nError. Invalid input.");
+//                        valid = false;
+//                    }
+//                } while (valid != true);
+//
+//                maintenance = maintenanceHistory.getEntry(position);
+//                maintenance.getFacility().setFacilityAvailability(true);
+//
+//                GregorianCalendar endDate = new GregorianCalendar();
+//                Date now = endDate.getTime();
+//                maintenance.setEndDate(now);
+//
+//                do {
+//                    System.out.print("\nEnter maintenance cost per day: ");
+//                    String input = userInput.nextLine();
+//
+//                    try {
+//                        double cost = Double.parseDouble(input);
+//                        maintenance.setCostPerDay(cost);
+//                        valid = true;
+//                    } catch (NumberFormatException e) {
+//                        System.out.println("\nError. Invalid input.");
+//                        valid = false;
+//                    }
+//                } while (valid != true);
+//
+//                System.out.println("\nMaintenance completed!"); //check if alrd completed
+//
+//                break;
+//            }
+//            case 2 -> {
+//                int position = 0;
+//                do {
+//                    System.out.print("\nEnter your choice: ");
+//                    String input = userInput.nextLine();
+//
+//                    try {
+//                        position = Integer.parseInt(input);
+//                        if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
+//                            valid = false;
+//                            System.out.println("\nError. Maintenance record not found.");
+//                        } else {
+//                            valid = true;
+//                        }
+//                    } catch (NumberFormatException e) {
+//                        System.out.println("\nError. Invalid input.");
+//                        valid = false;
+//                    }
+//                } while (valid != true);
+//
+//                maintenance = maintenanceHistory.getEntry(position);
+//
+//                System.out.println("\nMaintenance ID: " + maintenance.getMaintenanceID());
+//                System.out.println("Facility ID: " + maintenance.getFacility().getFacilityID());
+//                System.out.println("Maintenance type: " + maintenance.getMaintenanceType());
+//                System.out.println("Maintenance description: " + maintenance.getMaintenanceDesc());
+//                System.out.println("------------------------------------------");
+//                System.out.println("Waiting time: " + maintenance.calcWaitingTime() + " s");
+//                System.out.println("Duration of maintenance: " + maintenance.calcDuration() + " s");
+//                System.out.println("Total cost of maintenance: RM" + maintenance.calcCost());
+//            }
+//            case 3 -> {
+//
+//            }
+//            default -> {
+//                System.out.println();
+//                System.out.println("Error. Please select a correct choice.");
+//                break;
+//            } // TRY CATCH HERE
+//        }
+//        pressAnyKeyToContinue();
+//    }

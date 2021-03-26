@@ -98,7 +98,7 @@ public class TestMaintenanceManagement {
                         maintenanceMgmt.serveFront();
                     case 2 -> {
                         System.out.println();
-                        maintenanceMgmt.manageCompletion();
+                        //maintenanceMgmt.manageCompletion();
                     }
                     case 3 -> {
                     }
