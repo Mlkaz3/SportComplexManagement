@@ -17,7 +17,7 @@ public class Facility {
     private String facilityID;
     private String facilityName;
     private String facilityType;
-    private String facilityAvailability;
+    private boolean facilityAvailability;
     private boolean status;
 
     //set as string for now but the correct one shud be Date
@@ -31,14 +31,7 @@ public class Facility {
         this.facilityID = facilityID;
     }
 
-    public Facility(String facilityID, String facilityName, String facilityType, boolean status) {
-        this.facilityID = facilityID;
-        this.facilityName = facilityName;
-        this.facilityType = facilityType;
-        this.status = status;
-    }
-    
-    public Facility(String facilityID, String facilityName, String facilityType, String facilityAvailability, String timeSlot, Date checkingTimeSlot) {
+    public Facility(String facilityID, String facilityName, String facilityType, Boolean facilityAvailability, String timeSlot) {
         this.facilityID = facilityID;
         this.facilityName = facilityName;
         this.facilityType = facilityType;
@@ -46,6 +39,7 @@ public class Facility {
         this.timeSlot = timeSlot;
         //this.checkingTimeSlot = checkingTimeSlot;
     }
+
 
     public String getFacilityID() {
         return facilityID;
@@ -71,12 +65,12 @@ public class Facility {
         this.facilityType = facilityType;
     }
 
-    public String isFacilityAvailability() {
+    public boolean isFacilityAvailability() {
         return facilityAvailability;
     }
 
-    public void setFacilityAvailability(String facilityAvailability) {
-        this.facilityAvailability = facilityAvailability;
+    public void setFacilityAvailability(boolean facilityAvailability) {
+        this.facilityAvailability = facilityAvailability; 
     }
 
     public String getTimeSlot() {
@@ -133,3 +127,4 @@ public class Facility {
     }
 
 }
+

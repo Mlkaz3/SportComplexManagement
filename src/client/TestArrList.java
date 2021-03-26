@@ -135,9 +135,9 @@ public class TestArrList {
         System.out.println("Choose from these choices");
         System.out.println("-------------------------\n");
         System.out.println("1 - View available room");
-        System.out.println("2 - Add reservation");
-        System.out.println("3 - Remove reservation");
-        System.out.println("4 - Add Court");
+        System.out.println("2 - Add Court");
+        System.out.println("3 - Remove Court");
+        System.out.println("4 - Add Reservation");
         System.out.println("5 - Remove Court");
         System.out.println("6 - Quit");
 
@@ -177,13 +177,35 @@ public class TestArrList {
 
                 break;
             case 3:
-               // for(int i = 0; i < facility.filledSize() ; i++){
-               //     String 
-                   // System.out.println(i);
-                    //System.out.println(facility.get(i));}
+                
+                String facilityRemove;
+                System.out.println("Enter remove facility ID: ");
+                facilityRemove = userInput.nextLine();
+                
+                System.out.println("Enter remove facility ID: ");
+                facilityRemove = userInput.nextLine();
+                
+                for(int i = 0; i < facility.filledSize() ; i++){
+  
+                    String currentID = facility.get(i).getFacilityID();
+                    if(currentID == facilityRemove){
+                        facility.remove(i);
+                    };
+}
                 break;
             case 4:
-                break;
+            String requestID;
+            System.out.println("Enter request facility ID: ");
+            requestID = userInput.nextLine();
+            
+            System.out.println("Enter request facility ID: ");
+            requestID = userInput.nextLine();
+            
+            for(int i = 0; i < facility.filledSize() ; i++){
+                System.out.println(i);
+                System.out.println(facility.get(i));}
+                
+                break; 
             case 5:
                 break;
             case 6:
