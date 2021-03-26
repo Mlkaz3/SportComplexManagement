@@ -18,6 +18,7 @@ public class MainDriver {
 
     public static EquipmentManagement equipmentManagement = new EquipmentManagement();
     public static MaintenanceManagement maintenanceMgmt = new MaintenanceManagement();
+    public static UsageManagement usageManagement = new UsageManagement();
 
     public static void main(String[] args) throws ParseException {
 
@@ -355,6 +356,9 @@ public class MainDriver {
     }
 
     private static void UsageManagementMenu() {
+
+        //print out the record == Today's record
+        //and read row 
         int ch = 0;
         do {
             Scanner input = new Scanner(System.in);
@@ -375,15 +379,22 @@ public class MainDriver {
                 ch = input.nextInt();
 
                 switch (ch) {
-                    case 1 ->
-                        
-                        System.out.println("");
+                    case 1 ->{
+                        //called viewBooking() function in Usage Management
+                        usageManagement.viewBooking(0);
+                        System.out.println("");}
+
                     case 2 -> {
-                        System.out.println();
-                        maintenanceMgmt.manageCompletion();
+                        //called updateBooking() function in Usage Management
+                        usageManagement.updateBooking(0);
+                        System.out.println("");
+
                     }
                     case 3 -> {
-                        
+                        //called deleteBooking() function in Usage Management which pass in the row number and 
+                        usageManagement.deleteBooking(0);
+                        System.out.println("");
+
                     }
                     default -> {
                         System.out.println();
