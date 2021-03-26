@@ -192,7 +192,7 @@ public class MainDriver {
         } while (ch != 6 || invalidInput);
     }
 
-    public static void EquipmentManagementMenu() {
+    public static void EquipmentManagementMenu() throws ParseException {
         int ch = 0;
         do {
             Scanner input = new Scanner(System.in);

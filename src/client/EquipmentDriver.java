@@ -1,5 +1,6 @@
 package client;
 
+import java.text.ParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class EquipmentDriver {
 //        } while (ch != 4);
 //    }
 //    
-    public static void EquipmentManagementMenu() {
+    public static void EquipmentManagementMenu() throws ParseException {
         int ch = 0;
         do {
             Scanner input = new Scanner(System.in);
@@ -153,7 +154,7 @@ public class EquipmentDriver {
         } while (ch != 3);
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         //EquipmentManagementMenu();
         EquipmentManagementMenu();
     }

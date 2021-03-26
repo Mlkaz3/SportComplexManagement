@@ -6,6 +6,7 @@
 package client;
 
 import adt.LinkedList;
+import entity.Equipment;
 import entity.ReservationRecord;
 import entity.User;
 import java.math.RoundingMode;
@@ -26,6 +27,7 @@ public class UsageManagement {
 
     LinkedList<ReservationRecord> reservationRecord;
     Scanner input = new Scanner(System.in);
+    
 
     public UsageManagement() {
         this.reservationRecord = new LinkedList<>();
@@ -342,6 +344,25 @@ public class UsageManagement {
         return bookerRecord;
     }
 
+    public Equipment getBookingEquipment(String id) {
+        //System.out.println("id" + id);
+        Equipment bookingitem = new Equipment();
+        //get the booking item by searching 
+        Iterator<ReservationRecord> itemIterator = reservationRecord.getIterator();
+        while (itemIterator.hasNext()) {
+            ReservationRecord record = itemIterator.next();
+            //System.out.println("looping through" + record.getEquipments());
+            if (record.getReservationID() == null ? id == null : record.getReservationID().equals(id)) {
+                //System.out.println("id match");
+                //System.out.println(record.getReservationID());
+                //System.out.println(record.getEquipments());
+                bookingitem = record.getEquipments();
+                break;
+            }
+        }
+        return bookingitem;
+    }
+
     private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
         //Node current will point to head  
         ReservationRecord current;
@@ -382,9 +403,11 @@ public class UsageManagement {
         System.out.println("Booking Type: " + reservationRecord.getEntry(row).getReservationType());
 
         if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
-            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
+            System.out.println("Booking Item: " + reservationRecord.getEntry(row).getFacilities());
         } else {
-            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
+            System.out.println("Booking Item: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
+            System.out.println("Booking Items ID: " + reservationRecord.getEntry(row).getEquipments().getEquipmentID());
+            System.out.println("Booking Items Status: " + reservationRecord.getEntry(row).getEquipments().getEquipmentStatus());
         }
 
         System.out.println("\nBooking Date");
