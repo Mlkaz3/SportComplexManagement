@@ -278,7 +278,7 @@ public class MainDriver {
                         Maintenance maintenance = new Maintenance();
 
                         System.out.print("\nFacility ID: ");
-                        maintenance.setFacilityID(userInput.nextLine());
+                        //maintenance.setFacilityID(userInput.nextLine());
                         System.out.print("Maintenance type: ");
                         maintenance.setMaintenanceType(userInput.nextLine());
                         System.out.print("Maintenance description: ");
