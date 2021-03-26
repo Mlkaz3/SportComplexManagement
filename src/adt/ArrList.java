@@ -162,7 +162,7 @@ public class ArrList<T> implements ListInter<T>, Serializable {
  //   return outputStr;
     String outputStr = "";
     for (int index = 0; index < filledSize; ++index) {
-      outputStr += (index + 1) + ". " + array[index] + "\n";
+      outputStr += array[index] + "\n";
     }
     return outputStr;
   }

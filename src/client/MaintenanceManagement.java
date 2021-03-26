@@ -24,9 +24,9 @@ import java.util.Scanner;
  * @author YJ
  */
 public class MaintenanceManagement {
-    // display end date, maintenance ID
     // optimize code
-    // loop within page/method (see if got time)
+    // commence maintenance got bug -> do try catch for Y/N
+    // more details in maintenance report?
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
     ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
@@ -69,11 +69,11 @@ public class MaintenanceManagement {
         System.out.println("\nAdd an appointment -> ");
 
         //print list of facilities
-        System.out.println("---------------------------------------------------------");
-        System.out.println("                  - List of Facilities -                 ");
-        System.out.println("---------------------------------------------------------");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("               - List of Facilities -                ");
+        System.out.println("-----------------------------------------------------");
         System.out.println(Data.court);
-        System.out.println("---------------------------------------------------------");
+        System.out.println("-----------------------------------------------------");
 
         String facilityID;
         boolean validID;
@@ -164,7 +164,6 @@ public class MaintenanceManagement {
 
                             maintenance.getFacility().setFacilityAvailability(false);
 
-                            //Data.court.get(index).setFacilityAvailability(false);
                             GregorianCalendar startDate = new GregorianCalendar();
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
@@ -381,7 +380,7 @@ public class MaintenanceManagement {
     }
 
     //set end date, calculate waiting time, duration, cost
-    public void completeMaintenance() {
+    public void completeMaintenance() throws ParseException {
 
         printHistory();
 
@@ -439,14 +438,14 @@ public class MaintenanceManagement {
                     }
                 } while (valid != true);
 
-                System.out.println("\nMaintenance completed!"); //check if alrd completed
+                System.out.println("\nMaintenance completed!");
             }
         }
         pressAnyKeyToContinue();
     }
 
     //display report of chosen record
-    public void viewReport() {
+    public void viewReport() throws ParseException {
 
         printHistory();
 
@@ -505,30 +504,31 @@ public class MaintenanceManagement {
 
     }
 
-    public void printHistory() {
+    public void printHistory() throws ParseException {
         Maintenance maintenance;
 
-        System.out.println("                                                Maintenance Records");
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
-//        for (int i = 0; i < maintenanceHistory.filledSize(); i++) {
-//            maintenance = maintenanceHistory.getEntry(i);
-//            String maintenanceID = maintenance.getMaintenanceID();
-//            String facilityID = maintenance.getFacility().getFacilityID();
-//            String maintenanceType = maintenance.getMaintenanceType();
-//            String maintenanceDesc = maintenance.getMaintenanceDesc();
-//            Date startDate = maintenance.getStartDate();
-//            Date endDate = maintenance.getEndDate();
-//            
-//            if (endDate != null) {
-//                System.out.printf("%-17s %-20s %-30s %-20s %-25s %-25s\n", maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(startDate), formatter.format(endDate));
-//            } else {
-//            System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(startDate));
-//            }
-//        }
-        System.out.println(maintenanceHistory);
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("                                                                                  Maintenance Records");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", "No", "Maintenance ID", "Facility ID", "Maintenance type", "Maintenance description", "Required Date", "Request Timestamp", "Start Date", "End Date");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        for (int i = 1; i <= maintenanceHistory.filledSize(); i++) {
+            maintenance = maintenanceHistory.getEntry(i);
+            String maintenanceID = maintenance.getMaintenanceID();
+            String facilityID = maintenance.getFacility().getFacilityID();
+            String maintenanceType = maintenance.getMaintenanceType();
+            String maintenanceDesc = maintenance.getMaintenanceDesc();
+            Date requiredDate = maintenance.getRequiredDate();
+            Date requestTimestamp = maintenance.getRequestDate();
+            String startDate = maintenance.getStartDate().toString();
+            Date endDate = maintenance.getEndDate();
+
+            if (endDate != null) {
+                System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", i, maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestTimestamp, startDate, endDate.toString());
+            } else {
+                System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", i, maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestTimestamp, startDate, "--PENDING--");
+            }
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
     public static void pressAnyKeyToContinue() {

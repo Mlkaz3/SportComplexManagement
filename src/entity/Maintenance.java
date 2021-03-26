@@ -21,7 +21,6 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     private String maintenanceID;
     private String maintenanceType;
     private String maintenanceDesc;
-    private double maintenanceCost;
     private double costPerDay;
     private Date requestDate;
     private Date startDate;
@@ -70,14 +69,6 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     public void setMaintenanceDesc(String maintenanceDesc) {
         this.maintenanceDesc = maintenanceDesc;
-    }
-
-    public double getMaintenanceCost() {
-        return maintenanceCost;
-    }
-
-    public void setMaintenanceCost(double maintenanceCost) {
-        this.maintenanceCost = maintenanceCost;
     }
 
     public double getCostPerDay() {
