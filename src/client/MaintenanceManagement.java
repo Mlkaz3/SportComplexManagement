@@ -178,7 +178,7 @@ public class MaintenanceManagement { // read and write to file, manage completio
                                 if (maintenance.getFacility() == null ? Data.court.get(i) == null : maintenance.getFacility().equals(Data.court.get(i))) {
                                     int index = i;
                                 }
-                                Data.court.get(i).setStatus(false);
+                                Data.court.get(i).setFacilityAvailability(false);
                             }
 
                             GregorianCalendar startDate = new GregorianCalendar();

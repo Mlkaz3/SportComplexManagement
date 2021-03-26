@@ -46,62 +46,61 @@ public class TestArrList {
         badmintonCourt1.setFacilityName("Badminton Court 1");
         badmintonCourt1.setFacilityType("Badminton");
         badmintonCourt1.setFacilityAvailability(true);
-        badmintonCourt1.setTimeSlot("11.00");
+      
         
         badmintonCourt2.setFacilityID("B002");
         badmintonCourt2.setFacilityName("Badminton Court 2");
         badmintonCourt2.setFacilityType("Badminton");
         badmintonCourt2.setFacilityAvailability(true);
-        badmintonCourt2.setTimeSlot("11.00");
+       
         
         badmintonCourt3.setFacilityID("B003");
         badmintonCourt3.setFacilityName("Badminton Court 3");
         badmintonCourt3.setFacilityType("Badminton");
         badmintonCourt3.setFacilityAvailability(true);
-        badmintonCourt3.setTimeSlot("11.00");
+        
         
         badmintonCourt4.setFacilityID("B004");
         badmintonCourt4.setFacilityName("Badminton Court 4");
         badmintonCourt4.setFacilityType("Badminton");
         badmintonCourt4.setFacilityAvailability(true);
-        badmintonCourt4.setTimeSlot("11.00");
+        
         
         badmintonCourt5.setFacilityID("B005");
         badmintonCourt5.setFacilityName("Badminton Court 5");
         badmintonCourt5.setFacilityType("Badminton");
         badmintonCourt5.setFacilityAvailability(true);
-        badmintonCourt5.setTimeSlot("11.00");
         
 
         tennisCourt1.setFacilityID("T001");
         tennisCourt1.setFacilityName("Tennis Court 1");
         tennisCourt1.setFacilityType("Tennis");
         tennisCourt1.setFacilityAvailability(true);
-        tennisCourt1.setTimeSlot("11.00");
+       
         
         tennisCourt2.setFacilityID("T002");
         tennisCourt2.setFacilityName("Tennis Court 2");
         tennisCourt2.setFacilityType("Tennis");
         tennisCourt2.setFacilityAvailability(false);
-        tennisCourt2.setTimeSlot("11.00");
+       
         
         tennisCourt3.setFacilityID("T003");
         tennisCourt3.setFacilityName("Tennis Court 3");
         tennisCourt3.setFacilityType("Tennis");
         tennisCourt3.setFacilityAvailability(false);
-        tennisCourt3.setTimeSlot("11.00");
+        
         
         tennisCourt4.setFacilityID("T004");
         tennisCourt4.setFacilityName("Tennis Court 4");
         tennisCourt4.setFacilityType("Tennis");
         tennisCourt4.setFacilityAvailability(false);
-        tennisCourt4.setTimeSlot("11.00");
+       
         
         tennisCourt5.setFacilityID("T005");
         tennisCourt5.setFacilityName("Tennis Court 5");
         tennisCourt5.setFacilityType("Tennis");
         tennisCourt5.setFacilityAvailability(false);
-        tennisCourt5.setTimeSlot("11.00");
+        
         
         System.out.println("Choose the type of Court");
         input_Type = userInput.nextLine();
@@ -171,7 +170,7 @@ public class TestArrList {
                 timeSlot = userInput.nextLine(); 
                 
                 System.out.println(facility.get(1).getFacilityID());
-                Facility newFacility = new Facility(facilityID,facilityName,facilityType,facilityAvailability,timeSlot);
+                Facility newFacility = new Facility(facilityID,facilityName,facilityType,facilityAvailability);
                 facility.add(newFacility);
                 
 

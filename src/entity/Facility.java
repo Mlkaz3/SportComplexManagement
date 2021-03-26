@@ -18,10 +18,10 @@ public class Facility {
     private String facilityName;
     private String facilityType;
     private boolean facilityAvailability;
-    private boolean status;
+    //private boolean status;
 
     //set as string for now but the correct one shud be Date
-    private String timeSlot;   // the array List the facility ahve throught the day
+    // the array List the facility ahve throught the day
     //private Date checkingTimeSlot; // the timeslot requested by the user ,together with the facilityAvai can check if that time is available or not
 
     public Facility() {
@@ -31,12 +31,12 @@ public class Facility {
         this.facilityID = facilityID;
     }
 
-    public Facility(String facilityID, String facilityName, String facilityType, Boolean facilityAvailability, String timeSlot) {
+    public Facility(String facilityID, String facilityName, String facilityType, Boolean facilityAvailability) {
         this.facilityID = facilityID;
         this.facilityName = facilityName;
         this.facilityType = facilityType;
         this.facilityAvailability = facilityAvailability;
-        this.timeSlot = timeSlot;
+        //this.timeSlot = timeSlot;
         //this.checkingTimeSlot = checkingTimeSlot;
     }
 
@@ -65,28 +65,12 @@ public class Facility {
         this.facilityType = facilityType;
     }
 
-    public boolean isFacilityAvailability() {
+    public boolean getFacilityAvailability() {
         return facilityAvailability;
     }
 
     public void setFacilityAvailability(boolean facilityAvailability) {
         this.facilityAvailability = facilityAvailability; 
-    }
-
-    public String getTimeSlot() {
-        return timeSlot;
-    }
-
-    public void setTimeSlot(String timeSlot) {
-        this.timeSlot = timeSlot;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     /*public Date getCheckingTimeSlot() {
@@ -123,7 +107,7 @@ public class Facility {
     @Override
     public String toString() {
         return "Facility ID:" + facilityID + "\n Facility Name: " + facilityName + "\n Facility Type:" + facilityType
-                + "\n Facility Availability: " + facilityAvailability + "\n Time Slot:" + timeSlot;
+                + "\n Facility Availability: " + facilityAvailability;
     }
 
 }
