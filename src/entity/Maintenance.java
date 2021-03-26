@@ -151,10 +151,7 @@ public class Maintenance implements Comparable<Maintenance> {
             return false;
         }
         final Maintenance other = (Maintenance) obj;
-        if (!Objects.equals(this.requiredDate, other.requiredDate)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.requiredDate, other.requiredDate);
     }
 
     @Override

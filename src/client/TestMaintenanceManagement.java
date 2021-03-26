@@ -43,7 +43,7 @@ public class TestMaintenanceManagement {
                 switch (ch) {
                     case 1 -> {
                        maintenanceMgmt.displayQueue();
-                       maintenanceMgmt.pressAnyKeyToContinue();
+                       MaintenanceManagement.pressAnyKeyToContinue();
                     }
                     case 2 -> {
                         maintenanceMgmt.addAppt();

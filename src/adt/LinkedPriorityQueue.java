@@ -5,11 +5,10 @@
  */
 package adt;
 
-import java.io.Serializable;
-
 /**
  *
  * @author YJ
+ * @param <T>
  */
 /*
  * To change this license header, choose License Headers in Project Properties.

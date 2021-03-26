@@ -141,6 +141,8 @@ public class MaintenanceManagement { // read and write to file, manage completio
 //            } catch (IOException e) {
 //                System.out.println("Failed to write to file.");
 //            }
+        } else {
+            System.out.println("Duplicated appointment found!");
         }
 
         pressAnyKeyToContinue();
@@ -150,7 +152,7 @@ public class MaintenanceManagement { // read and write to file, manage completio
     public void serveFront() {
 
         Maintenance maintenance = new Maintenance();
-        char ch = 0;
+        char ch;
         displayQueue();
 
         if (appointmentQueue.isEmpty()) {
