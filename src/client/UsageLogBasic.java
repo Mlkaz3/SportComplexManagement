@@ -29,6 +29,10 @@ Log:
 - https://www.geeksforgeeks.org/how-to-sort-a-linked-list-that-is-sorted-alternating-ascending-and-descending-orders/
 - dealing with date https://www.geeksforgeeks.org/find-the-duration-of-difference-between-two-dates-in-java/
 - https://www.javatpoint.com/program-to-sort-the-elements-of-the-singly-linked-list
+
+26/3/2021 
+- performing the updation of starttime and endtime 
+- 
  */
 package client;
 
@@ -215,7 +219,19 @@ public class UsageLogBasic {
                             }
                             //validate the row input, make sure it is not larger than the list size 
                         } while (view_selection < 1 || view_selection > 3);
-
+                        
+                    switch (view_selection) {
+                        case 1 -> {
+                            //display booking item routine of the day
+                        }
+                        case 2 -> {
+                            //display user profile 
+                        }
+                        case 3 -> {
+                        }
+                        default -> {
+                        }
+                    }
                     }
                     case 2 -> {
                         //update facilities booking at position row
