@@ -118,10 +118,12 @@ public class MainDriver {
 
             System.out.println("\nFACILITIES");
             System.out.println("----------");
-            System.out.println("View Slot");
-            System.out.println("Reserve Slot");
-            System.out.println("Check In Slot");
-            System.out.println("Cancel Slot");
+            System.out.println("1 - View available room");
+            System.out.println("2 - Add Court");
+            System.out.println("3 - Remove Court");
+            System.out.println("4 - Add Reservation");
+            System.out.println("5 - Remove Court");
+            System.out.println("6 - Quit");
             try {
                 System.out.print("Please select your choice: ");
                 ch = input.nextInt();
@@ -129,10 +131,21 @@ public class MainDriver {
 
                 switch (ch) {
                     case 1 -> {
+                        //display function to be code in facility management class
+                        
                     }
                     case 2 -> {
+                        //add court
+                        
                     }
                     case 3 -> {
+                        
+                    }
+                    case 4 ->{
+                    
+                    }
+                    case 5 ->{
+                    
                     }
                     default -> {
                         System.out.println();
@@ -147,7 +160,7 @@ public class MainDriver {
                 System.out.println();
                 invalidInput = true;
             }
-        } while (ch != 3 || invalidInput);
+        } while (ch != 6 || invalidInput);
     }
 
     private static void Equipment() {
@@ -156,6 +169,8 @@ public class MainDriver {
         do {
             invalidInput = false;
             Scanner input = new Scanner(System.in);
+            
+           
 
             System.out.println("\nEQUIPMENT");
             System.out.println("---------");
@@ -169,7 +184,8 @@ public class MainDriver {
                 System.out.println("");
 
                 switch (ch) {
-                    case 1 -> System.out.println("Havent implement gomennasaaii");
+                    case 1 ->
+                        System.out.println("Havent implement gomennasaaii");
                     case 2 -> {
                         //when user wanna borrow stg 
                         //hardcode a equipment (user want)
