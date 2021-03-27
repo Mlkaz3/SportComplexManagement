@@ -133,6 +133,14 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         return lateHour;
     }
 
+    public Date getCheckOutDateTime() {
+        return checkOutDateTime;
+    }
+
+    public void setCheckOutDateTime(Date checkOutDateTime) {
+        this.checkOutDateTime = checkOutDateTime;
+    }
+
 
     public User getUser() {
         return user;

@@ -17,7 +17,7 @@ import adt.LinkedList;
  *
  * @author winnieyap note: red line = to update yo
  */
-public class TestingReservationRecord {
+public class TestingReservationRecordNOTUSING {
 
     public static void main(String[] args) {
 

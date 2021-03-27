@@ -64,7 +64,7 @@ import javax.swing.JOptionPane;
  *
  * @author winnie <winnieyap20@gmail.com>
  */
-public class UsageLogBasic {
+public class UsageLogBasicNOTUSING {
 
     public static void main(String[] args) throws ParseException {
 

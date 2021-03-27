@@ -417,18 +417,17 @@ public class MainDriver {
 
         //and read row 
         int ch = 0;
+        usageManagement.displayReservation();
+
+        //print out the record == Today's record
+        int row = usageManagement.getRow();
+
         do {
             Scanner input = new Scanner(System.in);
             try {
-                usageManagement.displayReservation();
-                pressEnterKeyToContinue();
-
-                //print out the record == Today's record
-                int row = usageManagement.getRow();
                 if (row == -1) {
                     pressEnterKeyToContinue();
                     break;
-
                 }
 
                 System.out.println();

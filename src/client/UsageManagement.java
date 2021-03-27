@@ -406,6 +406,7 @@ public class UsageManagement {
     }
 
     public Equipment getBookingEquipment(String id) {
+
         //System.out.println("id" + id);
         Equipment bookingitem = new Equipment();
         //get the booking item by searching 
@@ -422,6 +423,35 @@ public class UsageManagement {
             }
         }
         return bookingitem;
+    }
+
+    public void getPenaltyCharges(String id) {
+
+        //get the record item by searching 
+        int position = 0;
+        Iterator<ReservationRecord> itemIterator = reservationRecord.getIterator();
+        while (itemIterator.hasNext()) {
+            ReservationRecord record = itemIterator.next();
+            //System.out.println("looping through" + record.getEquipments());
+            if (record.getReservationID() == null ? id == null : record.getReservationID().equals(id)) {
+                position = reservationRecord.getPosition(record);
+
+                //perform the calculate penalty here 
+                Date end = reservationRecord.getEntry(position).getReservationEndTime();
+                Date checkout = reservationRecord.getEntry(position).getCheckOutDateTime();
+                if (checkout.compareTo(end) > 0) {
+                    long datediff = checkout.getTime() - end.getTime();
+                    datediff = (datediff / (1000 * 60 * 60)) % 24;
+
+                    reservationRecord.getEntry(position).setLateHour(datediff);
+                    System.out.println("Late In Returning");
+                    System.out.println("Penalty Fine: " + reservationRecord.getEntry(position).getReservationDuration());
+
+                }
+                break;
+            }
+        }
+
     }
 
     private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
@@ -482,13 +512,12 @@ public class UsageManagement {
         System.out.println("--------------");
         System.out.printf("%-25s %-20s\n", "Booker ID", "| " + reservationRecord.getEntry(row).getUser().getUserID());
         System.out.printf("%-25s %-20s\n", "Booker Name ", "| " + reservationRecord.getEntry(row).getUser().getUserName());
-        
+
         System.out.println("\nPenalty Details");
         System.out.println("---------------");
         System.out.printf("%-25s %-20s\n", "Late in Hours", "| " + reservationRecord.getEntry(row).getLateHour());
         System.out.printf("%-25s %-20s\n", "Penalty Rate ", "| " + reservationRecord.getEntry(row).getPenaltyRate());
         System.out.printf("%-25s %-20s\n", "Penalty Amount ", "| " + reservationRecord.getEntry(row).calculatePenalty());
-
 
         System.out.println("=".repeat(60));
     }
