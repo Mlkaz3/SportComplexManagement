@@ -17,14 +17,14 @@ import java.io.Serializable;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQueueInterface<T>, Serializable {
+public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQueueInterface<T> {
 
     private Node firstNode; // reference to first node
     private int length;  // number of elements in queue
 
     public LinkedPriorityQueue() {
         firstNode = null; // first node data initialized to null
-        length = 0; // // length of queue initialized to 0
+        length = 0; // length of queue initialized to 0
     }
 
     @Override
@@ -157,7 +157,7 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
         return exist;
     }
 
-    private class Node {
+    private class Node implements Serializable {
 
         private T data;
         private Node next;

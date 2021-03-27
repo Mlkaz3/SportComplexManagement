@@ -14,7 +14,7 @@ import java.util.Objects;
  *
  * @author YJ
  */
-public class Maintenance implements Comparable<Maintenance>, Serializable {
+public class Maintenance implements Comparable<Maintenance>{
 
     private Facility facility;
     private static int next = 1000;
