@@ -32,10 +32,6 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
     private double penaltyRate = 8.00; //8 ringgit per hour
     private double lateHour;
 
-    public ReservationRecord() {
-        this.reservationID = String.valueOf(nextNumber++);
-    }
-
     //for facilities constructor needa pass in start time and end time 
     public ReservationRecord(Date reservationEndTime, User user, Facility facilities) {
         //Date date = new Date(); 
