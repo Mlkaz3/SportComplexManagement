@@ -21,6 +21,7 @@ import java.util.Date;
 public class EquipmentManagement {
 
     StackInterface<Equipment> equipmentStack = new ArrayStack<>(); //tennis only
+    StackInterface<Equipment> brokenStack = new ArrayStack<>();
 
     Scanner input = new Scanner(System.in);
     //StackInterface<Equipment> badmintonStack = new ArrayStack<>();
@@ -118,20 +119,54 @@ public class EquipmentManagement {
 
         //update booking status 
         usageManagement.updateBookingStatus(bookingitem);
-        
+
         //find penalty 
         usageManagement.getPenaltyCharges(id);
 
-        serFileWriter();
+//        System.out.print("Enter Quantity : ");
+//        int qty = input.nextInt();
+//        input.nextLine();
+        System.out.println("Is the racquet broken? ->");
+        System.out.println("\n[1] Yes");
+        System.out.println("[2] No\n");
+        int num;
+        boolean valid = true;
+        do {
+            System.out.print("-> ");
+            String ch = input.nextLine();
 
-        System.out.print("Enter Quantity : ");
-        int qty = input.nextInt();
-        input.nextLine();
-
-        bookingitem.getEquipments().setEquipmentStatus(true);
-        equipmentStack.push(bookingitem.getEquipments());
-
-        System.out.println("Equipment Returned.");
+            try {
+                num = Integer.parseInt(ch);
+                switch (num) {
+                    case 1 -> {
+                        readBrokenFile();
+                        brokenStack.push(bookingitem.getEquipments());
+                        System.out.println("Broken equipment received.");
+                        writeBrokenFile();
+                        valid = true;
+                    }
+                    case 2 -> {
+                        serFileReader();
+                        bookingitem.getEquipments().setEquipmentStatus(true);
+                        equipmentStack.push(bookingitem.getEquipments());
+                        System.out.println("Equipment Returned.");
+                        serFileWriter();
+                        valid = true;
+                    }
+                    default -> {
+                        System.out.println();
+                        System.out.println("Error. Please select a correct choice.");
+                        System.out.println();
+                        valid = false;
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nError. Invalid input.");
+                System.out.println();
+                valid = false;
+            }
+        } while (valid != true);
+        viewBrokenStack();
 
 //        for (int i = 0; i < qty; i++) {
 //            Equipment equipment = new Equipment();
@@ -160,7 +195,6 @@ public class EquipmentManagement {
 //            System.out.println("Equipment Returned.");
 //        }
         //returnStackType(choice);
-        serFileWriter();
     }
 
     public void stockIn() {
@@ -255,6 +289,52 @@ public class EquipmentManagement {
         equipmentStack.clear();
         System.out.println("All equipment is removed.");
         serFileWriter();
+    }
+
+    public void readBrokenFile() {
+        try {
+            FileInputStream fileIn = new FileInputStream("src/BrokenRecord.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            brokenStack = (ArrayStack<Equipment>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("No Broken Equipment Record is found!");
+            c.printStackTrace();
+        }
+    }
+
+    public void writeBrokenFile() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src/BrokenRecord.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(brokenStack);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    public void viewBrokenStack() {
+        readBrokenFile();
+        Iterator<Equipment> it = brokenStack.getIterator();
+
+        if (brokenStack.isEmpty()) {
+            System.out.println("There are no broken racquet currently.");
+        } else {
+            System.out.println("                                                Broken Racquet");
+            System.out.printf("%-15s %-20s %-20s %-20s %-20s %-20s\n",
+                    "Equipment ID", "Equipment Brand", "Equipment Status", "Equipment Price", "Equipment Location", "Equipment Type");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------");
+            while (it.hasNext()) {
+                System.out.println(it.next());
+            }
+            System.out.println("There are currently " + brokenStack.size() + " racquet.");
+        }
+        writeBrokenFile();
     }
 
 //    public void setStackType(int ch) {
