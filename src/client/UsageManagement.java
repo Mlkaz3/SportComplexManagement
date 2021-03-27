@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -34,7 +35,7 @@ import javax.swing.JOptionPane;
  *
  * @author winnie <winnieyap20@gmail.com>
  */
-public class UsageManagement {
+public class UsageManagement implements Serializable {
 
     LinkedList<ReservationRecord> reservationRecord;
     Scanner input = new Scanner(System.in);
