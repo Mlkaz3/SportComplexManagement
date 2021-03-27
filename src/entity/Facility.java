@@ -107,7 +107,7 @@ public class Facility implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-10s %-20s %-15s %-10s", facilityID, facilityName, facilityType, facilityAvailability);
+        return String.format("%-15s %-22s %-13s %-15s", facilityID, facilityName, facilityType, facilityAvailability);
     }
 
 }
