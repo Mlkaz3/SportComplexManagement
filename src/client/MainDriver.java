@@ -37,11 +37,11 @@ public class MainDriver implements Serializable {
         Facility badmintonCourt3 = new Facility("B003", "Badmintion Court 3", "Badmintion", true);
         Facility badmintonCourt4 = new Facility("B004", "Badmintion Court 4", "Badmintion", true);
         Facility badmintonCourt5 = new Facility("B005", "Badmintion Court 5", "Badmintion", true);
-        Facility tennisCourt1 = new Facility("T001", "Tennie Court 1", "Tennis", true);
-        Facility tennisCourt2 = new Facility("T002", "Tennie Court 2", "Tennis", true);
-        Facility tennisCourt3 = new Facility("T003", "Tennie Court 3", "Tennis", true);
-        Facility tennisCourt4 = new Facility("T004", "Tennie Court 4", "Tennis", true);
-        Facility tennisCourt5 = new Facility("T005", "Tennie Court 5", "Tennis", true);
+        Facility tennisCourt1 = new Facility("T001", "Tennis Court 1", "Tennis", true);
+        Facility tennisCourt2 = new Facility("T002", "Tennis Court 2", "Tennis", true);
+        Facility tennisCourt3 = new Facility("T003", "Tennis Court 3", "Tennis", true);
+        Facility tennisCourt4 = new Facility("T004", "Tennis Court 4", "Tennis", true);
+        Facility tennisCourt5 = new Facility("T005", "Tennis Court 5", "Tennis", true);
 
         facilityManagement.add(badmintonCourt1);
         facilityManagement.add(badmintonCourt2);
@@ -152,7 +152,7 @@ public class MainDriver implements Serializable {
             System.out.println("2 - Add Court");
             System.out.println("3 - Remove Court");
             System.out.println("4 - Add Reservation");
-            System.out.println("5 - Remove Court");
+            System.out.println("5 - Remove Reservation");
             System.out.println("6 - Quit");
             try {
                 System.out.print("Please select your choice: ");
