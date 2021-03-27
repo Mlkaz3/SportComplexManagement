@@ -39,7 +39,7 @@ public class FacilityManagement {
             //System.out.println(i);
             System.out.println(facility.get(i));
         }
-        System.out.println("wtf");
+        
     }
 
     void add(Facility element) {
@@ -130,12 +130,14 @@ System.out.println(facility.get(i));}*/    }
                 String end_date = userInput.nextLine();
                 Date endDate = (Date) myFormatObj.parse(end_date);
 
-                facility.get(i).setFacilityAvailability(false);
+                
 
                 //add a new reservation record 
                 ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, newuser, facility.get(i));
-                usageManagement.addReservation(record1);
-                System.out.println("room hab been successfully registered");
+                
+                if(usageManagement.addReservation(record1)){
+                    facility.get(i).setFacilityAvailability(false);
+                    System.out.println("room hab been successfully registered");}
             } else if (currentCourtAvai == false && checkID.equals(requestID)) {
                 System.out.println("the room is not available");
             }
