@@ -16,7 +16,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -24,9 +23,9 @@ import java.util.Scanner;
  * @author YJ
  */
 public class MaintenanceManagement {
-    // optimize code
-    // commence maintenance got bug -> do try catch for Y/N
-    // more details in maintenance report?
+    // optimize code or loop within functions?
+    // big bug, cannot enqueue same date
+    // binary file??
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
     ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
@@ -69,12 +68,8 @@ public class MaintenanceManagement {
         System.out.println("\nAdd an appointment -> ");
 
         //print list of facilities
-        System.out.println("-----------------------------------------------------");
-        System.out.println("               - List of Facilities -                ");
-        System.out.println("-----------------------------------------------------");
-        System.out.println(Data.court);
-        System.out.println("-----------------------------------------------------");
-
+        printFacility();
+                
         String facilityID;
         boolean validID;
         do {
@@ -137,27 +132,30 @@ public class MaintenanceManagement {
         pressAnyKeyToContinue();
     }
 
-    //send for maintenance, generate a maintenance ID
+    //commence a maintenance, generate a maintenance ID
     public void serveFront() {
 
         Maintenance maintenance = appointmentQueue.getFront();
-        char ch;
         displayQueue();
 
         if (appointmentQueue.isEmpty()) {
             System.out.println("\nThere is nothing to be removed from queue.");
         } else {
 
-            System.out.print("\nCommence maintenance for the first appointment? (Y/N) -> ");
+            System.out.print("\nCommence maintenance for the first appointment -> ");
+            System.out.println("\n[1] Yes");
+            System.out.println("[2] No\n");
 
-            boolean validInput = true;
+            boolean valid;
+            int num;
             do {
-                try {
-                    ch = userInput.next().charAt(0);
-                    userInput.nextLine();
+                System.out.print("-> ");
+                String input = userInput.nextLine();
 
-                    switch (Character.toUpperCase(ch)) {
-                        case 'Y' -> {
+                try {
+                    num = Integer.parseInt(input);
+                    switch (num) {
+                        case 1 -> {
 
                             String maintenanceID = maintenance.getMaintenanceID();
                             maintenance.setMaintenanceID(maintenanceID);
@@ -172,26 +170,27 @@ public class MaintenanceManagement {
                             maintenanceHistory.add(maintenance);
 
                             System.out.println("\nFacility is currently undergoing maintenance!");
-                            break;
+                            valid = true;
                         }
-                        case 'N' -> {
-                            break;
+                        case 2 -> {
+                            valid = true;
                         }
                         default -> {
                             System.out.println();
                             System.out.println("Error. Please select a correct choice.");
-                            validInput = false;
-                            break;
+                            System.out.println();
+                            valid = false;
                         }
                     }
-                } catch (InputMismatchException e) {
+                } catch (NumberFormatException e) {
+                    System.out.println("\nError. Invalid input.");
                     System.out.println();
-                    System.out.println("Error. Please enter Y or N only.");
-                    validInput = true;
+                    valid = false;
                 }
-            } while (validInput != true);
+            } while (valid != true);
+
+            pressAnyKeyToContinue();
         }
-        pressAnyKeyToContinue();
     }
 
     //cancel appointment
@@ -372,7 +371,7 @@ public class MaintenanceManagement {
                         System.out.println();
                         System.out.println("Error. Please select a correct choice.");
                         break;
-                    } //TRY CATCH HERE
+                    }
                 }
             } while (num != 5);
         }
@@ -492,6 +491,7 @@ public class MaintenanceManagement {
                 System.out.println("Facility ID              : " + maintenance.getFacility().getFacilityID());
                 System.out.println("Maintenance type         : " + maintenance.getMaintenanceType());
                 System.out.println("Maintenance description  : " + maintenance.getMaintenanceDesc());
+                System.out.printf("Cost per day             : RM%.2f\n", maintenance.getCostPerDay());
                 System.out.println("-------------------------------------------------------");
                 System.out.println("Total waiting time       : " + maintenance.calcWaitingTime() + " s");
                 System.out.println("Duration of maintenance  : " + maintenance.calcDuration() + " s");
@@ -502,6 +502,14 @@ public class MaintenanceManagement {
 
         pressAnyKeyToContinue();
 
+    }
+
+    public void printFacility() {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("               - List of Facilities -                ");
+        System.out.println("-----------------------------------------------------");
+        System.out.println(Data.court);
+        System.out.println("-----------------------------------------------------");
     }
 
     public void printHistory() throws ParseException {
