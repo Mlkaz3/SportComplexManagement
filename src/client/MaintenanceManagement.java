@@ -27,7 +27,7 @@ import java.util.Scanner;
  *
  * @author Ong Yi Jie 19WMR11855
  */
-public class MaintenanceManagement { // change duration and waiting time to days, bug: same maintenance ID
+public class MaintenanceManagement { // bug: same maintenance ID
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
     ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
@@ -157,13 +157,16 @@ public class MaintenanceManagement { // change duration and waiting time to days
                     num = Integer.parseInt(input);
                     switch (num) {
                         case 1 -> {
+                            facilityManagement.readFacility();
                             maintenance.getFacility().setFacilityAvailability(false);
-
+                            facilityManagement.writeFacility();
+                            
                             GregorianCalendar startDate = new GregorianCalendar();
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
 
                             maintenance = appointmentQueue.dequeue();
+                            readRecord();
                             maintenanceHistory.add(maintenance);
                             writeRecord();
 
@@ -420,7 +423,9 @@ public class MaintenanceManagement { // change duration and waiting time to days
             if (maintenance.getEndDate() != null) {
                 System.out.println("\nThe maintenance is already completed.");
             } else {
+                facilityManagement.readFacility();
                 maintenance.getFacility().setFacilityAvailability(true);
+                facilityManagement.writeFacility();
 
                 GregorianCalendar endDate = new GregorianCalendar();
                 Date now = endDate.getTime();
@@ -489,7 +494,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
             if (maintenance.getEndDate() == null) {
                 System.out.println("\nMaintenance is still going on...");
             } else {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 System.out.println("              Maintenance report of " + maintenance.getMaintenanceID());
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 System.out.println("Facility ID              : " + maintenance.getFacility().getFacilityID());
@@ -497,8 +502,8 @@ public class MaintenanceManagement { // change duration and waiting time to days
                 System.out.println("Maintenance description  : " + maintenance.getMaintenanceDesc());
                 System.out.printf("Cost per day             : RM%.2f\n", maintenance.getCostPerDay());
                 System.out.println("-------------------------------------------------------");
-                System.out.println("Total waiting time       : " + maintenance.calcWaitingTime() + " s");
-                System.out.println("Duration of maintenance  : " + maintenance.calcDuration() + " s");
+                System.out.println("Total waiting time       : " + maintenance.calcWaitingTime() + " day(s)");
+                System.out.println("Duration of maintenance  : " + maintenance.calcDuration() + " day(s)");
                 System.out.printf("Total cost of maintenance: RM%.2f\n", maintenance.calcCost());
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             }
