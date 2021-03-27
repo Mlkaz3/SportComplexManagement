@@ -73,31 +73,29 @@ public class EquipmentManagement {
             System.out.print("Enter Tel : ");
             user.setUserTel(input.nextLine());
 
-            System.out.print("Enter Quantity : ");
-            String inputQty = input.nextLine();
-            int qty = Integer.parseInt(inputQty);
-
+//            System.out.print("Enter Quantity : ");
+//            String inputQty = input.nextLine();
+//            int qty = Integer.parseInt(inputQty);
             SimpleDateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
             System.out.print("Enter End Time: ");
             String end_date = input.nextLine();
             Date endDate = (Date) myFormatObj.parse(end_date); //help winnie
 
-            if (equipmentStack.size() < qty) {
-                System.out.println("Insufficient racquet.");
-                System.out.println("There are only " + equipmentStack.size() + " racquet currently.");
-            } else {
-                for (int i = 0; i < qty; i++) {
-                    Equipment equipment = equipmentStack.peek();
-                    ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, user, equipment);
-                    if (usageManagement.addReservation(record1)) {
-                        equipment.setEquipmentStatus(false);
-                        equipmentStack.pop();
-
-                    }
-
-                }
+//            if (equipmentStack.size() < qty) {
+//                System.out.println("Insufficient racquet.");
+//                System.out.println("There are only " + equipmentStack.size() + " racquet currently.");
+//            } else {
+//                for (int i = 0; i < qty; i++) {
+            Equipment equipment = equipmentStack.peek();
+            ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, user, equipment);
+            if (usageManagement.addReservation(record1)) {
+                equipment.setEquipmentStatus(false);
+                equipmentStack.pop();
             }
+//
+//                }
+//            }
         }
         //returnStackType(choice);
         serFileWriter();
