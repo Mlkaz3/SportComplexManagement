@@ -26,6 +26,7 @@ public class MainDriver {
     public static EquipmentManagement equipmentManagement = new EquipmentManagement();
     public static MaintenanceManagement maintenanceMgmt = new MaintenanceManagement();
     public static UsageManagement usageManagement = new UsageManagement();
+    public static FacilityManagement facilityManagement = new FacilityManagement();
 
     public static void main(String[] args) throws ParseException {
 
@@ -52,6 +53,18 @@ public class MainDriver {
         Data.court.add(tennisCourt3);
         Data.court.add(tennisCourt4);
         Data.court.add(tennisCourt5);
+        
+        facilityManagement.add(badmintonCourt1);
+        facilityManagement.add(badmintonCourt2);
+        facilityManagement.add(badmintonCourt3);
+        facilityManagement.add(badmintonCourt4);
+        facilityManagement.add(badmintonCourt5);
+        
+        facilityManagement.add(tennisCourt1);
+        facilityManagement.add(tennisCourt2);
+        facilityManagement.add(tennisCourt3);
+        facilityManagement.add(tennisCourt4);
+        facilityManagement.add(tennisCourt5);               
 
         User user = new User("Tan Pei Ling", "19119", "Student", "0123456789");
         User user1 = new User("Ting Tin Tin", "19109", "Alumni", "0123456781");
@@ -160,20 +173,27 @@ public class MainDriver {
 
                 switch (ch) {
                     case 1 -> {
-                        //display function to be code in facility management class
+                        System.out.println();
+                        facilityManagement.displayCourt();
 
                     }
                     case 2 -> {
-                        //add court
-
+                        System.out.println();
+                        facilityManagement.addCourt();
                     }
                     case 3 -> {
+                        System.out.println();
+                        facilityManagement.removeCourt();
 
                     }
                     case 4 -> {
+                        System.out.println();
+                        facilityManagement.addReservation();
 
                     }
                     case 5 -> {
+                        System.out.println();
+                        facilityManagement.removeReservation();
 
                     }
                     default -> {
