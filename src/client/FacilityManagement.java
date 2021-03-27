@@ -139,9 +139,6 @@ System.out.println(facility.get(i));}*/
 
             if (currentCourtAvai == true && checkID.equals(requestID)) {
                 SimpleDateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                System.out.print("Enter Start Time: ");
-                String start_date = userInput.nextLine();
-                Date startDate = (Date) myFormatObj.parse(start_date);
 
                 System.out.print("Enter End Time: ");
                 String end_date = userInput.nextLine();
@@ -161,16 +158,37 @@ System.out.println(facility.get(i));}*/
         writeFacility();
     }
 
+    public void returnDeleted(Facility deletedfacility) {
+        //read file
+
+        deletedfacility.setFacilityAvailability(true);
+        facility.add(deletedfacility);
+
+        //write file
+    }
+
     public void checkOut() {
         System.out.println("Enter request facility ID: ");
         String requestID = userInput.nextLine();
-        requestID = userInput.nextLine();
+
+        //call a function that return equipment borrowed according to the reservation 
+        ReservationRecord bookingitem;
+        bookingitem = usageManagement.getBookingRecord(requestID); //retrieve the whole equipment obj 
+
+        //update booking status 
+        usageManagement.updateBookingStatus(bookingitem);
+
+        //calculate penalty 
+        usageManagement.getPenaltyCharges(requestID);
+
+        String removeFacilityID;
+        removeFacilityID = bookingitem.getFacilities().getFacilityID();
 
         for (int i = 0; i < facility.filledSize(); i++) {
             String checkID = facility.get(i).getFacilityID();
             Boolean currentCourtAvai = facility.get(i).getFacilityAvailability();
 
-            if (currentCourtAvai == false && checkID.equals(requestID)) {
+            if (currentCourtAvai == false && checkID.equals(removeFacilityID)) {
                 facility.get(i).setFacilityAvailability(true);
                 System.out.println("Court successfully booked out");
             } else if (currentCourtAvai == true && checkID.equals(requestID)) {
