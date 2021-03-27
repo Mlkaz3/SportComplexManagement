@@ -34,11 +34,15 @@ public class FacilityManagement {
     }
 
     public void displayCourt() {
-        System.out.println("Facility ID    Facility Name    Facility Type   Facility Availability ");
+        System.out.println("                      Facilities Management");
+        System.out.println("------------------------------------------------------------------------------");
+        System.out.printf("%-15s %-22s %-13s %-15s\n", "Facility ID", "Facility Name", "Type", "Availability");
+        System.out.println("------------------------------------------------------------------------------");
         for (int i = 0; i < facility.filledSize(); i++) {
             //System.out.println(i);
             System.out.println(facility.get(i));
         }
+        System.out.println("------------------------------------------------------------------------------");
         
     }
 
@@ -63,7 +67,9 @@ public class FacilityManagement {
         System.out.println("Enter facility type: ");
         facilityType = userInput.nextLine();
 
-        System.out.println("Facility ID    Facility Name    Facility Type   Facility Availability ");
+        System.out.println("------------------------------------------------------------------------------");
+        System.out.printf("%-15s %-22s %-13s %-15s\n", "Facility ID", "Facility Name", "Type", "Availability");
+        System.out.println("------------------------------------------------------------------------------");
         System.out.println(facility.get(1).getFacilityID());
         Facility newFacility = new Facility(facilityID, facilityName, facilityType, facilityAvailability);
         facility.add(newFacility);
@@ -72,6 +78,7 @@ public class FacilityManagement {
 //    System.out.println(i);
             System.out.println(facility.get(i));
         }
+        System.out.println("------------------------------------------------------------------------------");
 
     }
 
@@ -85,10 +92,6 @@ public class FacilityManagement {
             if (currentID.equals(facilityRemove)) {
                 facility.remove(i + 1);
             }
-        }
-        for (int i = 0; i < facility.filledSize(); i++) {
-            System.out.println(i);
-            System.out.println(facility.get(i));
         }
         /*for(int i = 0; i < facility.filledSize() ; i++){
                     String currentID = facility.get(i).getFacilityID();
