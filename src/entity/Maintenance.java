@@ -147,7 +147,7 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
     //Entity class methods
     public int calcDuration() { //end date - start date
         long duration = endDate.getTime() - startDate.getTime();
-        return (int) (duration / (1000*60*60*24));
+        return (int) (duration / (1000 * 60 * 60 * 24));
     }
 
     public double calcCost() { // duration x payment per day (use seconds for demonstration)
@@ -156,6 +156,6 @@ public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     public int calcWaitingTime() { //request date - start date
         long waitingTime = startDate.getTime() - requestDate.getTime();
-        return (int) (waitingTime / (1000*60*60*24));
+        return (int) (waitingTime / (1000 * 60 * 60 * 24));
     }
 }

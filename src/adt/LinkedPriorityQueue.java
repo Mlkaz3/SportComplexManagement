@@ -117,7 +117,7 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
         if ((position >= 1) && (position <= length)) {
             Node currentNode = firstNode;
             for (int i = 0; i < position - 1; ++i) {
-                currentNode = currentNode.next;		// advance currentNode to next node
+                currentNode = currentNode.next;		// move to the next node
             }
             result = currentNode.data;	// currentNode is pointing to the node at givenPosition
         }
