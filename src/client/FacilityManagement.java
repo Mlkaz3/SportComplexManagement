@@ -142,7 +142,7 @@ System.out.println(facility.get(i));}*/    }
         }
     }
 
-    public void removeReservation() {
+    public void checkOut() {
         System.out.println("Enter request facility ID: ");
         String requestID = userInput.nextLine();
         requestID = userInput.nextLine();

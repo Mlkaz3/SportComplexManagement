@@ -193,7 +193,7 @@ public class MainDriver {
                     }
                     case 5 -> {
                         System.out.println();
-                        facilityManagement.removeReservation();
+                        facilityManagement.checkOut();
 
                     }
                     default -> {

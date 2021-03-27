@@ -32,17 +32,15 @@ public class UsageManagement {
         this.reservationRecord = new LinkedList<>();
     }
 
-    public void addReservation(ReservationRecord record) {
-//        //checking to ensure the duration does not more than 2 hours 
-//        if (record.getReservationDuration() > 2) {
-//            return "The maximum hour to use an equipment/facilities is 2 hours only";
-//        } else {
-//           
-//        }
-//
-//        return "Booking added successfully.";
-        reservationRecord.addLast(record);
-
+    public String addReservation(ReservationRecord record) {
+        //checking to ensure the duration does not more than 2 hours 
+        //checking to ensure date pass in is not previous than the current time
+        if (record.getReservationDuration() > 2) {
+            return "The maximum hour to use an equipment/facilities is 2 hours only";
+        } else {
+            reservationRecord.addLast(record);
+            return "Booking added successfully.";
+        }
     }
 
     public void displayReservation() {
@@ -174,7 +172,8 @@ public class UsageManagement {
     public void deleteBooking(int row) {
         String deletion;
         //cancel facilities booking at position row
-        
+        //get the deletion of item either equipment/facilities 
+
         System.out.println("\nAre you sure you want to permanently delete this booking? (Yes/No)");
         System.out.print("-> ");
         ReservationRecord deletionRecord;
@@ -182,8 +181,8 @@ public class UsageManagement {
         switch (deletion.toLowerCase()) {
             case "yes" -> {
                 deletionRecord = reservationRecord.removeAt(row);
-                System.out.println("The booking record with ID " + deletionRecord.getReservationID()+ " is deleted.");
-                
+                System.out.println("The booking record with ID " + deletionRecord.getReservationID() + " is deleted.");
+
             }
             case "no" -> {
                 System.out.println("The record is remain in the table.");
@@ -294,7 +293,7 @@ public class UsageManagement {
             try {
                 System.out.print("Please select a row to perform actions: ");
                 row = input.nextInt();
-                if(row < 1 || row > reservationRecord.getLength()){
+                if (row < 1 || row > reservationRecord.getLength()) {
                     System.out.println("Unknown row input, please try again.");
                 }
             } catch (InputMismatchException exception) {

@@ -14,24 +14,26 @@ import java.util.Date;
 /**
  *
  * @author winnieyap
- * 
+ *
  * Comparable<ReservationRecord>,
  */
-public class ReservationRecord implements Comparable<ReservationRecord>,Serializable{
+public class ReservationRecord implements Comparable<ReservationRecord>, Serializable {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static int nextNumber = 1000;
     private String reservationID;
     private String reservationType;
-    private Date reservationDateTime;
 
-    private Date reservationStartTime; //time where student start to use an equipment or facilities
+    //private Date reservationDateTime;
+
+    private Date reservationDateTime; //time where student start to use an equipment or facilities
     private Date reservationEndTime; //time where student end to use an equipment or facilities
     private Double reservationDuration; //start time - end time, but user might late return; or do function that generate duration after user return
-    private String status; //to store the status of a reservation, which can be success or failure due to cancelation/ not turn up to register, it can be staff input too 
+    private String status; 
     private User user; //user info
     private Facility facilities; //facilities info
     private Equipment equipments; //equipment info
+    private Date checkOutDateTime; //when user return
 
     public ReservationRecord() {
         this.reservationID = String.valueOf(nextNumber++);
@@ -41,25 +43,14 @@ public class ReservationRecord implements Comparable<ReservationRecord>,Serializ
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, User user, Facility facilities) {
         //Date date = new Date(); 
         this.reservationDateTime = new Date();
-        this.reservationStartTime = reservationStartTime;
+        this.reservationDateTime = reservationStartTime;
         this.reservationEndTime = reservationEndTime;
-        this.reservationDuration = calculateDuration(this.reservationStartTime, this.reservationEndTime);
+        this.reservationDuration = calculateDuration(this.reservationDateTime, this.reservationEndTime);
         this.user = user;
         this.facilities = facilities;
         this.reservationID = String.valueOf(nextNumber++);
         this.reservationType = "Facilities";
-    }
-
-    public ReservationRecord(User user, Facility facilities) {
-        //Date date = new Date(); 
-        this.reservationDateTime = new Date();
-        this.reservationStartTime = new Date();
-        this.reservationEndTime = new Date();
-        this.reservationDuration = 10.0;
-        this.user = user;
-        this.facilities = facilities;
-        this.reservationID = String.valueOf(nextNumber++);
-        this.reservationType = "Facilities";
+        this.status = "Pending";
     }
 
     double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
@@ -70,24 +61,14 @@ public class ReservationRecord implements Comparable<ReservationRecord>,Serializ
     //for equipment constructor 
     public ReservationRecord(Date reservationStartTime, Date reservationEndTime, User user, Equipment equipments) {
         this.reservationDateTime = new Date();
-        this.reservationStartTime = reservationStartTime;
+        this.reservationDateTime = reservationStartTime;
         this.reservationEndTime = reservationEndTime;
-        this.reservationDuration = calculateDuration(this.reservationStartTime, this.reservationEndTime);
+        this.reservationDuration = calculateDuration(this.reservationDateTime, this.reservationEndTime);
         this.user = user;
         this.equipments = equipments;
         this.reservationID = String.valueOf(nextNumber++);
         this.reservationType = "Equipments";
-    }
-    
-        public ReservationRecord(User user, Equipment equipments) {
-        this.reservationDateTime = new Date();
-        this.reservationStartTime = new Date();
-        this.reservationEndTime = reservationStartTime;
-        this.reservationDuration = 10.0;
-        this.user = user;
-        this.equipments = equipments;
-        this.reservationID = String.valueOf(nextNumber++);
-        this.reservationType = "Equipments";
+        this.status = "Pending";
     }
 
     public String getReservationType() {
@@ -116,11 +97,11 @@ public class ReservationRecord implements Comparable<ReservationRecord>,Serializ
     }
 
     public Date getReservationStartTime() {
-        return reservationStartTime;
+        return reservationDateTime;
     }
 
     public void setReservationStartTime(Date reservationStartTime) {
-        this.reservationStartTime = reservationStartTime;
+        this.reservationDateTime = reservationStartTime;
     }
 
     public Date getReservationEndTime() {
@@ -168,66 +149,13 @@ public class ReservationRecord implements Comparable<ReservationRecord>,Serializ
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
         //formatting the date 
         if (facilities == null) {
-//            return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
-//                    + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
-//                    + reservationStartTime + ", reservationEndTime=" + reservationEndTime + ", reservationDuration="
-//                    + reservationDuration + ", user=" + user + ", equipments=" + equipments + '}';
-
-//            return String.format(" %-15s %-20s %-30s %-30s %-30s %-20f %-20s %-20s", reservationID,reservationType,
-//            reservationDateTime,formatter.format(reservationStartTime),formatter.format(reservationEndTime),reservationDuration,
-//            user.getUserName(),equipments.getEquipmentType());
             return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), "Pending",
-                    formatter.format(reservationStartTime), formatter.format(reservationEndTime), formatter.format(reservationDateTime), user.getUserID());
-
-            /*expected output
-            Booking                  Status          From                   To                      Date
-            #ID of Items booked      Pending         22/3/2021 08:00AM      22/3/2021 09:00AM       2 mins ago
-            
-            
-             */
+                    formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(reservationDateTime), user.getUserID());
         }
-
-//        return "ReservationRecord{" + "reservationID=" + reservationID + ", reservationType="
-//                + reservationType + ", reservationDateTime=" + reservationDateTime + ", reservationStartTime="
-//                + formatter.format(reservationStartTime) + ", reservationEndTime=" + formatter.format(reservationEndTime) + ", reservationDuration="
-//                + reservationDuration + ", user=" + user + ", facilities=" + facilities + '}';
         return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), "Pending",
-                formatter.format(reservationStartTime), formatter.format(reservationEndTime), formatter.format(reservationDateTime), user.getUserID());
-
-    }
-
-    //method
-    void checkIn() {
-    }
-
-    void checkOut() {
-    }
-
-    void reserve() {
-    }
-
-    void alter() {
-    }
-
-    void cancel() {
-    }
-
-    void calculatePenalty() {
-    }
-
-    void insertRecord() {
-    }
-
-    void updateRecord() {
-    }
-
-    void deleteRecord() {
-    }
-
-    void filterRecord() {
+                formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(reservationDateTime), user.getUserID());
     }
 
     @Override
@@ -237,4 +165,25 @@ public class ReservationRecord implements Comparable<ReservationRecord>,Serializ
     }
 
 
+       public ReservationRecord(User user, Facility facilities) {
+        //Date date = new Date(); 
+        this.reservationDateTime = new Date();
+        this.reservationDateTime = new Date();
+        this.reservationEndTime = new Date();
+        this.reservationDuration = 10.0;
+        this.user = user;
+        this.facilities = facilities;
+        this.reservationID = String.valueOf(nextNumber++);
+        this.reservationType = "Facilities";
+    }
+        public ReservationRecord(User user, Equipment equipments) {
+        this.reservationDateTime = new Date();
+        this.reservationDateTime = new Date();
+        this.reservationEndTime = reservationDateTime;
+        this.reservationDuration = 10.0;
+        this.user = user;
+        this.equipments = equipments;
+        this.reservationID = String.valueOf(nextNumber++);
+        this.reservationType = "Equipments";
+    }
 }
