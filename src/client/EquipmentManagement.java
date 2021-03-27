@@ -107,6 +107,9 @@ public class EquipmentManagement {
         //returnStackType(choice);
         serFileWriter();
     }
+    
+    //read atribute equipment 
+    //push 
 
     public void returnEquipment() {
         //Should be enter userid / equipmentId to retrieve all the info and put back to stack

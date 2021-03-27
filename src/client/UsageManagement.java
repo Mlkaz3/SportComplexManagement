@@ -86,11 +86,6 @@ public class UsageManagement implements Serializable {
             System.out.println("");
             System.out.println("");
         }
-
-//        Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
-//        while (iterator.hasNext()) {
-//            System.out.println(iterator.next());
-//        }
     }
 
     private void displayHeading() {
@@ -149,7 +144,8 @@ public class UsageManagement implements Serializable {
                         //called deleteBooking() function in Usage Management which pass in the row number and 
                         usageManagement.deleteBooking(row);
                         System.out.println("");
-
+                        ch = 4;
+                       
                     }
                     case 4 -> {
 
@@ -332,7 +328,8 @@ public class UsageManagement implements Serializable {
             case "yes" -> {
                 deletionRecord = reservationRecord.removeAt(row);
                 System.out.println("The booking record with ID " + deletionRecord.getReservationID() + " is deleted.");
-
+                serFileWriter();
+                //EquipmentManagement.returnDeleted(equipment);
             }
             case "no" -> {
                 System.out.println("The record is remain in the table.");
@@ -445,6 +442,7 @@ public class UsageManagement implements Serializable {
             //here need to update booking table/record
             currentRecord.setReservationEndTime(endDate);
             reservationRecord.replace(row, currentRecord);
+            serFileWriter();
         } else {
             System.out.println("Extension is only available within booking period.");
         }
@@ -586,6 +584,7 @@ public class UsageManagement implements Serializable {
         position = reservationRecord.getPosition(record);
         reservationRecord.getEntry(position).setCheckOutDateTime(now);
         reservationRecord.getEntry(position).setStatus("Complete");
+        serFileWriter();
     }
 
     public void getPenaltyCharges(String id) {
@@ -796,90 +795,88 @@ public class UsageManagement implements Serializable {
         }
     }
 
-    private static LinkedList<ReservationRecord> Deserialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
-        //deserialize from the file  (read from the file)
-        try {
-            //Deserializing
-            File file = new File("src/ReservationRecord.ser");
-            System.out.println("***TRACE: " + file.getAbsolutePath());
-            ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
-            // This cast is correct because we're reading an ArrayList of Runner objects
-            // from the binary file
-            // @SuppressWarnings("unchecked") List<Runner> tempList = (ArrayList<Runner>) (oiStream.readObject());
-            // runnerList = tempList
-            reservationRecord = (LinkedList<ReservationRecord>) (oiStream.readObject());
-            oiStream.close();
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Cannot read from file", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Class not found", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        return reservationRecord;
-    }
-
-    private static void Serialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
-        //serializable to the file
-        try {
-            //Serializing
-            File file = new File("src/ReservationRecord.ser");
-            System.out.println("***TRACE: " + file.getAbsolutePath());
-            ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
-            ooStream.writeObject(reservationRecord);
-            ooStream.close();
-
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Cannot save to file", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void serial() {
-
-        try {
-            //Saving of object in a file
-            FileOutputStream file = new FileOutputStream("src/ReservationRecord.ser");
-            ObjectOutputStream out = new ObjectOutputStream(file);
-
-            // Method for serialization of object
-            Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
-            while (iterator.hasNext()) {
-                out.writeObject(iterator.next());
-            }
-
-            out.close();
-            file.close();
-
-            System.out.println("Object has been serialized");
-
-        } catch (IOException ex) {
-            System.out.println("IOException is caught");
-        }
-    }
-
-    public void deserial() {
-
-        // Deserialization
-        try {
-            // Reading the object from a file
-            FileInputStream file = new FileInputStream("src/ReservationRecord.ser");
-            ObjectInputStream in = new ObjectInputStream(file);
-
-            // Method for deserialization of object
-            reservationRecord = (LinkedList<ReservationRecord>) in.readObject();
-
-            in.close();
-            file.close();
-
-        } catch (IOException ex) {
-            System.out.println("IOException is caught");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("ClassNotFoundException is caught");
-        }
-    }
-
+//    private static LinkedList<ReservationRecord> Deserialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
+//        //deserialize from the file  (read from the file)
+//        try {
+//            //Deserializing
+//            File file = new File("src/ReservationRecord.ser");
+//            System.out.println("***TRACE: " + file.getAbsolutePath());
+//            ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
+//            // This cast is correct because we're reading an ArrayList of Runner objects
+//            // from the binary file
+//            // @SuppressWarnings("unchecked") List<Runner> tempList = (ArrayList<Runner>) (oiStream.readObject());
+//            // runnerList = tempList
+//            reservationRecord = (LinkedList<ReservationRecord>) (oiStream.readObject());
+//            oiStream.close();
+//        } catch (FileNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, "Cannot read from file", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (ClassNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "Class not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        }
+//        return reservationRecord;
+//    }
+//
+//    private static void Serialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
+//        //serializable to the file
+//        try {
+//            //Serializing
+//            File file = new File("src/ReservationRecord.ser");
+//            System.out.println("***TRACE: " + file.getAbsolutePath());
+//            ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
+//            ooStream.writeObject(reservationRecord);
+//            ooStream.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, "Cannot save to file", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
+//    public void serial() {
+//
+//        try {
+//            //Saving of object in a file
+//            FileOutputStream file = new FileOutputStream("src/ReservationRecord.ser");
+//            ObjectOutputStream out = new ObjectOutputStream(file);
+//
+//            // Method for serialization of object
+//            Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
+//            while (iterator.hasNext()) {
+//                out.writeObject(iterator.next());
+//            }
+//
+//            out.close();
+//            file.close();
+//
+//            System.out.println("Object has been serialized");
+//
+//        } catch (IOException ex) {
+//            System.out.println("IOException is caught");
+//        }
+//    }
+//
+//    public void deserial() {
+//
+//        // Deserialization
+//        try {
+//            // Reading the object from a file
+//            FileInputStream file = new FileInputStream("src/ReservationRecord.ser");
+//            ObjectInputStream in = new ObjectInputStream(file);
+//
+//            // Method for deserialization of object
+//            reservationRecord = (LinkedList<ReservationRecord>) in.readObject();
+//
+//            in.close();
+//            file.close();
+//
+//        } catch (IOException ex) {
+//            System.out.println("IOException is caught");
+//        } catch (ClassNotFoundException ex) {
+//            System.out.println("ClassNotFoundException is caught");
+//        }
+//    }
     private void facilityUsage() {
         System.out.println("Facility Usage");
         System.out.println("Total Booking for Facility: ");
@@ -912,54 +909,53 @@ public class UsageManagement implements Serializable {
         }
     }
 
-    private void read() {
-        try {
-            //Deserializing 
-            File file = new File("src/ReservationRecord.dat");
-            // System.out.println("***TRACE: " + file.getAbsolutePath());
-            ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
-            // This cast is correct because we're reading an ArrayList of Runner objects
-            // from the binary file
-            // @SuppressWarnings("unchecked") List<Runner> tempList = (ArrayList<Runner>) (oiStream.readObject());
-            // runnerList = tempList
-            reservationRecord = (LinkedList<ReservationRecord>) (oiStream.readObject());
-            oiStream.close();
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Cannot read from file", "ERROR", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Class not found", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void write() {
-        try {
-            //Serializing
-            File file = new File("src/ReservationRecord.dat");
-            // System.out.println("***TRACE: " + file.getAbsolutePath());
-            ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
-            ooStream.writeObject(reservationRecord);
-            ooStream.close();
-
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Cannot save to file", "ERROR", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-        }
-    }
-
-    public void writeStockInfo(String path, LinkedList<ReservationRecord> list) throws FileNotFoundException, IOException {
-        //1. Point to your file using File
-        File file = new File(path);
-        //2. Then use OOS but to serialize into a file you should use FileOutputStream inside the invocation
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
-        //3. Just write the object to a file using the method "writeObject"
-        objectOutputStream.writeObject(list);
-        //4. Close the streams
-        objectOutputStream.close();
-    }
-
+//    private void read() {
+//        try {
+//            //Deserializing 
+//            File file = new File("src/ReservationRecord.dat");
+//            // System.out.println("***TRACE: " + file.getAbsolutePath());
+//            ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
+//            // This cast is correct because we're reading an ArrayList of Runner objects
+//            // from the binary file
+//            // @SuppressWarnings("unchecked") List<Runner> tempList = (ArrayList<Runner>) (oiStream.readObject());
+//            // runnerList = tempList
+//            reservationRecord = (LinkedList<ReservationRecord>) (oiStream.readObject());
+//            oiStream.close();
+//        } catch (FileNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, "Cannot read from file", "ERROR", JOptionPane.ERROR_MESSAGE);
+//            ex.printStackTrace();
+//        } catch (ClassNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "Class not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
+//
+//    private void write() {
+//        try {
+//            //Serializing
+//            File file = new File("src/ReservationRecord.dat");
+//            // System.out.println("***TRACE: " + file.getAbsolutePath());
+//            ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
+//            ooStream.writeObject(reservationRecord);
+//            ooStream.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, "Cannot save to file", "ERROR", JOptionPane.ERROR_MESSAGE);
+//            ex.printStackTrace();
+//        }
+//    }
+//
+//    public void writeStockInfo(String path, LinkedList<ReservationRecord> list) throws FileNotFoundException, IOException {
+//        //1. Point to your file using File
+//        File file = new File(path);
+//        //2. Then use OOS but to serialize into a file you should use FileOutputStream inside the invocation
+//        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+//        //3. Just write the object to a file using the method "writeObject"
+//        objectOutputStream.writeObject(list);
+//        //4. Close the streams
+//        objectOutputStream.close();
+//    }
 }

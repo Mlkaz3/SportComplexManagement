@@ -31,6 +31,7 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
     private Date checkOutDateTime; //when user return
     private double penaltyRate = 8.00; //8 ringgit per hour
     private double lateHour;
+    private boolean isExtend;
 
     //for facilities constructor needa pass in start time and end time 
     public ReservationRecord(Date reservationEndTime, User user, Facility facilities) {
@@ -45,6 +46,7 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.status = "Pending";
         this.checkOutDateTime = null;
         this.lateHour =0.0;
+        this.isExtend = false;
     }
 
     double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
@@ -64,6 +66,7 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.status = "Pending";
         this.checkOutDateTime = null;
         this.lateHour =0.0;
+        this.isExtend = false;
     }
     
     //this is for debug purpose
