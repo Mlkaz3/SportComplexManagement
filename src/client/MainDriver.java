@@ -446,7 +446,6 @@ public class MainDriver implements Serializable {
         int ch = 0;
         usageManagement.displayReservation();
 
-        //print out the record == Today's record
         int row = usageManagement.getRow();
         do {
 
@@ -474,7 +473,6 @@ public class MainDriver implements Serializable {
 
                 switch (ch) {
                     case 1 -> {
-                        //called viewBooking() function in Usage Management
                         usageManagement.displayBookingDetails(row);
                         pressEnterKeyToContinue();
                         usageManagement.viewBooking(row);
@@ -482,13 +480,11 @@ public class MainDriver implements Serializable {
                     }
 
                     case 2 -> {
-                        //called updateBooking() function in Usage Management
                         usageManagement.updateBooking(row);
                         System.out.println("");
 
                     }
                     case 3 -> {
-                        //called deleteBooking() function in Usage Management which pass in the row number and 
                         usageManagement.deleteBooking(row);
                         System.out.println("");
                         ch = 4;
