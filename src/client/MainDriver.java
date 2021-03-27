@@ -421,6 +421,7 @@ public class MainDriver {
             Scanner input = new Scanner(System.in);
             try {
                 usageManagement.displayReservation();
+                pressEnterKeyToContinue();
 
                 //print out the record == Today's record
                 int row = usageManagement.getRow();

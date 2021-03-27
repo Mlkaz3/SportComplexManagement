@@ -133,8 +133,8 @@ public class UsageManagement {
                 System.out.println("*    [1] Extension of booking duration            *");
                 System.out.println("*    [2] Modify booking facility/equipment        *");
                 System.out.println("*    [3] Update booker information                *");
-                System.out.println("*    [4] Alter booking time                       *");
-                System.out.println("*    [5] Back                                     *");
+                //System.out.println("*    [4] Alter check out time                     *");
+                System.out.println("*    [4] Back                                     *");
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
                 System.out.println();
@@ -160,12 +160,6 @@ public class UsageManagement {
 
                     }
                     case 4 -> {
-                        //alter reservation time
-                        alterBookingDateTime(row);
-                        System.out.println();
-
-                    }
-                    case 5 -> {
                         System.out.println();
 
                     }
@@ -179,7 +173,7 @@ public class UsageManagement {
                 System.out.println("Error. Please enter an integer value within 1 and 3.");
             }
 
-        } while (ch != 5);
+        } while (ch != 4);
     }
 
     public void deleteBooking(int row) {
@@ -286,8 +280,8 @@ public class UsageManagement {
                     } else {
                         loop = true;
                     }
-                }else{
-                    loop=true;
+                } else {
+                    loop = true;
                 }
 
             } while (loop == false);
@@ -344,8 +338,6 @@ public class UsageManagement {
         displayHeading();
         System.out.println(bookingitems);
 
-        //to do 
-        //
     }
 
     private static LinkedList<ReservationRecord> filterRecord(LinkedList<ReservationRecord> reservationRecord, ReservationRecord currentRecord) {
@@ -490,12 +482,18 @@ public class UsageManagement {
         System.out.println("--------------");
         System.out.printf("%-25s %-20s\n", "Booker ID", "| " + reservationRecord.getEntry(row).getUser().getUserID());
         System.out.printf("%-25s %-20s\n", "Booker Name ", "| " + reservationRecord.getEntry(row).getUser().getUserName());
+        
+        System.out.println("\nPenalty Details");
+        System.out.println("---------------");
+        System.out.printf("%-25s %-20s\n", "Late in Hours", "| " + reservationRecord.getEntry(row).getLateHour());
+        System.out.printf("%-25s %-20s\n", "Penalty Rate ", "| " + reservationRecord.getEntry(row).getPenaltyRate());
+        System.out.printf("%-25s %-20s\n", "Penalty Amount ", "| " + reservationRecord.getEntry(row).calculatePenalty());
+
 
         System.out.println("=".repeat(60));
-
-        //if can put a press any key to continue
     }
 
+    //CANT USE CAUSE TEAM NOT DOING RESERVATION :)
     public void alterBookingDateTime(int row) throws ParseException {
 
         //validation of new startDate and endDate
@@ -507,9 +505,6 @@ public class UsageManagement {
         bookingitems = SortDateTime(bookingitems); //list
         int new_row = bookingitems.getPosition(currentRecord);
 
-        //alter cannot make during the booking ongoing 
-        //maybe can set a limit of 2 hours before updating 
-        //cannot alter pass record
         Date now = new Date();
         Date bookingStart = currentRecord.getReservationStartTime();
         Date bookingEnd = currentRecord.getReservationEndTime();

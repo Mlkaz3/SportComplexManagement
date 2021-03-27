@@ -31,6 +31,8 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
     private Facility facilities; //facilities info
     private Equipment equipments; //equipment info
     private Date checkOutDateTime; //when user return
+    private double penaltyRate = 8.00; //8 ringgit per hour
+    private double lateHour;
 
     public ReservationRecord() {
         this.reservationID = String.valueOf(nextNumber++);
@@ -48,6 +50,7 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.reservationType = "Facilities";
         this.status = "Pending";
         this.checkOutDateTime = null;
+        this.lateHour =0.0;
     }
 
     double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
@@ -66,6 +69,7 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.reservationType = "Equipments";
         this.status = "Pending";
         this.checkOutDateTime = null;
+        this.lateHour =0.0;
     }
 
     public String getReservationType() {
@@ -112,6 +116,23 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
     public Double getReservationDuration() {
         return reservationDuration;
     }
+
+    public double getPenaltyRate() {
+        return penaltyRate;
+    }
+
+    public double calculatePenalty() {
+        return lateHour * penaltyRate;
+    }
+
+    public void setLateHour(double lateHour) {
+        this.lateHour = lateHour;
+    }
+
+    public double getLateHour() {
+        return lateHour;
+    }
+
 
     public User getUser() {
         return user;
