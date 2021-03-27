@@ -6,6 +6,7 @@
 package client;
 
 import adt.LinkedList;
+import static client.MainDriver.pressEnterKeyToContinue;
 import entity.Equipment;
 import entity.ReservationRecord;
 import entity.User;
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
-import static client.MainDriver.pressEnterKeyToContinue;
+import static client.MainDriver.usageManagement;
 
 /**
  *
@@ -38,22 +39,30 @@ public class UsageManagement {
         //end time not smaller than now 
         if (record.getReservationDuration() > 2) {
             return "The maximum hour to use an equipment/facilities is 2 hours only";
-        } else if(record.getReservationEndTime().compareTo(now) <0 ){
+        } else if (record.getReservationEndTime().compareTo(now) < 0) {
             return "The booking end time should not smaller than current time";
-        
-        }else {
+
+        } else {
             reservationRecord.addLast(record);
             return "Booking added successfully.";
         }
     }
 
     public void displayReservation() {
-        Date date = new Date();
-        System.out.println("");
-        DateFormat headingFormat = new SimpleDateFormat("E, dd.MM.yyyy");
-        System.out.println("Today's Bookings -> " + headingFormat.format(date));
-        displayHeading();
-        System.out.println(reservationRecord);
+
+        if (reservationRecord.isEmpty()) {
+            System.out.println("-----------------------");
+            System.out.println("No booking record found");
+            System.out.println("-----------------------");
+
+        } else {
+            Date date = new Date();
+            System.out.println("");
+            DateFormat headingFormat = new SimpleDateFormat("E, dd.MM.yyyy");
+            System.out.println("Today's Bookings -> " + headingFormat.format(date));
+            displayHeading();
+            System.out.println(reservationRecord);
+        }
 
 //        Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
 //        while (iterator.hasNext()) {
@@ -277,6 +286,8 @@ public class UsageManagement {
                     } else {
                         loop = true;
                     }
+                }else{
+                    loop=true;
                 }
 
             } while (loop == false);
@@ -293,21 +304,27 @@ public class UsageManagement {
     public int getRow() {
         //enable staff to choose a row to perform actions
         int row = 0;
-        do {
-            try {
-                System.out.print("Please select a row to perform actions: ");
-                row = input.nextInt();
-                if (row < 1 || row > reservationRecord.getLength()) {
-                    System.out.println("Unknown row input, please try again.");
+        if (reservationRecord.isEmpty()) {
+            row = -1;
+        } else {
+
+            do {
+                try {
+                    System.out.print("Please select a row to perform actions: ");
+                    row = input.nextInt();
+                    if (row < 1 || row > reservationRecord.getLength()) {
+                        System.out.println("Unknown row input, please try again.");
+                    }
+                } catch (InputMismatchException exception) {
+                    System.out.println("Not an valid choice, please try again.");
+                    if (input.next().isEmpty()) {
+                        break;
+                    }
                 }
-            } catch (InputMismatchException exception) {
-                System.out.println("Not an valid choice, please try again.");
-                if (input.next().isEmpty()) {
-                    break;
-                }
-            }
-        } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
+            } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
+        }
         return row;
+
     }
 
     private void filterBookingItem(int row) {

@@ -78,10 +78,10 @@ public class MainDriver {
         Equipment equipment3 = new Equipment("004", "Nike", true, 12.00, "Shelf0120", "badminton racquet");
 
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 03:01"), user, equipment);
-        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 05:12"), user1, equipment2);
-        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 06:37"), user2, equipment3);
-        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 10:00"), user3, equipment3);
+        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 19:01"), user, equipment);
+        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 20:12"), user1, equipment2);
+        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 23:37"), user2, equipment3);
+        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 18:40"), user3, equipment3);
         ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 07:01"), user4, equipment3);
 
         usageManagement.addReservation(record1);
@@ -424,6 +424,11 @@ public class MainDriver {
 
                 //print out the record == Today's record
                 int row = usageManagement.getRow();
+                if (row == -1) {
+                    pressEnterKeyToContinue();
+                    break;
+
+                }
 
                 System.out.println();
                 System.out.println("***************************************************");
