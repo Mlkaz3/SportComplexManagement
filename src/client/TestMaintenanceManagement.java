@@ -127,18 +127,6 @@ public class TestMaintenanceManagement {
         Facility tennisCourt3 = new Facility("T003", "Tennie Court 3", "Tennis", true);
         Facility tennisCourt4 = new Facility("T004", "Tennie Court 4", "Tennis", true);
         Facility tennisCourt5 = new Facility("T005", "Tennie Court 5", "Tennis", true);
-
-        Data.court.add(badmintonCourt1);
-        Data.court.add(badmintonCourt2);
-        Data.court.add(badmintonCourt3);
-        Data.court.add(badmintonCourt4);
-        Data.court.add(badmintonCourt5);
-
-        Data.court.add(tennisCourt1);
-        Data.court.add(tennisCourt2);
-        Data.court.add(tennisCourt3);
-        Data.court.add(tennisCourt4);
-        Data.court.add(tennisCourt5);
       
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 //        Maintenance maintenance1 = new Maintenance("B001", "Replace", "Broken net", formatter.parse("2021-04-22"));

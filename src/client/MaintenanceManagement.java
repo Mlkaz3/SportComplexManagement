@@ -9,9 +9,14 @@ import adt.ArrList;
 import adt.LinkedPriorityQueue;
 import adt.ListInter;
 import adt.PriorityQueueInterface;
+import static client.MainDriver.facilityManagement;
 import entity.Facility;
 import entity.Maintenance;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,10 +25,9 @@ import java.util.Scanner;
 
 /**
  *
- * @author YJ
+ * @author Ong Yi Jie 19WMR11855
  */
-public class MaintenanceManagement {
-    // optimize code
+public class MaintenanceManagement { // change duration and waiting time to days, bug: same maintenance ID
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
     ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
@@ -38,6 +42,7 @@ public class MaintenanceManagement {
     //display
     public void displayQueue() {
 
+        readAppt();
         System.out.println("                                                       Maintenance Appointment Queue");
         System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.printf("%-17s %-17s %-20s %-30s %-20s %-25s\n", "   Maintenance ID", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
@@ -75,10 +80,10 @@ public class MaintenanceManagement {
             Facility selectedFacility = new Facility();
 
             int count = 0;
-            for (int i = 0; i < Data.court.filledSize(); i++) {
-                if (facilityID == null ? Data.court.get(i) == null : facilityID.equals(Data.court.get(i).getFacilityID())) {
+            for (int i = 0; i < facilityManagement.facility.filledSize(); i++) {
+                if (facilityID == null ? facilityManagement.facility.get(i) == null : facilityID.equals(facilityManagement.facility.get(i).getFacilityID())) {
                     count = 1;
-                    selectedFacility = Data.court.get(i);
+                    selectedFacility = facilityManagement.facility.get(i);
                 }
             }
             if (count == 0) {
@@ -124,10 +129,11 @@ public class MaintenanceManagement {
             System.out.println("\nDuplicated appointment found!");
         }
 
+        writeAppt();
         pressAnyKeyToContinue();
     }
 
-    //commence a maintenance, generate a maintenance ID
+    //commence a maintenance
     public void serveFront() {
 
         displayQueue();
@@ -159,6 +165,7 @@ public class MaintenanceManagement {
 
                             maintenance = appointmentQueue.dequeue();
                             maintenanceHistory.add(maintenance);
+                            writeRecord();
 
                             System.out.println("\nFacility is currently undergoing maintenance!");
                             valid = true;
@@ -180,6 +187,8 @@ public class MaintenanceManagement {
                 }
             } while (valid != true);
         }
+
+        writeAppt();
         pressAnyKeyToContinue();
     }
 
@@ -233,6 +242,7 @@ public class MaintenanceManagement {
 
         }
 
+        writeAppt();
         pressAnyKeyToContinue();
     }
 
@@ -305,10 +315,10 @@ public class MaintenanceManagement {
                             Facility selectedFacility = new Facility();
 
                             int count = 0;
-                            for (int i = 0; i < Data.court.filledSize(); i++) {
-                                if (newID == null ? Data.court.get(i) == null : newID.equals(Data.court.get(i).getFacilityID())) {
+                            for (int i = 0; i < facilityManagement.facility.filledSize(); i++) {
+                                if (newID == null ? facilityManagement.facility.get(i) == null : newID.equals(facilityManagement.facility.get(i).getFacilityID())) {
                                     count = 1;
-                                    selectedFacility = Data.court.get(i);
+                                    selectedFacility = facilityManagement.facility.get(i);
                                 }
                             }
                             if (count == 0) {
@@ -367,6 +377,7 @@ public class MaintenanceManagement {
             } while (num != 5);
         }
 
+        writeAppt();
         pressAnyKeyToContinue();
     }
 
@@ -432,6 +443,8 @@ public class MaintenanceManagement {
                 System.out.println("\nMaintenance completed!");
             }
         }
+
+        writeRecord();
         pressAnyKeyToContinue();
     }
 
@@ -496,20 +509,20 @@ public class MaintenanceManagement {
     }
 
     public void printFacility() {
-        System.out.println("-----------------------------------------------------");
-        System.out.println("               - List of Facilities -                ");
-        System.out.println("-----------------------------------------------------");
-        System.out.println(Data.court);
-        System.out.println("-----------------------------------------------------");
+
+        System.out.println("");
+        facilityManagement.displayCourt();
     }
 
     public void printHistory() throws ParseException {
-        Maintenance maintenance;
 
+        Maintenance maintenance;
+        readRecord();
         System.out.println("                                                                                  Maintenance Records");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", "No", "Maintenance ID", "Facility ID", "Maintenance type", "Maintenance description", "Required Date", "Request Timestamp", "Start Date", "End Date");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
         for (int i = 1; i <= maintenanceHistory.filledSize(); i++) {
             maintenance = maintenanceHistory.getEntry(i);
             String maintenanceID = maintenance.getMaintenanceID();
@@ -574,8 +587,67 @@ public class MaintenanceManagement {
             } while (valid != true);
         }
 
+        writeAppt();
         pressAnyKeyToContinue();
 
+    }
+
+    //Read appointments file
+    public void readAppt() {
+        try {
+            FileInputStream fileIn = new FileInputStream("src/MaintenanceAppointments.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            appointmentQueue = (LinkedPriorityQueue<Maintenance>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("No record found!");
+            c.printStackTrace();
+        }
+    }
+
+    //Write appointments file
+    public void writeAppt() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src/MaintenanceAppointments.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(appointmentQueue);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    //Read records file
+    public void readRecord() {
+        try {
+            FileInputStream fileIn = new FileInputStream("src/MaintenanceRecords.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            maintenanceHistory = (ArrList<Maintenance>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("No record found!");
+            c.printStackTrace();
+        }
+    }
+
+    //Write records file
+    public void writeRecord() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src/MaintenanceRecords.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(maintenanceHistory);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
 
     public static void pressAnyKeyToContinue() {

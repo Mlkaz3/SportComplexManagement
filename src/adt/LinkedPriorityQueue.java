@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author YJ
+ * @author Ong Yi Jie 19WMR11855
  * @param <T>
  */
 /*
@@ -17,7 +17,7 @@ import java.io.Serializable;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQueueInterface<T> {
+public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQueueInterface<T>, Serializable {
 
     private Node firstNode; // reference to first node
     private int length;  // number of elements in queue

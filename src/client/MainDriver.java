@@ -43,18 +43,6 @@ public class MainDriver implements Serializable {
         Facility tennisCourt4 = new Facility("T004", "Tennie Court 4", "Tennis", true);
         Facility tennisCourt5 = new Facility("T005", "Tennie Court 5", "Tennis", true);
 
-        Data.court.add(badmintonCourt1);
-        Data.court.add(badmintonCourt2);
-        Data.court.add(badmintonCourt3);
-        Data.court.add(badmintonCourt4);
-        Data.court.add(badmintonCourt5);
-
-        Data.court.add(tennisCourt1);
-        Data.court.add(tennisCourt2);
-        Data.court.add(tennisCourt3);
-        Data.court.add(tennisCourt4);
-        Data.court.add(tennisCourt5);
-
         facilityManagement.add(badmintonCourt1);
         facilityManagement.add(badmintonCourt2);
         facilityManagement.add(badmintonCourt3);

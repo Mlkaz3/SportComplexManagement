@@ -5,15 +5,16 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 /**
  *
- * @author YJ
+ * @author Ong Yi Jie 19WMR11855
  */
-public class Maintenance implements Comparable<Maintenance> {
+public class Maintenance implements Comparable<Maintenance>, Serializable {
 
     private Facility facility;
     private static int next = 1000;

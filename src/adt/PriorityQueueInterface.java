@@ -7,7 +7,7 @@ package adt;
 
 /**
  *
- * @author YJ
+ * @author Ong Yi Jie 19WMR11855
  * @param <T>
  */
 public interface PriorityQueueInterface<T extends Comparable<T>> {
