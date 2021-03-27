@@ -5,7 +5,6 @@
  */
 package entity;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -14,7 +13,7 @@ import java.util.Objects;
  *
  * @author YJ
  */
-public class Maintenance implements Comparable<Maintenance>{
+public class Maintenance implements Comparable<Maintenance> {
 
     private Facility facility;
     private static int next = 1000;
@@ -31,7 +30,7 @@ public class Maintenance implements Comparable<Maintenance>{
         this.maintenanceID = "M" + String.valueOf(next++);
     }
 
-    public Maintenance(String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
+    public Maintenance(String maintenanceID, String maintenanceType, String maintenanceDesc, Date requiredDate, Date requestDate) {
         this.maintenanceID = "M" + String.valueOf(next++);
         this.maintenanceType = maintenanceType;
         this.maintenanceDesc = maintenanceDesc;
@@ -114,11 +113,11 @@ public class Maintenance implements Comparable<Maintenance>{
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-        return String.format("%-17s %-20s %-30s %-20s %-25s", facility.getFacilityID(), maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestDate);
+        return String.format("%-17s %-17s %-20s %-30s %-20s %-25s", maintenanceID, facility.getFacilityID(), maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestDate);
     }
 
     @Override
-    public int hashCode() { // Ignored
+    public int hashCode() {
         int hash = 5;
         return hash;
     }

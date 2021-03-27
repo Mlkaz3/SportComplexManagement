@@ -23,8 +23,7 @@ import java.util.Scanner;
  * @author YJ
  */
 public class MaintenanceManagement {
-    // optimize code or loop within functions?
-    // change to static methods
+    // optimize code
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
     ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
@@ -39,17 +38,16 @@ public class MaintenanceManagement {
     //display
     public void displayQueue() {
 
-        System.out.println("                                             Maintenance Appointment Queue");
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-17s %-20s %-30s %-20s %-25s\n", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("                                                       Maintenance Appointment Queue");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-17s %-17s %-20s %-30s %-20s %-25s\n", "   Maintenance ID", "   Facility ID", "   Maintenance type", "   Maintenance description", "   Required Date", "   Request Timestamp");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println(appointmentQueue);
-        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
 
         if (appointmentQueue.isEmpty()) {
             System.out.println("The queue is currently empty.");
         } else {
-            System.out.println("======================");
             System.out.println("Current queue size: " + appointmentQueue.getTotalEntry());
             System.out.println("======================");
         }
@@ -153,10 +151,6 @@ public class MaintenanceManagement {
                     num = Integer.parseInt(input);
                     switch (num) {
                         case 1 -> {
-
-                            String maintenanceID = maintenance.getMaintenanceID();
-                            maintenance.setMaintenanceID(maintenanceID);
-
                             maintenance.getFacility().setFacilityAvailability(false);
 
                             GregorianCalendar startDate = new GregorianCalendar();
@@ -450,7 +444,6 @@ public class MaintenanceManagement {
             System.out.println("There is no record.");
 
         } else {
-            System.out.println("==================");
             System.out.println("Total records: " + maintenanceHistory.getfilledSize());
             System.out.println("==================");
 
@@ -483,9 +476,9 @@ public class MaintenanceManagement {
             if (maintenance.getEndDate() == null) {
                 System.out.println("\nMaintenance is still going on...");
             } else {
-                System.out.println("-------------------------------------------------------");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 System.out.println("              Maintenance report of " + maintenance.getMaintenanceID());
-                System.out.println("-------------------------------------------------------");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 System.out.println("Facility ID              : " + maintenance.getFacility().getFacilityID());
                 System.out.println("Maintenance type         : " + maintenance.getMaintenanceType());
                 System.out.println("Maintenance description  : " + maintenance.getMaintenanceDesc());
@@ -493,8 +486,8 @@ public class MaintenanceManagement {
                 System.out.println("-------------------------------------------------------");
                 System.out.println("Total waiting time       : " + maintenance.calcWaitingTime() + " s");
                 System.out.println("Duration of maintenance  : " + maintenance.calcDuration() + " s");
-                System.out.printf("Total cost of maintenance: RM%.2f", maintenance.calcCost());
-                System.out.println("\n-------------------------------------------------------");
+                System.out.printf("Total cost of maintenance: RM%.2f\n", maintenance.calcCost());
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             }
         }
 
