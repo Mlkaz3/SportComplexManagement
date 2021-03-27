@@ -10,11 +10,20 @@ package client;
  * @author andre
  */
 import adt.ArrList;
+import adt.ArrayStack;
 import adt.ListInter;
 import static client.MainDriver.usageManagement;
+import entity.Equipment;
 import entity.Facility;
+import entity.Maintenance;
 import entity.ReservationRecord;
 import entity.User;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import static java.lang.System.in;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +43,7 @@ public class FacilityManagement {
     }
 
     public void displayCourt() {
+        readFacility();
         System.out.println("                       List of Facilities");
         System.out.println("-----------------------------------------------------------------");
         System.out.printf("%-15s %-22s %-13s %-15s\n", "Facility ID", "Facility Name", "Type", "Availability");
@@ -43,11 +53,12 @@ public class FacilityManagement {
             System.out.println(facility.get(i));
         }
         System.out.println("-----------------------------------------------------------------");
-        
+
     }
 
     void add(Facility element) {
         facility.add(element);
+        writeFacility();
     }
 
     public void addCourt() {
@@ -80,6 +91,7 @@ public class FacilityManagement {
         }
         System.out.println("------------------------------------------------------------------------------");
 
+        writeFacility();
     }
 
     public void removeCourt() {
@@ -100,7 +112,9 @@ public class FacilityManagement {
                     };         }
                 for(int i = 0; i < facility.filledSize() ; i++){
                     System.out.println(i);
-System.out.println(facility.get(i));}*/    }
+System.out.println(facility.get(i));}*/
+        writeFacility();
+    }
 
     public void addReservation() throws ParseException {
         System.out.println("Kindly insert ur personal info: ");
@@ -133,18 +147,18 @@ System.out.println(facility.get(i));}*/    }
                 String end_date = userInput.nextLine();
                 Date endDate = (Date) myFormatObj.parse(end_date);
 
-                
-
                 //add a new reservation record 
                 ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, newuser, facility.get(i));
-                
-                if(usageManagement.addReservation(record1)){
+
+                if (usageManagement.addReservation(record1)) {
                     facility.get(i).setFacilityAvailability(false);
-                    System.out.println("room hab been successfully registered");}
+                    System.out.println("room hab been successfully registered");
+                }
             } else if (currentCourtAvai == false && checkID.equals(requestID)) {
                 System.out.println("the room is not available");
             }
         }
+        writeFacility();
     }
 
     public void checkOut() {
@@ -162,6 +176,36 @@ System.out.println(facility.get(i));}*/    }
             } else if (currentCourtAvai == true && checkID.equals(requestID)) {
                 System.out.println("Room is not booked no booking out require");
             }
+        }
+        writeFacility();
+    }
+
+    //Read facility file
+    public void readFacility() {
+        try {
+            FileInputStream fileIn = new FileInputStream("src/FacilityRecord.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            facility = (ArrList<Facility>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("No Equipment Record is found!");
+            c.printStackTrace();
+        }
+    }
+
+    //Write facility file
+    public void writeFacility() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src/FacilityRecord.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(facility);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
         }
     }
 
