@@ -61,7 +61,7 @@ public class EquipmentManagement {
         if (equipmentStack.isEmpty()) {
             System.out.println("Sorry. There are no racquet left.");
         } else {
-            
+
             System.out.print("Enter Name : ");
             user.setUserName(input.nextLine());
 
@@ -107,10 +107,9 @@ public class EquipmentManagement {
         //returnStackType(choice);
         serFileWriter();
     }
-    
+
     //read atribute equipment 
     //push 
-
     public void returnEquipment() {
         //Should be enter userid / equipmentId to retrieve all the info and put back to stack
         System.out.print("Enter the reservation ID : ");
@@ -266,6 +265,14 @@ public class EquipmentManagement {
         }
     }
 
+    public void returnDeleted(Equipment equipment) {
+
+        serFileReader();
+        equipment.setEquipmentStatus(true);
+        equipmentStack.push(equipment);
+        serFileWriter();
+    }
+
     //Read file
     public void serFileReader() {
         try {
@@ -301,14 +308,13 @@ public class EquipmentManagement {
         System.out.println("All broken equipment is removed.");
         writeBrokenFile();
     }
-        
+
 //    public void clearEquipmentStack() {
 //        serFileReader();
 //        equipmentStack.clear();
 //        System.out.println("All equipment is removed.");
 //        serFileWriter();
 //    }
-    
     public void readBrokenFile() {
         try {
             FileInputStream fileIn = new FileInputStream("src/BrokenRecord.ser");
@@ -354,7 +360,7 @@ public class EquipmentManagement {
         }
         writeBrokenFile();
     }
-    
+
 //    public void setStackType(int ch) {
 //        System.out.println("Setting stack type");
 //        switch (ch) {
