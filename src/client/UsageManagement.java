@@ -60,12 +60,12 @@ public class UsageManagement {
 
         System.out.println("Booking added successfully.");
         reservationRecord.addLast(record);
-        write();
+        serFileWriter();
         return true;
     }
 
     public void displayReservation() {
-        read();
+        serFileReader();
         if (reservationRecord.isEmpty()) {
             System.out.println("-----------------------");
             System.out.println("No booking record found");
