@@ -45,7 +45,7 @@ public class EquipmentManagement {
             while (it.hasNext()) {
                 System.out.println(it.next());
             }
-            System.out.println("There are currently " + equipmentStack.size() + " racquet.");
+            System.out.println("\nThere are currently " + equipmentStack.size() + " racquet.");
         }
         //returnStackType(choice);
     }
@@ -61,6 +61,7 @@ public class EquipmentManagement {
         if (equipmentStack.isEmpty()) {
             System.out.println("Sorry. There are no racquet left.");
         } else {
+            
             System.out.print("Enter Name : ");
             user.setUserName(input.nextLine());
 
@@ -78,7 +79,7 @@ public class EquipmentManagement {
 //            int qty = Integer.parseInt(inputQty);
             SimpleDateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-            System.out.print("Enter End Time: ");
+            System.out.print("Enter End Time (dd/MM/yyyy HH:mm) : ");
             String end_date = input.nextLine();
             Date endDate = (Date) myFormatObj.parse(end_date); //help winnie
 
@@ -91,7 +92,13 @@ public class EquipmentManagement {
             ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, user, equipment);
             if (usageManagement.addReservation(record1)) {
                 equipment.setEquipmentStatus(false);
+                System.out.println("");
+                System.out.println("----------------------------------");
+                System.out.println("Equipment ID : " + equipment.getEquipmentID());
+                System.out.println("Equipment Brand : " + equipment.getEquipmentBrand());
                 equipmentStack.pop();
+                System.out.println("----------------------------------");
+                System.out.println("Equipment successfully borrowed.");
             }
 //
 //                }
@@ -103,17 +110,20 @@ public class EquipmentManagement {
 
     public void returnEquipment() {
         //Should be enter userid / equipmentId to retrieve all the info and put back to stack
-        System.out.println("Enter the reservation ID");
+        System.out.print("Enter the reservation ID : ");
         String id = input.nextLine();
         //call a function that return a equipment
         ReservationRecord bookingitem;
         bookingitem = usageManagement.getBookingRecord(id); //retrieve the whole equipment obj 
 
         //set status back to true 
-        System.out.println("Booking item ");
-        System.out.println("Equipment ID" + bookingitem.getEquipments().getEquipmentID());
-        System.out.println("Equipment Brand" + bookingitem.getEquipments().getEquipmentBrand());
-        System.out.println("Equipment Status" + bookingitem.getEquipments().getEquipmentStatus());
+        System.out.println("------------------");
+        System.out.println("Borrowed item : ");
+        System.out.println("------------------");
+        System.out.println("Equipment ID : " + bookingitem.getEquipments().getEquipmentID());
+        System.out.println("Equipment Brand : " + bookingitem.getEquipments().getEquipmentBrand());
+        System.out.println("Equipment Status : " + bookingitem.getEquipments().getEquipmentStatus());
+        System.out.println("");
 
         //update booking status 
         usageManagement.updateBookingStatus(bookingitem);
@@ -148,7 +158,7 @@ public class EquipmentManagement {
                         serFileReader();
                         bookingitem.getEquipments().setEquipmentStatus(true);
                         equipmentStack.push(bookingitem.getEquipments());
-                        System.out.println("Equipment Returned.");
+                        System.out.println("Equipment Successfully Returned.");
                         serFileWriter();
                         valid = true;
                     }
@@ -283,17 +293,17 @@ public class EquipmentManagement {
     }
 
     public void clearAll() {
-        serFileReader();
-        equipmentStack.clear();
-        System.out.println("All equipment is removed.");
-        serFileWriter();
+        readBrokenFile();
+        brokenStack.clear();
+        System.out.println("All broken equipment is removed.");
+        writeBrokenFile();
     }
-
-//        public void clearAll() {
-//        readBrokenFile();
-//        brokenStack.clear();
+        
+//    public void clearEquipmentStack() {
+//        serFileReader();
+//        equipmentStack.clear();
 //        System.out.println("All equipment is removed.");
-//        writeBrokenFile();
+//        serFileWriter();
 //    }
     
     public void readBrokenFile() {
@@ -337,11 +347,11 @@ public class EquipmentManagement {
             while (it.hasNext()) {
                 System.out.println(it.next());
             }
-            System.out.println("There are currently " + brokenStack.size() + " racquet.");
+            System.out.println("There are currently " + brokenStack.size() + " broken racquet.");
         }
         writeBrokenFile();
     }
-
+    
 //    public void setStackType(int ch) {
 //        System.out.println("Setting stack type");
 //        switch (ch) {

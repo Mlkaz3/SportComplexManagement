@@ -275,7 +275,7 @@ public class MainDriver {
                 System.out.println("*                 Stock Management                *");
                 System.out.println("*                                                 *");
                 System.out.println("*    [1] Stock In                                 *");
-                System.out.println("*    [2] Clear All Equipment                      *");
+                System.out.println("*    [2] Clear All Broken Equipment               *");
                 System.out.println("*    [3] Back                                     *");
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
