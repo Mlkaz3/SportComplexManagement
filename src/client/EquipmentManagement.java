@@ -105,9 +105,9 @@ public class EquipmentManagement {
         System.out.println("------------------");
         System.out.println("Borrowed item : ");
         System.out.println("------------------");
-        System.out.println("Equipment ID : " + bookingitem.getEquipments().getEquipmentID());
-        System.out.println("Equipment Brand : " + bookingitem.getEquipments().getEquipmentBrand());
-        System.out.println("Equipment Status : " + bookingitem.getEquipments().getEquipmentStatus());
+        System.out.println("Equipment ID : " + bookingitem.getEquipment().getEquipmentID());
+        System.out.println("Equipment Brand : " + bookingitem.getEquipment().getEquipmentBrand());
+        System.out.println("Equipment Status : " + bookingitem.getEquipment().getEquipmentStatus());
         System.out.println("");
 
         //update booking status 
@@ -132,7 +132,7 @@ public class EquipmentManagement {
                     //if racquet broken, add to broken stack
                     case 1 -> {
                         readBrokenFile();
-                        brokenStack.push(bookingitem.getEquipments());
+                        brokenStack.push(bookingitem.getEquipment());
                         System.out.println("Broken equipment received.");
                         writeBrokenFile();
                         viewBrokenStack();
@@ -141,8 +141,8 @@ public class EquipmentManagement {
                     //add back to equipment stack only when in good condition
                     case 2 -> {
                         serFileReader();
-                        bookingitem.getEquipments().setEquipmentStatus(true);
-                        equipmentStack.push(bookingitem.getEquipments());
+                        bookingitem.getEquipment().setEquipmentStatus(true);
+                        equipmentStack.push(bookingitem.getEquipment());
                         System.out.println("Equipment Successfully Returned.");
                         serFileWriter();
                         valid = true;

@@ -104,6 +104,14 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         return reservationDateTime;
     }
 
+    public boolean isIsExtend() {
+        return isExtend;
+    }
+
+    public void setIsExtend(boolean isExtend) {
+        this.isExtend = isExtend;
+    }
+
     public void setReservationDate(Date reservationDate) {
         this.reservationDateTime = reservationDate;
     }
@@ -177,7 +185,7 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.facilities = facilities;
     }
 
-    public Equipment getEquipments() {
+    public Equipment getEquipment() {
         return equipments;
     }
 
