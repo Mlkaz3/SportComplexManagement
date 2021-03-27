@@ -77,9 +77,6 @@ public class EquipmentManagement {
             int qty = Integer.parseInt(inputQty);
 
             SimpleDateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            System.out.print("Enter Start Time: ");
-            String start_date = input.nextLine();
-            Date startDate = (Date) myFormatObj.parse(start_date); //help winnie
 
             System.out.print("Enter End Time: ");
             String end_date = input.nextLine();
@@ -91,12 +88,13 @@ public class EquipmentManagement {
             } else {
                 for (int i = 0; i < qty; i++) {
                     Equipment equipment = equipmentStack.peek();
-                    equipment.setEquipmentStatus(false);
-                    equipmentStack.pop();
+                    ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, user, equipment);
+                    if (usageManagement.addReservation(record1)) {
+                        equipment.setEquipmentStatus(false);
+                        equipmentStack.pop();
 
-                    //add a new reservation record 
-                    ReservationRecord record1 = new entity.ReservationRecord((Date)startDate, (Date) endDate, user, equipment);
-                    usageManagement.addReservation(record1);
+                    }
+
                 }
             }
         }
@@ -109,25 +107,29 @@ public class EquipmentManagement {
         System.out.println("Enter the reservation ID");
         String id = input.nextLine();
         //call a function that return a equipment
-        Equipment bookingitem;
-        bookingitem = usageManagement.getBookingEquipment(id); //retrieve the whole equipment obj 
-        
+        ReservationRecord bookingitem;
+        bookingitem = usageManagement.getBookingRecord(id); //retrieve the whole equipment obj 
+
         //set status back to true 
-        
-        
         System.out.println("Booking item ");
-        System.out.println("Equipment ID" + bookingitem.getEquipmentID());
-        System.out.println("Equipment Brand" + bookingitem.getEquipmentBrand());
-        System.out.println("Equipment Status" + bookingitem.getEquipmentStatus());
+        System.out.println("Equipment ID" + bookingitem.getEquipments().getEquipmentID());
+        System.out.println("Equipment Brand" + bookingitem.getEquipments().getEquipmentBrand());
+        System.out.println("Equipment Status" + bookingitem.getEquipments().getEquipmentStatus());
+
+        //update booking status 
+        usageManagement.updateBookingStatus(bookingitem);
         
+        //find penalty 
+        usageManagement.getPenaltyCharges(id);
+
         serFileWriter();
 
         System.out.print("Enter Quantity : ");
         int qty = input.nextInt();
         input.nextLine();
-        
-        bookingitem.setEquipmentStatus(true);
-        equipmentStack.push(bookingitem);
+
+        bookingitem.getEquipments().setEquipmentStatus(true);
+        equipmentStack.push(bookingitem.getEquipments());
 
         System.out.println("Equipment Returned.");
 

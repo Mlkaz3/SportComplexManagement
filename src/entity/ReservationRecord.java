@@ -137,6 +137,14 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         return checkOutDateTime;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setCheckOutDateTime(Date checkOutDateTime) {
         this.checkOutDateTime = checkOutDateTime;
     }
@@ -175,12 +183,12 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
                 return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), "Pending",
                         formatter.format(reservationDateTime), formatter.format(reservationEndTime), "-", user.getUserID());
             }
-            return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), "Pending",
+            return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(),status ,
                     formatter.format(reservationDateTime), formatter.format(reservationEndTime), "-", user.getUserID());
 
         } else {
             if (facilities == null) {
-                return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), "Pending",
+                return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), status,
                         formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(checkOutDateTime), user.getUserID());
             }
             return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), "Pending",

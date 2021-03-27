@@ -33,19 +33,23 @@ public class UsageManagement {
         this.reservationRecord = new LinkedList<>();
     }
 
-    public String addReservation(ReservationRecord record) {
+    public boolean addReservation(ReservationRecord record) {
         Date now = new Date();
         //checking to ensure the duration does not more than 2 hours 
         //end time not smaller than now 
+        System.out.println(record.getReservationEndTime().compareTo(now));
         if (record.getReservationDuration() > 2) {
-            return "The maximum hour to use an equipment/facilities is 2 hours only";
-        } else if (record.getReservationEndTime().compareTo(now) < 0) {
-            return "The booking end time should not smaller than current time";
+            System.out.println("The maximum hour to use an equipment/facilities is 2 hours only");
+            return false;
 
-        } else {
-            reservationRecord.addLast(record);
-            return "Booking added successfully.";
+        } else if (record.getReservationEndTime().compareTo(now) == -1) {
+            System.out.println("The booking end time should not smaller than current time");
+            return false;
         }
+
+        System.out.println("Booking added successfully.");
+        reservationRecord.addLast(record);
+        return true;
     }
 
     public void displayReservation() {
@@ -405,10 +409,10 @@ public class UsageManagement {
         return bookerRecord;
     }
 
-    public Equipment getBookingEquipment(String id) {
+    public ReservationRecord getBookingRecord(String id) {
 
         //System.out.println("id" + id);
-        Equipment bookingitem = new Equipment();
+        ReservationRecord bookingitem = null;
         //get the booking item by searching 
         Iterator<ReservationRecord> itemIterator = reservationRecord.getIterator();
         while (itemIterator.hasNext()) {
@@ -418,11 +422,19 @@ public class UsageManagement {
                 //System.out.println("id match");
                 //System.out.println(record.getReservationID());
                 //System.out.println(record.getEquipments());
-                bookingitem = record.getEquipments();
+                bookingitem = record;
                 break;
             }
         }
         return bookingitem;
+    }
+    
+    public void updateBookingStatus(ReservationRecord record){
+        int position;
+        Date now  = new Date();
+        position = reservationRecord.getPosition(record);
+        reservationRecord.getEntry(position).setCheckOutDateTime(now);
+        reservationRecord.getEntry(position).setStatus("Complete");
     }
 
     public void getPenaltyCharges(String id) {
@@ -445,7 +457,7 @@ public class UsageManagement {
 
                     reservationRecord.getEntry(position).setLateHour(datediff);
                     System.out.println("Late In Returning");
-                    System.out.println("Penalty Fine: " + reservationRecord.getEntry(position).getReservationDuration());
+                    System.out.println("Penalty Fine: " + reservationRecord.getEntry(position).calculatePenalty());
 
                 }
                 break;
@@ -488,7 +500,7 @@ public class UsageManagement {
         System.out.println("General Details");
         System.out.println("---------------");
         System.out.printf("%-25s %-30s\n", "Booking Creation Date", "| " + format.format(reservationRecord.getEntry(row).getReservationDate()));
-        System.out.println("Booking Status"); //status can be pending or success or cancelation
+        System.out.printf("%-25s %-30s\n","Booking Status", "| " + reservationRecord.getEntry(row).getStatus()); //status can be pending or success or cancelation
 
         System.out.println("\nBooking Facilities/Equipment");
         System.out.println("----------------------------");
