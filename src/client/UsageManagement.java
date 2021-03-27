@@ -9,19 +9,14 @@ import adt.LinkedList;
 import entity.Equipment;
 import entity.ReservationRecord;
 import entity.User;
-import java.math.RoundingMode;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
-import client.EquipmentManagement;
 import static client.MainDriver.pressEnterKeyToContinue;
-import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -499,7 +494,6 @@ public class UsageManagement {
         Date bookingStart = currentRecord.getReservationStartTime();
         Date bookingEnd = currentRecord.getReservationEndTime();
         if (now.compareTo(bookingStart) < 0) {
-
             Scanner in = new Scanner(System.in);
             String start_date, end_date; //for user imput
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");

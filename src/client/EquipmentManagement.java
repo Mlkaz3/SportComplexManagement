@@ -55,8 +55,6 @@ public class EquipmentManagement {
         boolean valid;
 
         User user = new User();
-        ReservationRecord reservationRecord = new ReservationRecord();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         Date date = new Date();
 
         if (equipmentStack.isEmpty()) {
