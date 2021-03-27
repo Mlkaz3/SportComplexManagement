@@ -141,6 +141,7 @@ public class EquipmentManagement {
                         brokenStack.push(bookingitem.getEquipments());
                         System.out.println("Broken equipment received.");
                         writeBrokenFile();
+                        viewBrokenStack();
                         valid = true;
                     }
                     case 2 -> {
@@ -164,7 +165,6 @@ public class EquipmentManagement {
                 valid = false;
             }
         } while (valid != true);
-        viewBrokenStack();
 
 //        for (int i = 0; i < qty; i++) {
 //            Equipment equipment = new Equipment();
@@ -289,6 +289,13 @@ public class EquipmentManagement {
         serFileWriter();
     }
 
+//        public void clearAll() {
+//        readBrokenFile();
+//        brokenStack.clear();
+//        System.out.println("All equipment is removed.");
+//        writeBrokenFile();
+//    }
+    
     public void readBrokenFile() {
         try {
             FileInputStream fileIn = new FileInputStream("src/BrokenRecord.ser");
