@@ -18,6 +18,16 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 import static client.MainDriver.usageManagement;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -240,7 +250,7 @@ public class UsageManagement {
     }
 
     //success
-    public void extendBooking(LinkedList<ReservationRecord> reservationRecord, int row) throws ParseException {
+        public void extendBooking(LinkedList<ReservationRecord> reservationRecord, int row) throws ParseException {
 
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date now = new Date();
@@ -250,7 +260,6 @@ public class UsageManagement {
         LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
         bookingitems = filterRecord(reservationRecord, currentRecord);
         LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems); //sorted list
-
         //check wether the time now is within the user booking time 
         Date bookingStart = currentRecord.getReservationStartTime();
         Date bookingEnd = currentRecord.getReservationEndTime();
@@ -259,14 +268,27 @@ public class UsageManagement {
             int new_row = sortedBookings.getPosition(currentRecord); //get the current booking to update in sortedBookings
             ReservationRecord comingBooking; //refer to next booking
             String end_time;
-            Date endDate;
+            Date endDate = null;
 
             boolean loop = false;
-            System.out.println("Extension");
+            System.out.println("\n-----------------------------");
+            System.out.println("Extension of Booking Duration");
+            System.out.println("-----------------------------");
             do {
-                System.out.print("New End Time(dd/MM/yyyy HH:mm) :");
-                end_time = input.nextLine();
-                endDate = (Date) myFormatObj.parse(end_time);
+                boolean validDate;
+                do {
+                    System.out.print("New End Time(dd/MM/yyyy HH:mm) :");
+                    end_time = input.nextLine();
+
+                    try {
+                        endDate = (Date) myFormatObj.parse(end_time);
+                        validDate = true;
+                    } catch (ParseException e) {
+                        System.out.println("\nInvalid date format.");
+                        System.out.println();
+                        validDate = false;
+                    }
+                } while (validDate != true);
 
                 double datediff = endDate.getTime() - currentRecord.getReservationEndTime().getTime();
                 //double datdiff = ((double) (endDate.getTime() - currentRecord.getReservationEndTime().getTime())) / (1000 * 60 * 60 * 24);
@@ -489,8 +511,9 @@ public class UsageManagement {
         return SortedList;
     }
 
-    public void displayBookingDetails(int row) {
+     public void displayBookingDetails(int row) {
         DateFormat format = new SimpleDateFormat("E dd/MM/yyyy HH:mm");
+        DecimalFormat df = new DecimalFormat("##.##");
         System.out.println("");
 
         System.out.println("=".repeat(60));
@@ -500,7 +523,7 @@ public class UsageManagement {
         System.out.println("General Details");
         System.out.println("---------------");
         System.out.printf("%-25s %-30s\n", "Booking Creation Date", "| " + format.format(reservationRecord.getEntry(row).getReservationDate()));
-        System.out.printf("%-25s %-30s\n","Booking Status", "| " + reservationRecord.getEntry(row).getStatus()); //status can be pending or success or cancelation
+        System.out.printf("%-25s %-30s\n", "Booking Status", "| " + reservationRecord.getEntry(row).getStatus()); //status can be pending or success or cancelation
 
         System.out.println("\nBooking Facilities/Equipment");
         System.out.println("----------------------------");
@@ -518,7 +541,7 @@ public class UsageManagement {
         System.out.println("------------");
         System.out.printf("%-25s %-20s\n", "Start DateTime", "| " + myFormatObj.format(reservationRecord.getEntry(row).getReservationStartTime()));
         System.out.printf("%-25s %-20s\n", "End DateTime ", "| " + myFormatObj.format(reservationRecord.getEntry(row).getReservationEndTime()));
-        System.out.printf("%-25s %-20s\n", "Duration", "| " + reservationRecord.getEntry(row).getReservationDuration() + " Hour(s)");
+        System.out.printf("%-25s %-20s\n", "Duration", "| " + df.format(reservationRecord.getEntry(row).getReservationDuration()) + " Hour(s)");
 
         System.out.println("\nBooker Details");
         System.out.println("--------------");
@@ -527,9 +550,15 @@ public class UsageManagement {
 
         System.out.println("\nPenalty Details");
         System.out.println("---------------");
-        System.out.printf("%-25s %-20s\n", "Late in Hours", "| " + reservationRecord.getEntry(row).getLateHour());
-        System.out.printf("%-25s %-20s\n", "Penalty Rate ", "| " + reservationRecord.getEntry(row).getPenaltyRate());
-        System.out.printf("%-25s %-20s\n", "Penalty Amount ", "| " + reservationRecord.getEntry(row).calculatePenalty());
+        if (reservationRecord.getEntry(row).getLateHour() == 0.0) {
+            System.out.printf("%-25s %-20s\n", "Penalty Status", "| " + "False");
+
+        } else {
+            System.out.printf("%-25s %-20s\n", "Penalty Status", "| " + "True");
+            System.out.printf("%-25s %-20s\n", "Late in Hours", "| " + reservationRecord.getEntry(row).getLateHour());
+            System.out.printf("%-25s %-20s\n", "Penalty Rate ", "| " + reservationRecord.getEntry(row).getPenaltyRate());
+            System.out.printf("%-25s %-20s\n", "Penalty Amount ", "| " + reservationRecord.getEntry(row).calculatePenalty());
+        }
 
         System.out.println("=".repeat(60));
     }
@@ -606,6 +635,121 @@ public class UsageManagement {
             System.out.println("Unable to alter past booking.");
         } else {
             System.out.println("Booking time is only able to alter right before the exact booking");
+        }
+    }
+    
+    
+    //Read file
+    public void serFileReader() {
+        try {
+            FileInputStream fileIn = new FileInputStream("src/ReservationRecord.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            reservationRecord = (LinkedList<ReservationRecord>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("No Equipment Record is found!");
+            c.printStackTrace();
+        }
+    }
+
+    //Write file
+    public void serFileWriter() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src/ReservationRecord.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(reservationRecord);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    private static LinkedList<ReservationRecord> Deserialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
+        //deserialize from the file  (read from the file)
+        try {
+            //Deserializing
+            File file = new File("src/ReservationRecord.ser");
+            System.out.println("***TRACE: " + file.getAbsolutePath());
+            ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
+            // This cast is correct because we're reading an ArrayList of Runner objects
+            // from the binary file
+            // @SuppressWarnings("unchecked") List<Runner> tempList = (ArrayList<Runner>) (oiStream.readObject());
+            // runnerList = tempList
+            reservationRecord = (LinkedList<ReservationRecord>) (oiStream.readObject());
+            oiStream.close();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Cannot read from file", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Class not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return reservationRecord;
+    }
+
+    private static void Serialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
+        //serializable to the file
+        try {
+            //Serializing
+            File file = new File("src/ReservationRecord.ser");
+            System.out.println("***TRACE: " + file.getAbsolutePath());
+            ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
+            ooStream.writeObject(reservationRecord);
+            ooStream.close();
+
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Cannot save to file", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void serial() {
+
+        try {
+            //Saving of object in a file
+            FileOutputStream file = new FileOutputStream("src/ReservationRecord.ser");
+            ObjectOutputStream out = new ObjectOutputStream(file);
+
+            // Method for serialization of object
+            Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
+            while (iterator.hasNext()) {
+                out.writeObject(iterator.next());
+            }
+
+            out.close();
+            file.close();
+
+            System.out.println("Object has been serialized");
+
+        } catch (IOException ex) {
+            System.out.println("IOException is caught");
+        }
+    }
+
+    public void deserial() {
+
+        // Deserialization
+        try {
+            // Reading the object from a file
+            FileInputStream file = new FileInputStream("src/ReservationRecord.ser");
+            ObjectInputStream in = new ObjectInputStream(file);
+
+            // Method for deserialization of object
+            reservationRecord = (LinkedList<ReservationRecord>) in.readObject();
+
+
+            in.close();
+            file.close();
+
+        } catch (IOException ex) {
+            System.out.println("IOException is caught");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException is caught");
         }
     }
 
