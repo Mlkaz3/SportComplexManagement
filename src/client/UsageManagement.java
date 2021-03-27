@@ -33,11 +33,15 @@ public class UsageManagement {
     }
 
     public String addReservation(ReservationRecord record) {
+        Date now = new Date();
         //checking to ensure the duration does not more than 2 hours 
-        //checking to ensure date pass in is not previous than the current time
+        //end time not smaller than now 
         if (record.getReservationDuration() > 2) {
             return "The maximum hour to use an equipment/facilities is 2 hours only";
-        } else {
+        } else if(record.getReservationEndTime().compareTo(now) <0 ){
+            return "The booking end time should not smaller than current time";
+        
+        }else {
             reservationRecord.addLast(record);
             return "Booking added successfully.";
         }
@@ -60,7 +64,7 @@ public class UsageManagement {
     private void displayHeading() {
         System.out.println("-".repeat(135));
         System.out.println(String.format("%-2s %-40s %-15s %-20s %-20s %-20s %-10s", "No.",
-                "Booking", "Status", "From", "To", "Date", "UserID"));
+                "Booking", "Status", "StartDateTime", "EndDateTime", "CheckOutTime", "UserID"));
         System.out.println("-".repeat(135));
     }
 

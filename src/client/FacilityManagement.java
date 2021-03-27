@@ -133,7 +133,7 @@ System.out.println(facility.get(i));}*/    }
                 facility.get(i).setFacilityAvailability(false);
 
                 //add a new reservation record 
-                ReservationRecord record1 = new entity.ReservationRecord((Date) startDate, (Date) endDate, newuser, facility.get(i));
+                ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, newuser, facility.get(i));
                 usageManagement.addReservation(record1);
                 System.out.println("room hab been successfully registered");
             } else if (currentCourtAvai == false && checkID.equals(requestID)) {

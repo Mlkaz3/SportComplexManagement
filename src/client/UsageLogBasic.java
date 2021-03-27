@@ -96,12 +96,12 @@ public class UsageLogBasic {
         Facility facility = new Facility(); //facility havent done 
 
         //creating 4 record
-        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 02:01"), (Date) myFormatObj.parse("02/04/2021 03:01"), user, equipment);
-        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 03:11"), (Date) myFormatObj.parse("02/04/2021 04:12"), user1, equipment2);
-        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 10:13"), (Date) myFormatObj.parse("02/04/2021 11:37"), user2, equipment3);
-        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 05:01"), (Date) myFormatObj.parse("02/04/2021 06:00"), user3, equipment3);
-        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 07:01"), (Date) myFormatObj.parse("02/04/2021 10:01"), user4, equipment3);
-        ReservationRecord record6 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 12:01"), (Date) myFormatObj.parse("02/04/2021 13:01"), user4, equipment2);
+        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 03:01"), user, equipment);
+        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 04:12"), user1, equipment2);
+        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 11:37"), user2, equipment3);
+        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 06:00"), user3, equipment3);
+        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 10:01"), user4, equipment3);
+        ReservationRecord record6 = new entity.ReservationRecord((Date) myFormatObj.parse("02/04/2021 13:01"), user4, equipment2);
         reservationRecord.addLast(record1);
         reservationRecord.addLast(record2);
         reservationRecord.addLast(record4);

@@ -53,18 +53,18 @@ public class MainDriver {
         Data.court.add(tennisCourt3);
         Data.court.add(tennisCourt4);
         Data.court.add(tennisCourt5);
-        
+
         facilityManagement.add(badmintonCourt1);
         facilityManagement.add(badmintonCourt2);
         facilityManagement.add(badmintonCourt3);
         facilityManagement.add(badmintonCourt4);
         facilityManagement.add(badmintonCourt5);
-        
+
         facilityManagement.add(tennisCourt1);
         facilityManagement.add(tennisCourt2);
         facilityManagement.add(tennisCourt3);
         facilityManagement.add(tennisCourt4);
-        facilityManagement.add(tennisCourt5);               
+        facilityManagement.add(tennisCourt5);
 
         User user = new User("Tan Pei Ling", "19119", "Student", "0123456789");
         User user1 = new User("Ting Tin Tin", "19109", "Alumni", "0123456781");
@@ -78,11 +78,11 @@ public class MainDriver {
         Equipment equipment3 = new Equipment("004", "Nike", true, 12.00, "Shelf0120", "badminton racquet");
 
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 02:01"), (Date) myFormatObj.parse("02/02/2021 03:01"), user, equipment);
-        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2021 03:11"), (Date) myFormatObj.parse("02/02/2021 04:12"), user1, equipment2);
-        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("02/02/2022 10:13"), (Date) myFormatObj.parse("02/02/2022 11:37"), user2, equipment3);
-        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 09:00"), (Date) myFormatObj.parse("27/03/2021 10:00"), user3, equipment3);
-        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 03:01"), (Date) myFormatObj.parse("27/03/2021 07:01"), user4, equipment3);
+        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 03:01"), user, equipment);
+        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 05:12"), user1, equipment2);
+        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 06:37"), user2, equipment3);
+        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 10:00"), user3, equipment3);
+        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 07:01"), user4, equipment3);
 
         usageManagement.addReservation(record1);
         usageManagement.addReservation(record2);
@@ -462,7 +462,7 @@ public class MainDriver {
 
                     }
                     case 4 -> {
-                      
+
                     }
                     default -> {
                         System.out.println();
@@ -476,8 +476,8 @@ public class MainDriver {
 
         } while (ch != 4);
     }
-    
-        public static void pressEnterKeyToContinue() {
+
+    public static void pressEnterKeyToContinue() {
         System.out.print("\nPress Enter Key to Continue.");
         try {
             System.in.read();
