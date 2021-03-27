@@ -18,8 +18,6 @@ import java.util.Date;
  * Comparable<ReservationRecord>,
  */
 public class ReservationRecord implements Comparable<ReservationRecord>, Serializable {
-
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static int nextNumber = 1000;
     private String reservationID;
     private String reservationType;
@@ -61,6 +59,20 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
     //for equipment constructor 
     public ReservationRecord(Date reservationEndTime, User user, Equipment equipments) {
         this.reservationDateTime = new Date();
+        this.reservationEndTime = reservationEndTime;
+        this.reservationDuration = calculateDuration(this.reservationDateTime, this.reservationEndTime);
+        this.user = user;
+        this.equipments = equipments;
+        this.reservationID = String.valueOf(nextNumber++);
+        this.reservationType = "Equipments";
+        this.status = "Pending";
+        this.checkOutDateTime = null;
+        this.lateHour =0.0;
+    }
+    
+    //this is for debug purpose
+    public ReservationRecord(Date startTime, Date reservationEndTime, User user, Equipment equipments) {
+        this.reservationDateTime = startTime;
         this.reservationEndTime = reservationEndTime;
         this.reservationDuration = calculateDuration(this.reservationDateTime, this.reservationEndTime);
         this.user = user;

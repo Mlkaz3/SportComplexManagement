@@ -5,13 +5,14 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
  *String userName, String userID, String userCategory, String userTel
  * @author YJ
  */
-public class User {
+public class User implements Serializable{
     
     private String userName;
     private String userID;

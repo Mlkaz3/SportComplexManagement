@@ -5,6 +5,7 @@
  */
 package adt;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Iterator;
  * @author winnieyap
  * @param <T>
  */
-public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
+public class LinkedList<T extends Comparable<T>> implements ListInterface<T>,Serializable {
 
     private Node head;
     private int length;	// number of entries in list/size
@@ -279,7 +280,7 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
         return count;
     }
 
-    private class Node<T> {
+    private class Node<T> implements Serializable{
 
         T data; // entry in list
         Node next; // link to next node
