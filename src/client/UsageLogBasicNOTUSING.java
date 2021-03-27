@@ -429,12 +429,12 @@ public class UsageLogBasicNOTUSING {
                 }
             }
         } else {
-            booking_item = currentRecord.getEquipments().getEquipmentID();
+            booking_item = currentRecord.getEquipment().getEquipmentID();
 
             while (newiterator.hasNext()) {
                 ReservationRecord record = newiterator.next();
 
-                if (record.getEquipments().getEquipmentID() == booking_item) {
+                if (record.getEquipment().getEquipmentID() == booking_item) {
                     bookingitems.addFirst(record);
                 }
             }
@@ -511,7 +511,7 @@ public class UsageLogBasicNOTUSING {
         if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
             System.out.println("Booking Items: " + reservationRecord.getEntry(row).getFacilities());
         } else {
-            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipments().getEquipmentType());
+            System.out.println("Booking Items: " + reservationRecord.getEntry(row).getEquipment().getEquipmentType());
         }
 
         System.out.println("\nBooking Date");
