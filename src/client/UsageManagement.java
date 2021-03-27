@@ -18,19 +18,13 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
-import static client.MainDriver.usageManagement;
-import java.awt.HeadlessException;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -164,12 +158,10 @@ public class UsageManagement implements Serializable {
 
                 switch (ch) {
                     case 1 -> {
-                        //extension (debug 90% done)
-                        extendBooking(reservationRecord, row);
+                        extendBooking(row);
                         System.out.println("");
                     }
                     case 2 -> {
-                        //update booker (debug 100% done)
                         updateBooker(row);
                     }
                     case 3 -> {
@@ -196,15 +188,14 @@ public class UsageManagement implements Serializable {
             System.out.println("Unable to delete success booking");
             pressEnterKeyToContinue();
         } else {
-            //cancel facilities booking at position row
-            //get the deletion of item either equipment/facilities 
             System.out.println("\nAre you sure you want to permanently delete this booking? (Yes/No)");
             System.out.print("-> ");
             ReservationRecord deletionRecord;
             deletion = input.next();
             switch (deletion.toLowerCase()) {
                 case "yes" -> {
-                    if (reservationRecord.getEntry(row).getReservationType() == "Facilities") {
+                    if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
+                        //here undone
 
                     } else {
                         Equipment deletionEquipment = reservationRecord.getEntry(row).getEquipment();
@@ -213,8 +204,6 @@ public class UsageManagement implements Serializable {
 
                     deletionRecord = reservationRecord.removeAt(row);
                     System.out.println("The booking record with ID " + deletionRecord.getReservationID() + " is deleted.");
-
-                    //EquipmentManagement.returnDeleted(equipment);
                 }
                 case "no" -> {
                     System.out.println("The record is remain in the table.");
@@ -231,8 +220,6 @@ public class UsageManagement implements Serializable {
 
     public void updateBooker(int row) {
         serFileReader();
-        //Update booker information
-        //get the object to update
         Scanner user_input = new Scanner(System.in);
         ReservationRecord currentRecord = reservationRecord.getEntry(row);
         User currentUser = currentRecord.getUser();
@@ -242,22 +229,16 @@ public class UsageManagement implements Serializable {
         System.out.printf("%-30s %-1s", "Name", "|");
         user_update = user_input.nextLine();
         currentUser.setUserName(user_update);
-
         System.out.printf("%-30s %-1s", "User ID", "|");
         user_update = user_input.nextLine();
         currentUser.setUserID(user_update);
-
         System.out.printf("%-30s %-1s", "User Category ", "|");
         user_update = user_input.nextLine();
         currentUser.setUserCategory(user_update);
-
         System.out.printf("%-30s %-1s", "User Contact ", "|");
         user_update = user_input.nextLine();
         currentUser.setUserTel(user_update);
-
         currentRecord.setUser(currentUser);
-
-        //update with replace
         if (reservationRecord.replace(row, currentRecord) == true) {
             System.out.println("\nBooker Info Successfully Update.");
         }
@@ -265,24 +246,17 @@ public class UsageManagement implements Serializable {
         serFileWriter();
     }
 
-    //success
-    public void extendBooking(LinkedList<ReservationRecord> reservationRecord, int row) throws ParseException {
+    public void extendBooking(int row) throws ParseException {
         serFileReader();
         DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date now = new Date();
         Scanner input = new Scanner(System.in);
-
-        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
-        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
-        bookingitems = filterRecord(currentRecord);
-        LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems); //sorted list
-        //check wether the time now is within the user booking time 
+        ReservationRecord currentRecord = reservationRecord.getEntry(row);
+        LinkedList<ReservationRecord> bookingitems; 
+        
         Date bookingStart = currentRecord.getReservationDate();
         Date bookingEnd = currentRecord.getReservationEndTime();
         if (now.compareTo(bookingStart) > 0 && now.compareTo(bookingEnd) < 0 && currentRecord.isIsExtend() == false && "Pending".equals(currentRecord.getStatus())) {
-
-            int new_row = sortedBookings.getPosition(currentRecord); //get the current booking to update in sortedBookings
-            ReservationRecord comingBooking; //refer to next booking
             String end_time;
             Date endDate = null;
 
@@ -312,13 +286,6 @@ public class UsageManagement implements Serializable {
                     System.out.println("Maximum time allow to extend is only 2 hours.\n");
                 } else if (endDate.compareTo(bookingEnd) < 0) { //where the updated is actually shorten the original 
                     System.out.println("Extension doesnt allow shorten of booking.\n");
-                } else if (new_row + 1 <= sortedBookings.getLength()) { //there is a next row
-                    comingBooking = sortedBookings.getEntry(new_row + 1);
-                    if (endDate.compareTo(comingBooking.getReservationStartTime()) > 0) {
-                        System.out.println("The updation is clash with next booking\n");
-                    } else {
-                        loop = true;
-                    }
                 } else {
                     loop = true;
                 }
@@ -370,9 +337,9 @@ public class UsageManagement implements Serializable {
     private void filterBookingItem(int row) {
         serFileReader();
 
-        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
+        ReservationRecord currentRecord = reservationRecord.getEntry(row); 
         System.out.println("currentRecord " + currentRecord);
-        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
+        LinkedList<ReservationRecord> bookingitems; 
         bookingitems = filterRecord(currentRecord);
         System.out.println("bookingItem " + bookingitems);
         bookingitems = SortDateTime(bookingitems);
@@ -394,20 +361,21 @@ public class UsageManagement implements Serializable {
 
         System.out.println("currentRecord " + currentRecord);
         LinkedList<ReservationRecord> bookingitems = new LinkedList<>(); //is the list of items that have l;
-        Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+
         System.out.println("reservationRecord ");
         System.out.println(reservationRecord);
 
         String booking_item; //booking exact item (to sort a list based on the item) 
         String type = currentRecord.getReservationType(); //get the type
         System.out.println("type " + type);
+
         if ("Facilities".equals(type)) {
             //get the booking items
             booking_item = currentRecord.getFacilities().getFacilityID();
-
+            Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
             while (newiterator.hasNext()) {
                 ReservationRecord record = newiterator.next();
-                System.out.println("record in iterator" + newiterator.next());
+                System.out.println("record in iterator" + record);
                 System.out.println("booking item " + booking_item);
                 System.out.println("record item " + record.getFacilities().getFacilityID());
 
@@ -416,10 +384,14 @@ public class UsageManagement implements Serializable {
                 }
             }
         } else {
+            System.out.println("currentRecord " +currentRecord );
             booking_item = currentRecord.getEquipment().getEquipmentID();
-
+            Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
             while (newiterator.hasNext()) {
                 ReservationRecord record = newiterator.next();
+                System.out.println("record in iterator" + record);
+                System.out.println("booking item " + booking_item);
+                System.out.println("record item " + record.getEquipment().getEquipmentID());
 
                 if (record.getEquipment().getEquipmentID().equals(booking_item)) {
                     bookingitems.addFirst(record);
@@ -519,7 +491,6 @@ public class UsageManagement implements Serializable {
     }
 
     private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
-        //Node current will point to head  
         ReservationRecord current;
         ReservationRecord next;
         ReservationRecord temp;
@@ -567,7 +538,6 @@ public class UsageManagement implements Serializable {
         } else {
             System.out.printf("%-25s %-20s\n", "Booking Item", "| " + reservationRecord.getEntry(row).getEquipment().getEquipmentType());
             System.out.printf("%-25s %-20s\n", "Booking Items ID ", "| " + reservationRecord.getEntry(row).getEquipment().getEquipmentID());
-            //System.out.printf("%-25s %-20s\n", "Booking Items Status", "| " +  reservationRecord.getEntry(row).getEquipments().getEquipmentStatus());
         }
 
         System.out.println("\nBooking Date");
