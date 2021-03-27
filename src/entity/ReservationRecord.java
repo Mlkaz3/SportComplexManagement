@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -13,32 +14,25 @@ import java.util.Date;
 /**
  *
  * @author winnieyap
+ * 
+ * Comparable<ReservationRecord>,
  */
-public class ReservationRecord implements Comparable<ReservationRecord> {
+public class ReservationRecord implements Comparable<ReservationRecord>,Serializable{
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-    //registrations number start from 1000
     private static int nextNumber = 1000;
-    //field
-    private String reservationID; //a unique id to verify reservation R0000000001 , this is computerised 
-    private String reservationType; //computerised
-
-    private Date reservationDateTime; //time where this record is generated
+    private String reservationID;
+    private String reservationType;
+    private Date reservationDateTime;
 
     private Date reservationStartTime; //time where student start to use an equipment or facilities
     private Date reservationEndTime; //time where student end to use an equipment or facilities
     private Double reservationDuration; //start time - end time, but user might late return; or do function that generate duration after user return
     private String status; //to store the status of a reservation, which can be success or failure due to cancelation/ not turn up to register, it can be staff input too 
-    //other object
     private User user; //user info
     private Facility facilities; //facilities info
     private Equipment equipments; //equipment info
 
-    //might having a penalty but soon 
-    //private penaltyRate;
-    //private overdueDuration;
-    //empty constructor
     public ReservationRecord() {
         this.reservationID = String.valueOf(nextNumber++);
     }
@@ -238,16 +232,9 @@ public class ReservationRecord implements Comparable<ReservationRecord> {
 
     @Override
     public int compareTo(ReservationRecord o) {
-        return this.getReservationStartTime().compareTo(o.getReservationStartTime());
+        //return this.getReservationStartTime().compareTo(o.getReservationStartTime());
+        return this.reservationDateTime.compareTo(o.reservationDateTime);
     }
-//
-//    static class ReservedStartTimeSortingComparator implements Comparator<ReservationRecord> {
-//        // Used for sorting in ascending order of
-//        // Reservation Start Time
-//
-//        public int compare(ReservationRecord a, ReservationRecord b) {
-//            return a.getReservationStartTime().compareTo(b.getReservationStartTime());
-//        }
-//    }
+
 
 }

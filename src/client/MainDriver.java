@@ -151,7 +151,7 @@ public class MainDriver {
         } while (ch != 5);
     }
 
-    private static void Facility() {
+    private static void Facility() throws ParseException {
         int ch = 0;
         boolean invalidInput;
         do {
