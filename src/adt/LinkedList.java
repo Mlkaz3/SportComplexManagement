@@ -247,21 +247,6 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T>,Ser
     }
 
     @Override
-    public T remove(T newEntry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public T removeLast() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public T removeFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public int getPosition(T anEntry) {
         if (contains(anEntry) != true){
             return -1;

@@ -23,9 +23,6 @@ public interface ListInterface<T extends Comparable<T>> {
     
     //remove element at given position
     public T removeAt(int givenPosition);
-    public T remove(T newEntry);
-    public T removeLast();
-    public T removeFirst();
     
     //to swap element that stick together
     public void swap(int frontPosition, int backPosition);
