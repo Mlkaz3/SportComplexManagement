@@ -365,7 +365,7 @@ public class MainDriver implements Serializable {
                 switch (ch) {
                     case 1 -> {
                         maintenanceMgmt.displayQueue();
-                        maintenanceMgmt.pressAnyKeyToContinue();
+                        pressEnterKeyToContinue();
                     }
                     case 2 -> {
                         maintenanceMgmt.addAppt();

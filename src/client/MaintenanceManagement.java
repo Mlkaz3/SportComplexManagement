@@ -130,7 +130,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
         }
 
         writeAppt();
-        pressAnyKeyToContinue();
+        MainDriver.pressEnterKeyToContinue();
     }
 
     //commence a maintenance
@@ -189,7 +189,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
         }
 
         writeAppt();
-        pressAnyKeyToContinue();
+        MainDriver.pressEnterKeyToContinue();
     }
 
     //cancel appointment
@@ -243,7 +243,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
         }
 
         writeAppt();
-        pressAnyKeyToContinue();
+        MainDriver.pressEnterKeyToContinue();
     }
 
     //edit appointment details
@@ -378,7 +378,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
         }
 
         writeAppt();
-        pressAnyKeyToContinue();
+        MainDriver.pressEnterKeyToContinue();
     }
 
     //set end date, calculate waiting time, duration, cost
@@ -445,7 +445,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
         }
 
         writeRecord();
-        pressAnyKeyToContinue();
+        MainDriver.pressEnterKeyToContinue();
     }
 
     //display report of chosen record
@@ -504,43 +504,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
             }
         }
 
-        pressAnyKeyToContinue();
-
-    }
-
-    public void printFacility() {
-
-        System.out.println("");
-        facilityManagement.displayCourt();
-    }
-
-    public void printHistory() throws ParseException {
-
-        Maintenance maintenance;
-        readRecord();
-        System.out.println("                                                                                  Maintenance Records");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", "No", "Maintenance ID", "Facility ID", "Maintenance type", "Maintenance description", "Required Date", "Request Timestamp", "Start Date", "End Date");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        for (int i = 1; i <= maintenanceHistory.filledSize(); i++) {
-            maintenance = maintenanceHistory.getEntry(i);
-            String maintenanceID = maintenance.getMaintenanceID();
-            String facilityID = maintenance.getFacility().getFacilityID();
-            String maintenanceType = maintenance.getMaintenanceType();
-            String maintenanceDesc = maintenance.getMaintenanceDesc();
-            Date requiredDate = maintenance.getRequiredDate();
-            Date requestTimestamp = maintenance.getRequestDate();
-            String startDate = maintenance.getStartDate().toString();
-            Date endDate = maintenance.getEndDate();
-
-            if (endDate != null) {
-                System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", i, maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestTimestamp, startDate, endDate.toString());
-            } else {
-                System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", i, maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestTimestamp, startDate, "--PENDING--");
-            }
-        }
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        MainDriver.pressEnterKeyToContinue();
     }
 
     public void clearAll() {
@@ -588,8 +552,42 @@ public class MaintenanceManagement { // change duration and waiting time to days
         }
 
         writeAppt();
-        pressAnyKeyToContinue();
+        MainDriver.pressEnterKeyToContinue();
+    }
 
+    public void printFacility() {
+
+        System.out.println("");
+        facilityManagement.displayCourt();
+    }
+
+    public void printHistory() throws ParseException {
+
+        Maintenance maintenance;
+        readRecord();
+        System.out.println("                                                                                  Maintenance Records");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", "No", "Maintenance ID", "Facility ID", "Maintenance type", "Maintenance description", "Required Date", "Request Timestamp", "Start Date", "End Date");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        for (int i = 1; i <= maintenanceHistory.filledSize(); i++) {
+            maintenance = maintenanceHistory.getEntry(i);
+            String maintenanceID = maintenance.getMaintenanceID();
+            String facilityID = maintenance.getFacility().getFacilityID();
+            String maintenanceType = maintenance.getMaintenanceType();
+            String maintenanceDesc = maintenance.getMaintenanceDesc();
+            Date requiredDate = maintenance.getRequiredDate();
+            Date requestTimestamp = maintenance.getRequestDate();
+            String startDate = maintenance.getStartDate().toString();
+            Date endDate = maintenance.getEndDate();
+
+            if (endDate != null) {
+                System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", i, maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestTimestamp, startDate, endDate.toString());
+            } else {
+                System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", i, maintenanceID, facilityID, maintenanceType, maintenanceDesc, formatter.format(requiredDate), requestTimestamp, startDate, "--PENDING--");
+            }
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
     //Read appointments file
@@ -601,10 +599,9 @@ public class MaintenanceManagement { // change duration and waiting time to days
             in.close();
             fileIn.close();
         } catch (IOException i) {
-            i.printStackTrace();
+            System.out.println("Failed to read appointments from file.");
         } catch (ClassNotFoundException c) {
             System.out.println("No record found!");
-            c.printStackTrace();
         }
     }
 
@@ -617,7 +614,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
             out.close();
             fileOut.close();
         } catch (IOException i) {
-            i.printStackTrace();
+            System.out.println("Failed to write appointments to file.");
         }
     }
 
@@ -630,10 +627,9 @@ public class MaintenanceManagement { // change duration and waiting time to days
             in.close();
             fileIn.close();
         } catch (IOException i) {
-            i.printStackTrace();
+            System.out.println("Failed to read records from file.");
         } catch (ClassNotFoundException c) {
             System.out.println("No record found!");
-            c.printStackTrace();
         }
     }
 
@@ -646,15 +642,7 @@ public class MaintenanceManagement { // change duration and waiting time to days
             out.close();
             fileOut.close();
         } catch (IOException i) {
-            i.printStackTrace();
-        }
-    }
-
-    public static void pressAnyKeyToContinue() {
-        System.out.print("\nPress Enter key to continue...");
-        try {
-            System.in.read();
-        } catch (IOException e) {
+            System.out.println("Failed to write records to file");
         }
     }
 }
