@@ -753,4 +753,103 @@ public class UsageManagement {
         }
     }
 
+
+//    //Write file
+//    public void serFileWriter() {
+//        try {
+//            FileOutputStream fileOut = new FileOutputStream("src/ReservationRecord.ser");
+//            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//            out.writeObject(reservationRecord);
+//            out.close();
+//            fileOut.close();
+//        } catch (IOException i) {
+//            i.printStackTrace();
+//        }
+//    }
+//
+//    private static LinkedList<ReservationRecord> Deserialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
+//        //deserialize from the file  (read from the file)
+//        try {
+//            //Deserializing
+//            File file = new File("src/ReservationRecord.ser");
+//            System.out.println("***TRACE: " + file.getAbsolutePath());
+//            ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
+//            // This cast is correct because we're reading an ArrayList of Runner objects
+//            // from the binary file
+//            // @SuppressWarnings("unchecked") List<Runner> tempList = (ArrayList<Runner>) (oiStream.readObject());
+//            // runnerList = tempList
+//            reservationRecord = (LinkedList<ReservationRecord>) (oiStream.readObject());
+//            oiStream.close();
+//        } catch (FileNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, "Cannot read from file", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (ClassNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "Class not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        }
+//        return reservationRecord;
+//    }
+//
+//    private static void Serialize(LinkedList<ReservationRecord> reservationRecord) throws HeadlessException {
+//        //serializable to the file
+//        try {
+//            //Serializing
+//            File file = new File("src/ReservationRecord.ser");
+//            System.out.println("***TRACE: " + file.getAbsolutePath());
+//            ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
+//            ooStream.writeObject(reservationRecord);
+//            ooStream.close();
+//
+//        } catch (FileNotFoundException ex) {
+//            JOptionPane.showMessageDialog(null, "File not found", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, "Cannot save to file", "ERROR", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
+//
+//    public void serial() {
+//
+//        try {
+//            //Saving of object in a file
+//            FileOutputStream file = new FileOutputStream("src/ReservationRecord.ser");
+//            ObjectOutputStream out = new ObjectOutputStream(file);
+//
+//            // Method for serialization of object
+//            Iterator<ReservationRecord> iterator = reservationRecord.getIterator();
+//            while (iterator.hasNext()) {
+//                out.writeObject(iterator.next());
+//            }
+//
+//            out.close();
+//            file.close();
+//
+//            System.out.println("Object has been serialized");
+//
+//        } catch (IOException ex) {
+//            System.out.println("IOException is caught");
+//        }
+//    }
+//
+//    public void deserial() {
+//
+//        // Deserialization
+//        try {
+//            // Reading the object from a file
+//            FileInputStream file = new FileInputStream("src/ReservationRecord.ser");
+//            ObjectInputStream in = new ObjectInputStream(file);
+//
+//            // Method for deserialization of object
+//            reservationRecord = (LinkedList<ReservationRecord>) in.readObject();
+//
+//
+//            in.close();
+//            file.close();
+//
+//        } catch (IOException ex) {
+//            System.out.println("IOException is caught");
+//        } catch (ClassNotFoundException ex) {
+//            System.out.println("ClassNotFoundException is caught");
+//        }
+//    }
+
 }
