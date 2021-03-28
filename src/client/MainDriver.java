@@ -30,60 +30,10 @@ public class MainDriver implements Serializable {
     public static FacilityManagement facilityManagement = new FacilityManagement();
 
     public static void main(String[] args) throws ParseException {
-
-        //hard code faciliies
-        Facility badmintonCourt1 = new Facility("B001", "Badmintion Court 1", "Badmintion", true);
-        Facility badmintonCourt2 = new Facility("B002", "Badmintion Court 2", "Badmintion", true);
-        Facility badmintonCourt3 = new Facility("B003", "Badmintion Court 3", "Badmintion", true);
-        Facility badmintonCourt4 = new Facility("B004", "Badmintion Court 4", "Badmintion", true);
-        Facility badmintonCourt5 = new Facility("B005", "Badmintion Court 5", "Badmintion", true);
-        Facility tennisCourt1 = new Facility("T001", "Tennis Court 1", "Tennis", true);
-        Facility tennisCourt2 = new Facility("T002", "Tennis Court 2", "Tennis", true);
-        Facility tennisCourt3 = new Facility("T003", "Tennis Court 3", "Tennis", true);
-        Facility tennisCourt4 = new Facility("T004", "Tennis Court 4", "Tennis", true);
-        Facility tennisCourt5 = new Facility("T005", "Tennis Court 5", "Tennis", true);
-
-        facilityManagement.add(badmintonCourt1);
-        facilityManagement.add(badmintonCourt2);
-        facilityManagement.add(badmintonCourt3);
-        facilityManagement.add(badmintonCourt4);
-        facilityManagement.add(badmintonCourt5);
-
-        facilityManagement.add(tennisCourt1);
-        facilityManagement.add(tennisCourt2);
-        facilityManagement.add(tennisCourt3);
-        facilityManagement.add(tennisCourt4);
-        facilityManagement.add(tennisCourt5);
-
-        User user = new User("Tan Pei Ling", "19119", "Student", "0123456789");
-        User user1 = new User("Ting Tin Tin", "19109", "Alumni", "0123456781");
-        User user2 = new User("Phea Lee Mai", "18119", "Student", "0123456782");
-        User user3 = new User("Lim Siew Mooi", "20119", "Student", "0123456783");
-        User user4 = new User("Kenneth", "20109", "Student", "0123456783");
-
-        Equipment equipment = new Equipment("001", "Yoonex", true, 12.00, "Shelf0123", "badminton racquet");
-        Equipment equipment1 = new Equipment("002", "Adidas", true, 12.00, "Shelf0122", "squash racquet");
-        Equipment equipment2 = new Equipment("003", "MsiaB", true, 12.00, "Shelf0121", "tennis ball");
-        Equipment equipment3 = new Equipment("004", "Nike", true, 12.00, "Shelf0120", "badminton racquet");
-
-        DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-//        ReservationRecord record1 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 19:01"), user, equipment);
-//        ReservationRecord record2 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 20:12"), user1, equipment2);
-//        ReservationRecord record3 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 23:37"), user2, equipment3);
-//        ReservationRecord record4 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 18:40"), user3, equipment3);
-//        ReservationRecord record5 = new entity.ReservationRecord((Date) myFormatObj.parse("27/03/2021 07:01"), user4, equipment3);
-
-//        usageManagement.addReservation(record1);
-//        usageManagement.addReservation(record2);
-//        usageManagement.addReservation(record3);
-//        usageManagement.addReservation(record4);
-//        usageManagement.addReservation(record5);
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("WELCOME TO TARUC SPORT COMPLEX");
         System.out.println("");
         MainPage();
-
     }
 
     public static void MainPage() throws ParseException {
