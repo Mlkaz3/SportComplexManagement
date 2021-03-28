@@ -205,7 +205,6 @@ public class UsageManagement implements Serializable {
     }
 
     public void updateBooking(int row) throws ParseException {
-        serFileReader();
         int ch = 0;
         do {
             Scanner input = new Scanner(System.in);
@@ -226,7 +225,7 @@ public class UsageManagement implements Serializable {
 
                 switch (ch) {
                     case 1 -> {
-                        extendBooking(reservationRecord, row);
+                        extendBooking(row);
                         System.out.println("");
                     }
                     case 2 -> {
@@ -292,7 +291,9 @@ public class UsageManagement implements Serializable {
         ReservationRecord currentRecord = reservationRecord.getEntry(row);
         User currentUser = currentRecord.getUser();
         String user_update;
+        System.out.println("\n--------------------------");
         System.out.println("Update Booking Information");
+        System.out.println("--------------------------");
         System.out.println("Enter the following details");
         System.out.printf("%-30s %-1s", "Name", "|");
         user_update = user_input.nextLine();
@@ -320,22 +321,17 @@ public class UsageManagement implements Serializable {
     }
 
     //fail
-    public void extendBooking(LinkedList<ReservationRecord> reservationRecord, int row) throws ParseException {
+    public void extendBooking(int row) throws ParseException {
         serFileReader();
-        DateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        DateFormat format_date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date now = new Date();
-        Scanner input = new Scanner(System.in);
-
-        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
-        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
-        bookingitems = filterRecord(currentRecord);
-        //LinkedList<ReservationRecord> sortedBookings = SortDateTime(bookingitems); //sorted list
-        //check wether the time now is within the user booking time 
+        Scanner user_in = new Scanner(System.in);
+        ReservationRecord currentRecord = reservationRecord.getEntry(row);
         Date bookingStart = currentRecord.getReservationDate();
         Date bookingEnd = currentRecord.getReservationEndTime();
         if (now.compareTo(bookingStart) > 0 && now.compareTo(bookingEnd) < 0 && currentRecord.isIsExtend() == false && "pending".equals(currentRecord.getStatus().toLowerCase())) {
             String end_time;
-            Date endDate = null;
+            Date endDate = new Date();
             boolean loop = false;
             System.out.println("\n-----------------------------");
             System.out.println("Extension of Booking Duration");
@@ -344,10 +340,10 @@ public class UsageManagement implements Serializable {
                 boolean validDate;
                 do {
                     System.out.print("New End Time(dd/MM/yyyy HH:mm) :");
-                    end_time = input.nextLine();
+                    end_time = user_in.nextLine();
 
                     try {
-                        endDate = (Date) myFormatObj.parse(end_time);
+                        endDate = (Date) format_date.parse(end_time);
                         validDate = true;
                     } catch (ParseException e) {
                         System.out.println("\nInvalid date format.");
@@ -371,22 +367,20 @@ public class UsageManagement implements Serializable {
             currentRecord.setReservationEndTime(endDate);
             currentRecord.setIsExtend(true);
             reservationRecord.replace(row, currentRecord);
-
+            serFileWriter();
         } else if (currentRecord.isIsExtend() == true) {
             System.out.println("Extension is only allow once per each booking.");
         } else {
             System.out.println("Extension is only available within booking period.");
         }
-        serFileWriter();
+
     }
 
     public int getRow() {
-        //enable staff to choose a row to perform actions
         int row = 0;
         if (reservationRecord.isEmpty()) {
             row = -1;
         } else {
-
             do {
                 try {
                     System.out.print("Please select a row to perform actions: ");
@@ -486,7 +480,7 @@ public class UsageManagement implements Serializable {
         System.out.println(bookerRecord);
 
         System.out.println("");
-        System.out.printf("%-25s %-20s\n", "Total booking record", "| " + count + " record(s)");
+        System.out.printf("%-25s %-20s\n\n", "Total booking record", "| " + count + " record(s)");
         System.out.println("*".repeat(135));
         System.out.println("");
         System.out.println("");
