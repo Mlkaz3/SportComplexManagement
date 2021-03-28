@@ -146,14 +146,19 @@ public class MainDriver implements Serializable {
             invalidInput = false;
             Scanner input = new Scanner(System.in);
 
-            System.out.println("\nFACILITIES");
-            System.out.println("----------");
-            System.out.println("1 - View available room");
-            System.out.println("2 - Add Court");
-            System.out.println("3 - Remove Court");
-            System.out.println("4 - Add Reservation");
-            System.out.println("5 - Remove Reservation");
-            System.out.println("6 - Quit");
+                System.out.println();
+                System.out.println("***************************************************");
+                System.out.println("*               Facility Management               *");
+                System.out.println("*                                                 *");
+                System.out.println("*    [1] View available Court                     *");
+                System.out.println("*    [2] Add Court                                *");
+                System.out.println("*    [3] Remove Court                             *");
+                System.out.println("*    [4] Add Reservation                          *");
+                System.out.println("*    [5] Remove Reservation                       *");
+                System.out.println("*    [6] Back                                     *");
+                System.out.println("*                                                 *");
+                System.out.println("***************************************************");
+                System.out.println();
             try {
                 System.out.print("Please select your choice: ");
                 ch = input.nextInt();
