@@ -5,8 +5,10 @@
  */
 package client;
 
+import adt.LinkedList;
 import entity.Equipment;
 import entity.Facility;
+import entity.ReservationRecord;
 import entity.User;
 import java.io.IOException;
 import java.io.Serializable;
@@ -144,19 +146,19 @@ public class MainDriver implements Serializable {
             invalidInput = false;
             Scanner input = new Scanner(System.in);
 
-                System.out.println();
-                System.out.println("***************************************************");
-                System.out.println("*               Facility Management               *");
-                System.out.println("*                                                 *");
-                System.out.println("*    [1] View available Court                     *");
-                System.out.println("*    [2] Add Court                                *");
-                System.out.println("*    [3] Remove Court                             *");
-                System.out.println("*    [4] Add Reservation                          *");
-                System.out.println("*    [5] Remove Reservation                       *");
-                System.out.println("*    [6] Back                                     *");
-                System.out.println("*                                                 *");
-                System.out.println("***************************************************");
-                System.out.println();
+            System.out.println();
+            System.out.println("***************************************************");
+            System.out.println("*               Facility Management               *");
+            System.out.println("*                                                 *");
+            System.out.println("*    [1] View available Court                     *");
+            System.out.println("*    [2] Add Court                                *");
+            System.out.println("*    [3] Remove Court                             *");
+            System.out.println("*    [4] Add Reservation                          *");
+            System.out.println("*    [5] Remove Reservation                       *");
+            System.out.println("*    [6] Back                                     *");
+            System.out.println("*                                                 *");
+            System.out.println("***************************************************");
+            System.out.println();
             try {
                 System.out.print("Please select your choice: ");
                 ch = input.nextInt();
@@ -451,7 +453,7 @@ public class MainDriver implements Serializable {
 
             Scanner input = new Scanner(System.in);
             try {
-               
+
                 System.out.println();
                 System.out.println("***************************************************");
                 System.out.println("*                Usage Management                 *");
@@ -468,11 +470,11 @@ public class MainDriver implements Serializable {
 
                 switch (ch) {
                     case 1 -> {
-                        usageManagement.booking();
+                        booking();
                     }
 
                     case 2 -> {
-                        usageManagement.overview();
+                        overview();
 
                     }
                     case 3 -> {
@@ -485,10 +487,138 @@ public class MainDriver implements Serializable {
                 }
             } catch (InputMismatchException e) {
                 System.out.println();
-                System.out.println("Error. Please enter an integer value within 1 and 4.");
+                System.out.println("Error. Please enter an integer value within 1 and 3.");
             }
 
         } while (ch != 3);
+    }
+
+    public static void booking() throws ParseException {
+        int ch = 0;
+        usageManagement.displayReservation();
+        int row = usageManagement.getRow();
+        do {
+            Scanner in = new Scanner(System.in);
+            try {
+                if (row == -1) {
+                    pressEnterKeyToContinue();
+                    break;
+                }
+                System.out.println();
+                System.out.println("***************************************************");
+                System.out.println("*                    Booking                      *");
+                System.out.println("*                                                 *");
+                System.out.println("*    [1] View Booking Details                     *");
+                System.out.println("*    [2] Update Booking                           *");
+                System.out.println("*    [3] Delete Booking                           *");
+                System.out.println("*    [4] Back                                     *");
+                System.out.println("*                                                 *");
+                System.out.println("***************************************************");
+                System.out.println();
+                System.out.print("Please select your choice: ");
+                ch = in.nextInt();
+
+                switch (ch) {
+                    case 1 -> {
+                        viewBooking(row);
+                        System.out.println("");
+                    }
+                    case 2 -> {
+                        usageManagement.updateBooking(row);
+                        System.out.println("");
+                    }
+                    case 3 -> {
+                        usageManagement.deleteBooking(row);
+                        System.out.println("");
+                        ch = 4;
+                    }
+                    case 4 -> {
+                    }
+                    default -> {
+                        System.out.println();
+                        System.out.println("Error. Please select a correct choice.");
+                    }
+                }
+            } catch (InputMismatchException e) {
+                System.out.println();
+                System.out.println("Error. Please enter an integer value within 1 and 4.");
+            }
+
+        } while (ch != 4);
+
+    }
+
+    public static void viewBooking(int row) {
+        int ch = 0;
+        do {
+            Scanner input = new Scanner(System.in);
+            try {
+                System.out.println();
+                System.out.println("***************************************************");
+                System.out.println("*                  View Booking                   *");
+                System.out.println("*                                                 *");
+                System.out.println("*    [1] View Booking Description                 *");
+                System.out.println("*    [2] View Booker Profile                      *");
+                System.out.println("*    [3] Back                                     *");
+                System.out.println("*                                                 *");
+                System.out.println("***************************************************");
+                System.out.println();
+                System.out.print("Please select your choice: ");
+                ch = input.nextInt();
+                switch (ch) {
+                    case 1 -> {
+                        usageManagement.displayBookingDetails(row);
+                        pressEnterKeyToContinue();
+                    }
+                    case 2 -> {
+                        usageManagement.filterBookerRecord(row);
+                        pressEnterKeyToContinue();
+                    }
+                    case 3 -> {
+                        System.out.println();
+                    }
+                    default -> {
+                        System.out.println();
+                        System.out.println("Error. Please select a correct choice.");
+                    }
+                }
+            } catch (InputMismatchException e) {
+                System.out.println();
+                System.out.println("Error. Please enter an integer value within 1 and 3.");
+            }
+        } while (ch != 3);
+    }
+
+    public static void overview() {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("*".repeat(135));
+        System.out.println("Summary");
+        LinkedList<ReservationRecord> equipment = usageManagement.filterEquipmentRecord();
+        LinkedList<ReservationRecord> facility = usageManagement.filterFacilitiesRecord();
+        System.out.println("\nBorrow Record for Equipment");
+        if (equipment.getLength() == 0) {
+            System.out.println("--------------------------------");
+            System.out.println("No equipment booking record yet");
+            System.out.println("--------------------------------");
+        } else {
+            usageManagement.displayHeading();
+            System.out.println(equipment);
+        }
+        System.out.println("\nBorrow Record for Facility");
+        if (facility.getLength() == 0) {
+            System.out.println("------------------------------");
+            System.out.println("No facility booking record yet");
+            System.out.println("------------------------------");
+        } else {
+            usageManagement.displayHeading();
+            System.out.println(facility);
+        }
+        System.out.println("*".repeat(135));
+        System.out.println("");
+        System.out.println("");
+        pressEnterKeyToContinue();
+
     }
 
     public static void pressEnterKeyToContinue() {

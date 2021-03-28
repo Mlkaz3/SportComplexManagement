@@ -85,108 +85,11 @@ public class UsageManagement implements Serializable {
         }
     }
 
-    private void displayHeading() {
+    public void displayHeading() {
         System.out.println("-".repeat(135));
         System.out.println(String.format("%-2s %-40s %-15s %-20s %-20s %-20s %-10s", "No.",
                 "Booking", "Status", "StartDateTime", "EndDateTime", "CheckOutTime", "UserID"));
         System.out.println("-".repeat(135));
-    }
-
-    public void booking() throws ParseException {
-        int ch = 0;
-        serFileReader();
-        usageManagement.displayReservation();
-        int row = usageManagement.getRow();
-        do {
-            Scanner in = new Scanner(System.in);
-            try {
-                if (row == -1) {
-                    pressEnterKeyToContinue();
-                    break;
-                }
-                System.out.println();
-                System.out.println("***************************************************");
-                System.out.println("*                    Booking                      *");
-                System.out.println("*                                                 *");
-                System.out.println("*    [1] View Booking Details                     *");
-                System.out.println("*    [2] Update Booking                           *");
-                System.out.println("*    [3] Delete Booking                           *");
-                System.out.println("*    [4] Back                                     *");
-                System.out.println("*                                                 *");
-                System.out.println("***************************************************");
-                System.out.println();
-                System.out.print("Please select your choice: ");
-                ch = in.nextInt();
-
-                switch (ch) {
-                    case 1 -> {
-                        usageManagement.viewBooking(row);
-                        System.out.println("");
-                    }
-                    case 2 -> {
-                        usageManagement.updateBooking(row);
-                        System.out.println("");
-                    }
-                    case 3 -> {
-                        usageManagement.deleteBooking(row);
-                        System.out.println("");
-                        ch = 4;
-                    }
-                    case 4 -> {
-                    }
-                    default -> {
-                        System.out.println();
-                        System.out.println("Error. Please select a correct choice.");
-                    }
-                }
-            } catch (InputMismatchException e) {
-                System.out.println();
-                System.out.println("Error. Please enter an integer value within 1 and 4.");
-            }
-
-        } while (ch != 4);
-
-    }
-
-    public void viewBooking(int row) {
-        int ch = 0;
-        do {
-            Scanner input = new Scanner(System.in);
-            try {
-                System.out.println();
-                System.out.println("***************************************************");
-                System.out.println("*                  View Booking                   *");
-                System.out.println("*                                                 *");
-                System.out.println("*    [1] View Booking Description                 *");
-                System.out.println("*    [2] View Booker Profile                      *");
-                System.out.println("*    [3] Back                                     *");
-                System.out.println("*                                                 *");
-                System.out.println("***************************************************");
-                System.out.println();
-                System.out.print("Please select your choice: ");
-                ch = input.nextInt();
-                switch (ch) {
-                    case 1 -> {
-                        usageManagement.displayBookingDetails(row);
-                        pressEnterKeyToContinue();
-                    }
-                    case 2 -> {
-                        filterBookerRecord(row);
-                        pressEnterKeyToContinue();
-                    }
-                    case 3 -> {
-                        System.out.println();
-                    }
-                    default -> {
-                        System.out.println();
-                        System.out.println("Error. Please select a correct choice.");
-                    }
-                }
-            } catch (InputMismatchException e) {
-                System.out.println();
-                System.out.println("Error. Please enter an integer value within 1 and 3.");
-            }
-        } while (ch != 3);
     }
 
     public void updateBooking(int row) throws ParseException {
@@ -500,7 +403,7 @@ public class UsageManagement implements Serializable {
         System.out.println("=".repeat(60));
     }
 
-    private LinkedList<ReservationRecord> filterEquipmentRecord() {
+    public LinkedList<ReservationRecord> filterEquipmentRecord() {
         serFileReader();
         LinkedList<ReservationRecord> equipment = new LinkedList<>();
         for (int i = 1; i < reservationRecord.getLength() + 1; i++) {
@@ -512,7 +415,7 @@ public class UsageManagement implements Serializable {
         return equipment;
     }
 
-    private LinkedList<ReservationRecord> filterFacilitiesRecord() {
+    public LinkedList<ReservationRecord> filterFacilitiesRecord() {
         serFileReader();
         LinkedList<ReservationRecord> facility = new LinkedList<>();
         for (int i = 1; i < reservationRecord.getLength() + 1; i++) {
@@ -524,37 +427,7 @@ public class UsageManagement implements Serializable {
         return facility;
     }
 
-    void overview() {
-        System.out.println("");
-        System.out.println("");
-        System.out.println("*".repeat(135));
-        System.out.println("Summary");
-        LinkedList<ReservationRecord> equipment = filterEquipmentRecord();
-        LinkedList<ReservationRecord> facility = filterFacilitiesRecord();
-        System.out.println("\nBorrow Record for Equipment");
-        if (equipment.getLength() == 0) {
-            System.out.println("--------------------------------");
-            System.out.println("No equipment booking record yet");
-            System.out.println("--------------------------------");
-        } else {
-            displayHeading();
-            System.out.println(equipment);
-        }
-        System.out.println("\nBorrow Record for Facility");
-        if (facility.getLength() == 0) {
-            System.out.println("------------------------------");
-            System.out.println("No facility booking record yet");
-            System.out.println("------------------------------");
-        } else {
-            displayHeading();
-            System.out.println(facility);
-        }
-        System.out.println("*".repeat(135));
-        System.out.println("");
-        System.out.println("");
-        pressEnterKeyToContinue();
 
-    }
 
     //Read file
     public void serFileReader() {
