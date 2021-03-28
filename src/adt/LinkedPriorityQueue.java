@@ -101,16 +101,6 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
     }
 
     @Override
-    public int getTotalEntry() {
-        return length;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return length == 0;
-    }
-
-    @Override
     public T getElement(int position) {
         T result = null;
 
@@ -122,6 +112,16 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
             result = currentNode.data;	// currentNode is pointing to the node at givenPosition
         }
         return result;
+    }
+
+    @Override
+    public int getTotalEntry() {
+        return length;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return length == 0;
     }
 
     @Override

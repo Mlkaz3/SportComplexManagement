@@ -27,16 +27,17 @@ import java.util.Scanner;
  *
  * @author Ong Yi Jie 19WMR11855
  */
-public class MaintenanceManagement { // bug: same maintenance ID
+public class MaintenanceManagement {
 
     PriorityQueueInterface<Maintenance> appointmentQueue;
-    ListInter<Maintenance> maintenanceHistory = new ArrList<>(); // use of teammate's ADT to store records
+    ListInter<Maintenance> maintenanceRecord; // use of teammate's ADT to store records
     Facility facility; // reference to Facility class
     Scanner userInput = new Scanner(System.in);
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 
     public MaintenanceManagement() {
         appointmentQueue = new LinkedPriorityQueue<>();
+        maintenanceRecord = new ArrList<>();
     }
 
     //display
@@ -160,14 +161,14 @@ public class MaintenanceManagement { // bug: same maintenance ID
                             facilityManagement.readFacility();
                             maintenance.getFacility().setFacilityAvailability(false);
                             facilityManagement.writeFacility();
-                            
+
                             GregorianCalendar startDate = new GregorianCalendar();
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
 
                             maintenance = appointmentQueue.dequeue();
                             readRecord();
-                            maintenanceHistory.add(maintenance);
+                            maintenanceRecord.add(maintenance);
                             writeRecord();
 
                             System.out.println("\nFacility is currently undergoing maintenance!");
@@ -389,7 +390,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
 
         printHistory();
 
-        if (maintenanceHistory.isEmpty()) {
+        if (maintenanceRecord.isEmpty()) {
             System.out.println("There is no record.");
 
         } else {
@@ -406,7 +407,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
 
                 try {
                     position = Integer.parseInt(input);
-                    if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
+                    if (position <= 0 || position > maintenanceRecord.filledSize()) {
                         valid = false;
                         System.out.println("\nError. Maintenance record not found.");
                     } else {
@@ -418,7 +419,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
                 }
             } while (valid != true);
 
-            maintenance = maintenanceHistory.getEntry(position);
+            maintenance = maintenanceRecord.get(position);
 
             if (maintenance.getEndDate() != null) {
                 System.out.println("\nThe maintenance is already completed.");
@@ -458,11 +459,11 @@ public class MaintenanceManagement { // bug: same maintenance ID
 
         printHistory();
 
-        if (maintenanceHistory.isEmpty()) {
+        if (maintenanceRecord.isEmpty()) {
             System.out.println("There is no record.");
 
         } else {
-            System.out.println("Total records: " + maintenanceHistory.getfilledSize());
+            System.out.println("Total records: " + maintenanceRecord.filledSize());
             System.out.println("==================");
 
             System.out.println("\nView report of a completed maintenance -> ");
@@ -477,7 +478,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
 
                 try {
                     position = Integer.parseInt(input);
-                    if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
+                    if (position <= 0 || position > maintenanceRecord.filledSize()) {
                         valid = false;
                         System.out.println("\nError. Maintenance record not found.");
                     } else {
@@ -489,7 +490,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
                 }
             } while (valid != true);
 
-            maintenance = maintenanceHistory.getEntry(position);
+            maintenance = maintenanceRecord.get(position);
 
             if (maintenance.getEndDate() == null) {
                 System.out.println("\nMaintenance is still going on...");
@@ -575,8 +576,8 @@ public class MaintenanceManagement { // bug: same maintenance ID
         System.out.printf("%-3s %-15s %-12s %-17s %-25s %-15s %-30s %-30s %-30s\n", "No", "Maintenance ID", "Facility ID", "Maintenance type", "Maintenance description", "Required Date", "Request Timestamp", "Start Date", "End Date");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-        for (int i = 1; i <= maintenanceHistory.filledSize(); i++) {
-            maintenance = maintenanceHistory.getEntry(i);
+        for (int i = 1; i <= maintenanceRecord.filledSize(); i++) {
+            maintenance = maintenanceRecord.get(i);
             String maintenanceID = maintenance.getMaintenanceID();
             String facilityID = maintenance.getFacility().getFacilityID();
             String maintenanceType = maintenance.getMaintenanceType();
@@ -628,7 +629,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
         try {
             FileInputStream fileIn = new FileInputStream("src/MaintenanceRecords.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            maintenanceHistory = (ArrList<Maintenance>) in.readObject();
+            maintenanceRecord = (ArrList<Maintenance>) in.readObject();
             in.close();
             fileIn.close();
         } catch (IOException i) {
@@ -643,7 +644,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
         try {
             FileOutputStream fileOut = new FileOutputStream("src/MaintenanceRecords.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(maintenanceHistory);
+            out.writeObject(maintenanceRecord);
             out.close();
             fileOut.close();
         } catch (IOException i) {
