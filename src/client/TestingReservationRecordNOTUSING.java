@@ -173,6 +173,15 @@ public class TestingReservationRecordNOTUSING {
         System.out.println("The position is at " + reservationRecord.getPosition(record2));
         System.out.println("----------------------");
 
+        System.out.println("");
+        System.out.println("SECTION 13");
+        System.out.println("");
+        System.out.println("Get last position of element");
+        System.out.println("--------------------------");
+        System.out.println("The position is at " + reservationRecord.getLast());
+        System.out.println("----------------------");
+
+        System.out.println("The position is at " + reservationRecord.getLast());
 //        ReservationRecord record3 = new ReservationRecord(now,now,2.0,user,facility);
 //        System.out.println("record3 " + record3);
         //client side planning

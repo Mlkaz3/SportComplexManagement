@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class ReservationRecord implements Serializable {
 
-    private static int nextNumber = 1000;
+    public static int nextNumber = 1000;
     private String reservationID;
     private String reservationType;
     private String status;
@@ -25,7 +25,7 @@ public class ReservationRecord implements Serializable {
     private Date reservationEndTime;
     private Date checkOutDateTime;
     private double reservationDuration;
-    private double penaltyRate = 8.00;
+    final private double penaltyRate = 8.50;
     private double lateHour;
     private boolean isExtend;
     private User user;
@@ -65,15 +65,6 @@ public class ReservationRecord implements Serializable {
        
     }
 
-    public static int getNextNumber() {
-        return nextNumber;
-    }
-
-    public static void setNextNumber(int nextNumber) {
-        ReservationRecord.nextNumber = nextNumber;
-    }
-
-    
     double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
         double difference_In_Time = reservationEndTime.getTime() - reservationStartTime.getTime();
         return (difference_In_Time / (1000 * 60 * 60)) % 24; //return in hour
