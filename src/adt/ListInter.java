@@ -15,7 +15,6 @@ public interface ListInter<T> {
 
   public void add(T newEntry);
 
-
   public void add(int newPosition, T newEntry);
 
   public T remove(int atPosition);
@@ -36,7 +35,7 @@ public interface ListInter<T> {
   
   //public void grow();
 
-    public int size();
+  public int size();
 }
 
 
