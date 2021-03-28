@@ -12,6 +12,7 @@ package client;
 import adt.ArrList;
 import adt.ArrayStack;
 import adt.ListInter;
+import static client.MainDriver.pressEnterKeyToContinue;
 import static client.MainDriver.usageManagement;
 import entity.Equipment;
 import entity.Facility;
@@ -49,7 +50,6 @@ public class FacilityManagement {
         System.out.printf("%-15s %-22s %-13s %-15s\n", "Facility ID", "Facility Name", "Type", "Availability");
         System.out.println("-----------------------------------------------------------------");
         for (int i = 1; i <= facility.filledSize(); i++) {
-            //System.out.println(i);
             System.out.println(facility.get(i));
         }
         System.out.println("-----------------------------------------------------------------");
@@ -78,78 +78,64 @@ public class FacilityManagement {
         System.out.println("Enter facility type: ");
         facilityType = userInput.nextLine();
 
-        System.out.println("------------------------------------------------------------------------------");
-        System.out.printf("%-15s %-22s %-13s %-15s\n", "Facility ID", "Facility Name", "Type", "Availability");
-        System.out.println("------------------------------------------------------------------------------");
-        System.out.println(facility.get(1).getFacilityID());
+//        System.out.println("------------------------------------------------------------------------------");
+//        System.out.printf("%-15s %-22s %-13s %-15s\n", "Facility ID", "Facility Name", "Type", "Availability");
+//        System.out.println("------------------------------------------------------------------------------");
+//        System.out.println(facility.get(1).getFacilityID());
         Facility newFacility = new Facility(facilityID, facilityName, facilityType, facilityAvailability);
         facility.add(newFacility);
 
-        for (int i = 0; i < facility.filledSize(); i++) {
+        for (int i = 1; i <= facility.filledSize(); i++) {
 //    System.out.println(i);
             System.out.println(facility.get(i));
         }
         System.out.println("------------------------------------------------------------------------------");
 
+        System.out.println("Court Added Successfully.");
+
         writeFacility();
     }
 
     public void removeCourt() {
+        readFacility();
         System.out.println("Enter remove facility ID: ");
         String facilityRemove = userInput.nextLine();
-        facilityRemove = userInput.nextLine();
-
-        for (int i = 0; i < facility.filledSize(); i++) {
+        for (int i = 1; i <= facility.filledSize(); i++) {
             String currentID = facility.get(i).getFacilityID();
             if (currentID.equals(facilityRemove)) {
-                facility.remove(i + 1);
+                facility.remove(i);
             }
         }
-        /*for(int i = 0; i < facility.filledSize() ; i++){
-                    String currentID = facility.get(i).getFacilityID();
-                    if(currentID == facilityRemove){
-                        facility.remove(i);
-                    };         }
-                for(int i = 0; i < facility.filledSize() ; i++){
-                    System.out.println(i);
-System.out.println(facility.get(i));}*/
         writeFacility();
+        pressEnterKeyToContinue();
     }
 
     public void addReservation() throws ParseException {
+        readFacility();
         System.out.println("Kindly insert ur personal info: ");
-        System.out.println("Enter username: ");
+        System.out.print("Enter username: ");
         String userName = userInput.nextLine();
-        System.out.println("Enter user ID: ");
+        System.out.print("Enter user ID: ");
         String userID = userInput.nextLine();
-        System.out.println("Enter user category: ");
+        System.out.print("Enter user category: ");
         String userCategory = userInput.nextLine();
-        System.out.println("Enter user tel: ");
+        System.out.print("Enter user tel: ");
         String userTel = userInput.nextLine();
-
-        //User newuser = new User();
         User newuser = new User(userName, userID, userCategory, userTel);
-        // String requestID;
-        System.out.println("Enter request facility ID: ");
+        System.out.print("Enter request facility ID: ");
         String requestID = userInput.nextLine();
-
         for (int i = 1; i <= facility.filledSize(); i++) {
             String checkID = facility.get(i).getFacilityID();
             Boolean currentCourtAvai = facility.get(i).getFacilityAvailability();
-
             if (currentCourtAvai == true && checkID.equals(requestID)) {
                 SimpleDateFormat myFormatObj = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
                 System.out.print("Enter End Time: ");
                 String end_date = userInput.nextLine();
                 Date endDate = (Date) myFormatObj.parse(end_date);
-
                 //add a new reservation record 
                 ReservationRecord record1 = new entity.ReservationRecord((Date) endDate, newuser, facility.get(i));
-
                 if (usageManagement.addReservation(record1)) {
                     facility.get(i).setFacilityAvailability(false);
-                    System.out.println("room hab been successfully registered");
                 }
             } else if (currentCourtAvai == false && checkID.equals(requestID)) {
                 System.out.println("the room is not available");
@@ -159,35 +145,28 @@ System.out.println(facility.get(i));}*/
     }
 
     public void returnDeleted(Facility deletedfacility) {
-        //read file
-
+        readFacility();
         deletedfacility.setFacilityAvailability(true);
         facility.add(deletedfacility);
-
-        //write file
+        writeFacility();
     }
 
     public void checkOut() {
-        System.out.println("Enter request facility ID: ");
+        readFacility();
+        System.out.print("Enter request reservation ID: ");
         String requestID = userInput.nextLine();
-
         //call a function that return equipment borrowed according to the reservation 
         ReservationRecord bookingitem;
         bookingitem = usageManagement.getBookingRecord(requestID); //retrieve the whole equipment obj 
-
         //update booking status 
         usageManagement.updateBookingStatus(bookingitem);
-
         //calculate penalty 
         usageManagement.getPenaltyCharges(requestID);
-
         String removeFacilityID;
         removeFacilityID = bookingitem.getFacilities().getFacilityID();
-
-        for (int i = 0; i <= facility.filledSize(); i++) {
+        for (int i = 1; i <= facility.filledSize(); i++) {
             String checkID = facility.get(i).getFacilityID();
             Boolean currentCourtAvai = facility.get(i).getFacilityAvailability();
-
             if (currentCourtAvai == false && checkID.equals(removeFacilityID)) {
                 facility.get(i).setFacilityAvailability(true);
                 System.out.println("Court successfully booked out");

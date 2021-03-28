@@ -158,10 +158,11 @@ public class MaintenanceManagement {
                     num = Integer.parseInt(input);
                     switch (num) {
                         case 1 -> {
+
                             facilityManagement.readFacility();
                             maintenance.getFacility().setFacilityAvailability(false);
-                            facilityManagement.writeFacility();
 
+                            facilityManagement.writeFacility();
                             GregorianCalendar startDate = new GregorianCalendar();
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
