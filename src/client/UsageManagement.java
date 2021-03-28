@@ -456,52 +456,6 @@ public class UsageManagement implements Serializable {
         }
     }
 
-    private void filterBookingItem(int row) {
-        serFileReader();
-        ReservationRecord currentRecord = reservationRecord.getEntry(row); //record to be alter
-        LinkedList<ReservationRecord> bookingitems; //is the list of items that have l;
-//        bookingitems = filterRecord(currentRecord);
-        //      bookingitems = SortDateTime(bookingitems);
-        String bookingitemscode;
-        if ("Equipments".equals(currentRecord.getReservationType())) {
-            bookingitemscode = currentRecord.getEquipment().getEquipmentID();
-        } else {
-            bookingitemscode = currentRecord.getFacilities().getFacilityID();
-        }
-
-    }
-
-    //this function fucked up 
-    //filter Record based on type of reservation
-    private LinkedList<ReservationRecord> filterRecord(ReservationRecord currentRecord) {
-        serFileReader();
-        LinkedList<ReservationRecord> bookingitems = new LinkedList<>();
-        String type = currentRecord.getReservationType();
-
-        if ("Facilities".equals(type)) {
-            //get the booking items
-            String booking_item = currentRecord.getFacilities().getFacilityID();
-            Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
-            while (newiterator.hasNext()) {
-                ReservationRecord record = newiterator.next();
-                if (record.getFacilities().getFacilityID().equals(booking_item)) {
-                    bookingitems.addFirst(record);
-                }
-            }
-        } else {
-            System.out.println("currentRecord " + currentRecord);
-            String booking_item = currentRecord.getEquipment().getEquipmentID();
-            Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
-            while (newiterator.hasNext()) {
-                ReservationRecord record = newiterator.next();
-                if (record.getEquipment().getEquipmentID().equals(booking_item)) {
-                    bookingitems.addFirst(record);
-                }
-            }
-        }
-        return bookingitems;
-    }
-
     public void overview() {
         System.out.println("");
         System.out.println("");
@@ -547,11 +501,42 @@ public class UsageManagement implements Serializable {
                 next = SortedList.getEntry(j);
                 if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) > 0) {
                     temp = SortedList.getEntry(j);
-                    SortedList.swap(i, j); 
+                    SortedList.swap(i, j);
                 }
             }
         }
         return SortedList;
+    }
+
+    //this function fucked up 
+    //filter Record based on type of reservation
+    private LinkedList<ReservationRecord> filterRecord(ReservationRecord currentRecord) {
+        serFileReader();
+        LinkedList<ReservationRecord> bookingitems = new LinkedList<>();
+        String type = currentRecord.getReservationType();
+
+        if ("Facilities".equals(type)) {
+            //get the booking items
+            String booking_item = currentRecord.getFacilities().getFacilityID();
+            Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+            while (newiterator.hasNext()) {
+                ReservationRecord record = newiterator.next();
+                if (record.getFacilities().getFacilityID().equals(booking_item)) {
+                    bookingitems.addFirst(record);
+                }
+            }
+        } else {
+            System.out.println("currentRecord " + currentRecord);
+            String booking_item = currentRecord.getEquipment().getEquipmentID();
+            Iterator<ReservationRecord> newiterator = reservationRecord.getIterator();
+            while (newiterator.hasNext()) {
+                ReservationRecord record = newiterator.next();
+                if (record.getEquipment().getEquipmentID().equals(booking_item)) {
+                    bookingitems.addFirst(record);
+                }
+            }
+        }
+        return bookingitems;
     }
 }
 
