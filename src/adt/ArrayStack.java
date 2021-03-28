@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayStack<T> implements StackInterface<T>, Serializable {
+public class ArrayStack<T> implements ArrayStackWithIteratorInterface<T>, Serializable {
 
     //Variable Declaration
     private T[] array; //to store the entries of the stack
@@ -97,21 +97,6 @@ public class ArrayStack<T> implements StackInterface<T>, Serializable {
         return this.array.length;
     }
 
-//    @Override
-//    //Pop evertyhing out and show
-//    public String toString() {
-//        String str = "";
-//        T[] tempStack = (T[]) new Object[this.array.length];
-//        tempStack = this.array;
-//        if(!isEmpty()) {
-//            int x = size();
-//            for (int i = 0; i < x; i++) {
-//                str += ("\n" + (i+1) + ". " + pop());
-//            }
-//        }
-//        this.array = tempStack;
-//        return str;
-//    }
     //--------------------------UTILITY METHODS --------------------------------
     //expand size of the array stack
     private void expandCapacity() {

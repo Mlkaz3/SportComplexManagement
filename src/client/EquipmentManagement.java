@@ -224,10 +224,45 @@ public class EquipmentManagement {
 
     //Clearing all equipments in broken stack
     public void clearAll() {
-        readBrokenFile();
-        brokenStack.clear();
-        System.out.println("All broken equipment is removed.");
-        writeBrokenFile();
+        viewBrokenStack();
+
+        System.out.println("Confirm clear all broken equipments? ->");
+        System.out.println("\n[1] Yes");
+        System.out.println("[2] No\n");
+        int num;
+        boolean valid = true;
+        do {
+            System.out.print("-> ");
+            String ch = input.nextLine();
+
+            try {
+                num = Integer.parseInt(ch);
+                switch (num) {
+                    case 1 -> {
+                        readBrokenFile();
+                        brokenStack.clear();
+                        System.out.println("All broken equipment is removed.");
+                        writeBrokenFile();
+                        valid = true;
+                    }
+                    //add back to equipment stack only when in good condition
+                    case 2 -> {
+                        System.out.println("No equipments removed.");
+                        valid = true;
+                    }
+                    default -> {
+                        System.out.println();
+                        System.out.println("Error. Please select a correct choice.");
+                        System.out.println();
+                        valid = false;
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\nError. Invalid input.");
+                System.out.println();
+                valid = false;
+            }
+        } while (valid != true);
     }
 
     //Display stack storing broken equipements
