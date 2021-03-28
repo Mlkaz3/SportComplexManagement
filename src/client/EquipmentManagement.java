@@ -224,7 +224,10 @@ public class EquipmentManagement {
 
     //Clearing all equipments in broken stack
     public void clearAll() {
-        viewBrokenStack();
+        if (brokenStack.isEmpty()) {
+            System.out.println("There are no broken racquet currently.");
+        } else {
+            viewBrokenStack();
 
         System.out.println("Confirm clear all broken equipments? ->");
         System.out.println("\n[1] Yes");
@@ -263,6 +266,8 @@ public class EquipmentManagement {
                 valid = false;
             }
         } while (valid != true);
+        }
+        
     }
 
     //Display stack storing broken equipements
