@@ -388,7 +388,7 @@ public class MaintenanceManagement {
     //set end date, calculate waiting time, duration, cost
     public void completeMaintenance() throws ParseException {
 
-        printHistory();
+        printRecord();
 
         if (maintenanceRecord.isEmpty()) {
             System.out.println("There is no record.");
@@ -457,7 +457,7 @@ public class MaintenanceManagement {
     //display report of chosen record
     public void viewReport() throws ParseException {
 
-        printHistory();
+        printRecord();
 
         if (maintenanceRecord.isEmpty()) {
             System.out.println("There is no record.");
@@ -567,7 +567,7 @@ public class MaintenanceManagement {
         facilityManagement.displayCourt();
     }
 
-    public void printHistory() throws ParseException {
+    public void printRecord() throws ParseException {
 
         Maintenance maintenance;
         readRecord();

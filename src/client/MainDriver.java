@@ -408,7 +408,7 @@ public class MainDriver implements Serializable {
             try {
                 System.out.println();
                 System.out.println("***************************************************");
-                System.out.println("*               Manage Appointments               *");
+                System.out.println("*                Manage Maintenance               *");
                 System.out.println("*                                                 *");
                 System.out.println("*    [1] Commence a maintenance                   *");
                 System.out.println("*    [2] Complete a maintenance                   *");
