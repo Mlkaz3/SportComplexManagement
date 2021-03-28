@@ -273,7 +273,6 @@ public class EquipmentManagement {
     //Display stack storing broken equipements
     public void viewBrokenStack() {
         readBrokenFile();
-        Iterator<Equipment> it = brokenStack.getIterator();
 
         if (brokenStack.isEmpty()) {
             System.out.println("There are no broken racquet currently.");
@@ -282,6 +281,7 @@ public class EquipmentManagement {
             System.out.printf("%-15s %-20s %-20s %-20s %-20s %-20s\n",
                     "Equipment ID", "Equipment Brand", "Equipment Status", "Equipment Price", "Equipment Location", "Equipment Type");
             System.out.println("------------------------------------------------------------------------------------------------------------------------");
+            Iterator<Equipment> it = brokenStack.getIterator();
             while (it.hasNext()) {
                 System.out.println(it.next());
             }
