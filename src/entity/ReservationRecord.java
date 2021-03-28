@@ -205,7 +205,7 @@ public class ReservationRecord implements Serializable {
                 return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), status,
                         formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(checkOutDateTime), user.getUserID());
             }
-            return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityID(), status,
+            return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityName(), status,
                     formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(checkOutDateTime), user.getUserID());
         }
     }

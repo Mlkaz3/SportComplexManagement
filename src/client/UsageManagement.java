@@ -473,7 +473,6 @@ public class UsageManagement implements Serializable {
         } else {
             usageManagement.displayHeading();
             System.out.println(equipment);
-            System.out.println("*".repeat(135));
         }
         System.out.println("\nBorrow Record for Facility");
         if (facility.getLength() == 0) {
@@ -483,7 +482,6 @@ public class UsageManagement implements Serializable {
         } else {
             usageManagement.displayHeading();
             System.out.println(facility);
-            System.out.println("*".repeat(135));
         }
         System.out.println("*".repeat(135));
         System.out.println("");
