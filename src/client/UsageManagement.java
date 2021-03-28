@@ -369,7 +369,7 @@ public class UsageManagement implements Serializable {
         System.out.println("General Details");
         System.out.println("---------------");
         System.out.printf("%-25s %-30s\n", "Booking Creation Date", "| " + format.format(reservationRecord.getEntry(row).getReservationDate()));
-        System.out.printf("%-25s %-30s\n", "Booking Status", "| " + reservationRecord.getEntry(row).getStatus()); 
+        System.out.printf("%-25s %-30s\n", "Booking Status", "| " + reservationRecord.getEntry(row).getStatus());
         System.out.printf("%-25s %-20s\n", "Booking Extension Status ", "| " + reservationRecord.getEntry(row).isIsExtend());
         System.out.println("\nBooking Facilities/Equipment");
         System.out.println("----------------------------");
@@ -426,8 +426,6 @@ public class UsageManagement implements Serializable {
         }
         return facility;
     }
-
-
 
     //Read file
     public void serFileReader() {
@@ -504,28 +502,58 @@ public class UsageManagement implements Serializable {
         return bookingitems;
     }
 
-    //print the record in the list sort based on reservation date time :) 
-    //in desc order 
+    public void overview() {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("*".repeat(135));
+        System.out.println("Summary");
+        LinkedList<ReservationRecord> equipment = usageManagement.filterEquipmentRecord();
+        equipment = SortDateTime(equipment);
+        LinkedList<ReservationRecord> facility = usageManagement.filterFacilitiesRecord();
+        facility = SortDateTime(facility);
+        System.out.println("\nBorrow Record for Equipment");
+        if (equipment.getLength() == 0) {
+            System.out.println("--------------------------------");
+            System.out.println("No equipment booking record yet");
+            System.out.println("--------------------------------");
+        } else {
+            usageManagement.displayHeading();
+            System.out.println(equipment);
+        }
+        System.out.println("\nBorrow Record for Facility");
+        if (facility.getLength() == 0) {
+            System.out.println("------------------------------");
+            System.out.println("No facility booking record yet");
+            System.out.println("------------------------------");
+        } else {
+            usageManagement.displayHeading();
+            System.out.println(facility);
+        }
+        System.out.println("*".repeat(135));
+        System.out.println("");
+        System.out.println("");
+        pressEnterKeyToContinue();
+    }
+
     private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
-        //Node current will point to head  
         ReservationRecord current;
         ReservationRecord next;
         ReservationRecord temp;
         LinkedList<ReservationRecord> SortedList = toSortList;
         SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
         for (int i = 1; i < SortedList.getLength() + 1; i++) {
             for (int j = 1; j < SortedList.getLength() + 1; j++) {
                 current = SortedList.getEntry(i);
                 next = SortedList.getEntry(j);
                 if (current.getReservationStartTime().compareTo(next.getReservationStartTime()) > 0) {
                     temp = SortedList.getEntry(j);
-//                    SortedList.replace(j, SortedList.getEntry(i));
-//                    SortedList.replace(i, temp);
-                    SortedList.swap(i, j); //to arrange based on time 
+                    SortedList.swap(i, j); 
                 }
             }
         }
         return SortedList;
     }
 }
+
+//                    SortedList.replace(j, SortedList.getEntry(i));
+//                    SortedList.replace(i, temp);

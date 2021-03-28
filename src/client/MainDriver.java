@@ -474,7 +474,7 @@ public class MainDriver implements Serializable {
                     }
 
                     case 2 -> {
-                        overview();
+                        usageManagement.overview();
 
                     }
                     case 3 -> {
@@ -587,38 +587,6 @@ public class MainDriver implements Serializable {
                 System.out.println("Error. Please enter an integer value within 1 and 3.");
             }
         } while (ch != 3);
-    }
-
-    public static void overview() {
-        System.out.println("");
-        System.out.println("");
-        System.out.println("*".repeat(135));
-        System.out.println("Summary");
-        LinkedList<ReservationRecord> equipment = usageManagement.filterEquipmentRecord();
-        LinkedList<ReservationRecord> facility = usageManagement.filterFacilitiesRecord();
-        System.out.println("\nBorrow Record for Equipment");
-        if (equipment.getLength() == 0) {
-            System.out.println("--------------------------------");
-            System.out.println("No equipment booking record yet");
-            System.out.println("--------------------------------");
-        } else {
-            usageManagement.displayHeading();
-            System.out.println(equipment);
-        }
-        System.out.println("\nBorrow Record for Facility");
-        if (facility.getLength() == 0) {
-            System.out.println("------------------------------");
-            System.out.println("No facility booking record yet");
-            System.out.println("------------------------------");
-        } else {
-            usageManagement.displayHeading();
-            System.out.println(facility);
-        }
-        System.out.println("*".repeat(135));
-        System.out.println("");
-        System.out.println("");
-        pressEnterKeyToContinue();
-
     }
 
     public static void pressEnterKeyToContinue() {
