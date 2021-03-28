@@ -144,11 +144,11 @@ public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQue
     }
 
     @Override
-    public boolean contains(T newElement) {
+    public boolean contains(T anElement) {
         boolean exist = false;
         Node currentNode = firstNode;
         while (currentNode != null && !exist) { // loop through the queue
-            if (currentNode.data.equals(newElement)) { // check if element already existed
+            if (currentNode.data.equals(anElement)) { // check if element already existed
                 exist = true;
             } else {
                 currentNode = currentNode.next; // move to the next node
