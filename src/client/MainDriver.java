@@ -447,26 +447,18 @@ public class MainDriver implements Serializable {
 
     private static void UsageManagementMenu() throws ParseException {
         int ch = 0;
-        usageManagement.displayReservation();
-
-        int row = usageManagement.getRow();
         do {
 
             Scanner input = new Scanner(System.in);
             try {
-                if (row == -1) {
-                    pressEnterKeyToContinue();
-                    break;
-                }
-
+               
                 System.out.println();
                 System.out.println("***************************************************");
                 System.out.println("*                Usage Management                 *");
                 System.out.println("*                                                 *");
-                System.out.println("*    [1] View Booking                             *");
-                System.out.println("*    [2] Update Booking                           *");
-                System.out.println("*    [3] Delete Booking                           *");
-                System.out.println("*    [4] Back                                     *");
+                System.out.println("*    [1] Booking                                  *");
+                System.out.println("*    [2] Overview                                 *");
+                System.out.println("*    [3] Back                                     *");
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
                 System.out.println();
@@ -476,24 +468,14 @@ public class MainDriver implements Serializable {
 
                 switch (ch) {
                     case 1 -> {
-                        usageManagement.displayBookingDetails(row);
-                        pressEnterKeyToContinue();
-                        usageManagement.viewBooking(row);
-                        System.out.println("");
+                        usageManagement.booking();
                     }
 
                     case 2 -> {
-                        usageManagement.updateBooking(row);
-                        System.out.println("");
+                        usageManagement.overview();
 
                     }
                     case 3 -> {
-                        usageManagement.deleteBooking(row);
-                        System.out.println("");
-                        ch = 4;
-
-                    }
-                    case 4 -> {
 
                     }
                     default -> {
@@ -506,7 +488,7 @@ public class MainDriver implements Serializable {
                 System.out.println("Error. Please enter an integer value within 1 and 4.");
             }
 
-        } while (ch != 4);
+        } while (ch != 3);
     }
 
     public static void pressEnterKeyToContinue() {

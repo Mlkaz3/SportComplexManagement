@@ -7,8 +7,6 @@ package entity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -17,21 +15,22 @@ import java.util.Date;
  *
  * Comparable<ReservationRecord>,
  */
-public class ReservationRecord implements Comparable<ReservationRecord>, Serializable {
+public class ReservationRecord implements Serializable {
+
     private static int nextNumber = 1000;
     private String reservationID;
     private String reservationType;
-    private Date reservationDateTime; //time where student start to use an equipment or facilities
-    private Date reservationEndTime; //time where student end to use an equipment or facilities
-    private Double reservationDuration; //start time - end time, but user might late return; or do function that generate duration after user return
     private String status;
-    private User user; //user info
-    private Facility facilities; //facilities info
-    private Equipment equipments; //equipment info
-    private Date checkOutDateTime; //when user return
-    private double penaltyRate = 8.00; //8 ringgit per hour
+    private Date reservationDateTime;
+    private Date reservationEndTime;
+    private Date checkOutDateTime;
+    private double reservationDuration;
+    private double penaltyRate = 8.00;
     private double lateHour;
     private boolean isExtend;
+    private User user;
+    private Facility facilities;
+    private Equipment equipments;
 
     //for facilities constructor needa pass in start time and end time 
     public ReservationRecord(Date reservationEndTime, User user, Facility facilities) {
@@ -45,16 +44,11 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.reservationType = "Facilities";
         this.status = "Pending";
         this.checkOutDateTime = null;
-        this.lateHour =0.0;
+        this.lateHour = 0.0;
         this.isExtend = false;
     }
-
-    double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
-        double difference_In_Time = reservationEndTime.getTime() - reservationStartTime.getTime();
-        return (difference_In_Time / (1000 * 60 * 60)) % 24; //return in hour
-    }
-
     //for equipment constructor 
+
     public ReservationRecord(Date reservationEndTime, User user, Equipment equipments) {
         this.reservationDateTime = new Date();
         this.reservationEndTime = reservationEndTime;
@@ -65,24 +59,16 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.reservationType = "Equipments";
         this.status = "Pending";
         this.checkOutDateTime = null;
-        this.lateHour =0.0;
+        this.lateHour = 0.0;
         this.isExtend = false;
     }
-    
-    //this is for debug purpose
-    public ReservationRecord(Date startTime, Date reservationEndTime, User user, Equipment equipments) {
-        this.reservationDateTime = startTime;
-        this.reservationEndTime = reservationEndTime;
-        this.reservationDuration = calculateDuration(this.reservationDateTime, this.reservationEndTime);
-        this.user = user;
-        this.equipments = equipments;
-        this.reservationID = String.valueOf(nextNumber++);
-        this.reservationType = "Equipments";
-        this.status = "Pending";
-        this.checkOutDateTime = null;
-        this.lateHour =0.0;
+
+    double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
+        double difference_In_Time = reservationEndTime.getTime() - reservationStartTime.getTime();
+        return (difference_In_Time / (1000 * 60 * 60)) % 24; //return in hour
     }
 
+ 
     public String getReservationType() {
         return reservationType;
     }
@@ -168,7 +154,6 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.checkOutDateTime = checkOutDateTime;
     }
 
-
     public User getUser() {
         return user;
     }
@@ -193,6 +178,7 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.equipments = equipments;
     }
 
+
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -202,25 +188,16 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
                 return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), status,
                         formatter.format(reservationDateTime), formatter.format(reservationEndTime), "-", user.getUserID());
             }
-            return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(),status ,
+            return String.format("%-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), status,
                     formatter.format(reservationDateTime), formatter.format(reservationEndTime), "-", user.getUserID());
-
         } else {
             if (facilities == null) {
                 return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), status,
                         formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(checkOutDateTime), user.getUserID());
             }
-            return String.format(" %-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), status,
+            return String.format("%-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), status,
                     formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(checkOutDateTime), user.getUserID());
-
         }
-
-    }
-
-    @Override
-    public int compareTo(ReservationRecord o) {
-        //return this.getReservationStartTime().compareTo(o.getReservationStartTime());
-        return this.reservationDateTime.compareTo(o.reservationDateTime);
     }
 
     public ReservationRecord(User user, Facility facilities) {
@@ -239,10 +216,25 @@ public class ReservationRecord implements Comparable<ReservationRecord>, Seriali
         this.reservationDateTime = new Date();
         this.reservationDateTime = new Date();
         this.reservationEndTime = reservationDateTime;
-        this.reservationDuration = 10.0;
+        this.reservationDuration = calculateDuration(this.reservationDateTime, this.reservationEndTime);
         this.user = user;
         this.equipments = equipments;
         this.reservationID = String.valueOf(nextNumber++);
         this.reservationType = "Equipments";
     }
+    
+       //this is for debug purpose
+    public ReservationRecord(Date startTime, Date reservationEndTime, User user, Equipment equipments) {
+        this.reservationDateTime = startTime;
+        this.reservationEndTime = reservationEndTime;
+        this.reservationDuration = calculateDuration(this.reservationDateTime, this.reservationEndTime);
+        this.user = user;
+        this.equipments = equipments;
+        this.reservationID = String.valueOf(nextNumber++);
+        this.reservationType = "Equipments";
+        this.status = "Pending";
+        this.checkOutDateTime = null;
+        this.lateHour = 0.0;
+    }
+
 }

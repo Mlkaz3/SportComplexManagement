@@ -6,40 +6,37 @@
 package adt;
 
 /**
- *can do index of 
+ * can do index of
+ *
  * @author winnieyap
  * @param <T>
  */
-public interface ListInterface<T extends Comparable<T>> {
-    
-    //add a new entry to the linked list
+public interface ListInterface<T> {
+
     public boolean addFirst(T newEntry);
-    
-    //add a new entry to the linked list
+
     public boolean addLast(T newEntry);
-    
-    //add a new entry at given Position in the linked list
+
     public boolean addAt(int newPosition, T newEntry);
-    
-    //remove element at given position
+
     public T removeAt(int givenPosition);
-    
-    //to swap element that stick together
-    public void swap(int frontPosition, int backPosition);
-    
+
+    public boolean swap(int frontPosition, int backPosition);
+
     public void clear();
-    
+
     public boolean replace(int givenPosition, T newEntry);
-    
+
     public T getEntry(int givenPosition);
+
     public int getPosition(T newEntry);
-    
+
     public boolean contains(T anEntry);
-    
+
     public int getLength();
-    
+
     public boolean isEmpty();
-    
+
     public boolean isFull();
-        
+
 }

@@ -133,7 +133,7 @@ System.out.println(facility.get(i));}*/
         System.out.println("Enter request facility ID: ");
         String requestID = userInput.nextLine();
 
-        for (int i = 0; i < facility.filledSize(); i++) {
+        for (int i = 1; i <= facility.filledSize(); i++) {
             String checkID = facility.get(i).getFacilityID();
             Boolean currentCourtAvai = facility.get(i).getFacilityAvailability();
 
@@ -184,7 +184,7 @@ System.out.println(facility.get(i));}*/
         String removeFacilityID;
         removeFacilityID = bookingitem.getFacilities().getFacilityID();
 
-        for (int i = 0; i < facility.filledSize(); i++) {
+        for (int i = 0; i <= facility.filledSize(); i++) {
             String checkID = facility.get(i).getFacilityID();
             Boolean currentCourtAvai = facility.get(i).getFacilityAvailability();
 
