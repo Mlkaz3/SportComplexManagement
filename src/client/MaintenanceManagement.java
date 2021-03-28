@@ -81,7 +81,7 @@ public class MaintenanceManagement {
             Facility selectedFacility = new Facility();
 
             int count = 0;
-            for (int i = 0; i < facilityManagement.facility.filledSize(); i++) {
+            for (int i = 1; i <= facilityManagement.facility.filledSize(); i++) {
                 if (facilityID == null ? facilityManagement.facility.get(i) == null : facilityID.equals(facilityManagement.facility.get(i).getFacilityID())) {
                     count = 1;
                     selectedFacility = facilityManagement.facility.get(i);
@@ -319,7 +319,7 @@ public class MaintenanceManagement {
                             Facility selectedFacility = new Facility();
 
                             int count = 0;
-                            for (int i = 0; i < facilityManagement.facility.filledSize(); i++) {
+                            for (int i = 1; i <= facilityManagement.facility.filledSize(); i++) {
                                 if (newID == null ? facilityManagement.facility.get(i) == null : newID.equals(facilityManagement.facility.get(i).getFacilityID())) {
                                     count = 1;
                                     selectedFacility = facilityManagement.facility.get(i);

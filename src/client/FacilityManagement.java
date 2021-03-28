@@ -48,7 +48,7 @@ public class FacilityManagement {
         System.out.println("-----------------------------------------------------------------");
         System.out.printf("%-15s %-22s %-13s %-15s\n", "Facility ID", "Facility Name", "Type", "Availability");
         System.out.println("-----------------------------------------------------------------");
-        for (int i = 0; i < facility.filledSize(); i++) {
+        for (int i = 1; i <= facility.filledSize(); i++) {
             //System.out.println(i);
             System.out.println(facility.get(i));
         }

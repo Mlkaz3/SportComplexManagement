@@ -7,14 +7,12 @@ package client;
 
 import entity.Equipment;
 import entity.Facility;
-import entity.ReservationRecord;
 import entity.User;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
