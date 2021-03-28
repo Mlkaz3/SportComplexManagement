@@ -44,6 +44,7 @@ public class UsageManagement implements Serializable {
 
     public UsageManagement() {
         this.reservationRecord = new LinkedList<>();
+        //reservationRecord.clear();
 
     }
 
@@ -626,7 +627,7 @@ public class UsageManagement implements Serializable {
     private LinkedList<ReservationRecord> filterEquipmentRecord() {
         serFileReader();
         LinkedList<ReservationRecord> equipment = new LinkedList<>();
-        for (int i = 1; i < reservationRecord.getLength(); i++) {
+        for (int i = 1; i < reservationRecord.getLength() + 1; i++) {
             ReservationRecord record = reservationRecord.getEntry(i);
             if (record.getEquipment() != null) {
                 //add into equipment
@@ -654,20 +655,31 @@ public class UsageManagement implements Serializable {
         System.out.println("");
         System.out.println("*".repeat(135));
         System.out.println("Summary");
-
-        System.out.println("\nBorrow Record for Equipment");
-        displayHeading();
         LinkedList<ReservationRecord> equipment = filterEquipmentRecord();
-        System.out.println(equipment);
-
-        System.out.println("Borrow Record for Facility");
-        displayHeading();
         LinkedList<ReservationRecord> facility = filterFacilitiesRecord();
-        System.out.println(facility);
+        System.out.println("\nBorrow Record for Equipment");
+        if (equipment.getLength() == 0) {
+            System.out.println("--------------------------------");
+            System.out.println("No equipment booking record yet");
+            System.out.println("--------------------------------");
+        } else {
 
+            displayHeading();
+            System.out.println(equipment);
+        }
+        System.out.println("\nBorrow Record for Facility");
+        if (facility.getLength() == 0) {
+            System.out.println("------------------------------");
+            System.out.println("No facility booking record yet");
+            System.out.println("------------------------------");
+        } else {
+            displayHeading();
+            System.out.println(facility);
+        }
         System.out.println("*".repeat(135));
         System.out.println("");
         System.out.println("");
+        pressEnterKeyToContinue();
 
     }
 

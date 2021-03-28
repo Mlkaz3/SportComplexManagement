@@ -68,7 +68,6 @@ public class ReservationRecord implements Serializable {
         return (difference_In_Time / (1000 * 60 * 60)) % 24; //return in hour
     }
 
- 
     public String getReservationType() {
         return reservationType;
     }
@@ -178,24 +177,33 @@ public class ReservationRecord implements Serializable {
         this.equipments = equipments;
     }
 
-
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         //checking check out time
         if (checkOutDateTime == null) {
             if (facilities == null) {
-                return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), status,
-                        formatter.format(reservationDateTime), formatter.format(reservationEndTime), "-", user.getUserID());
+                return String.format("%-42s %-15s %-20s %-20s %-20s %-10s",
+                        " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(),
+                        status,
+                        formatter.format(reservationDateTime), 
+                        formatter.format(reservationEndTime), 
+                        "-",
+                        user.getUserID());
             }
-            return String.format("%-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), status,
-                    formatter.format(reservationDateTime), formatter.format(reservationEndTime), "-", user.getUserID());
+            return String.format("%-42s %-15s %-20s %-20s %-20s %-10s",
+                    " #" + reservationID + " of " + facilities.getFacilityName(), 
+                    status,
+                    formatter.format(reservationDateTime), 
+                    formatter.format(reservationEndTime),
+                    "-", 
+                    user.getUserID());
         } else {
             if (facilities == null) {
                 return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + equipments.getEquipmentBrand() + " " + equipments.getEquipmentType(), status,
                         formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(checkOutDateTime), user.getUserID());
             }
-            return String.format("%-40s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityType(), status,
+            return String.format("%-42s %-15s %-20s %-20s %-20s %-10s", " #" + reservationID + " of " + facilities.getFacilityID(), status,
                     formatter.format(reservationDateTime), formatter.format(reservationEndTime), formatter.format(checkOutDateTime), user.getUserID());
         }
     }
@@ -222,8 +230,8 @@ public class ReservationRecord implements Serializable {
         this.reservationID = String.valueOf(nextNumber++);
         this.reservationType = "Equipments";
     }
-    
-       //this is for debug purpose
+
+    //this is for debug purpose
     public ReservationRecord(Date startTime, Date reservationEndTime, User user, Equipment equipments) {
         this.reservationDateTime = startTime;
         this.reservationEndTime = reservationEndTime;
