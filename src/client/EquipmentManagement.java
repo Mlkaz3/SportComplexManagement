@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class EquipmentManagement {
 
-    StackInterface<Equipment> equipmentStack = new ArrayStack<>(); //tennis only
+    StackInterface<Equipment> equipmentStack = new ArrayStack<>();
     StackInterface<Equipment> brokenStack = new ArrayStack<>();
 
     Scanner input = new Scanner(System.in);
@@ -224,6 +224,7 @@ public class EquipmentManagement {
 
     //Clearing all equipments in broken stack
     public void clearAll() {
+        readBrokenFile();
         if (brokenStack.isEmpty()) {
             System.out.println("There are no broken racquet currently.");
         } else {
@@ -242,7 +243,6 @@ public class EquipmentManagement {
                 num = Integer.parseInt(ch);
                 switch (num) {
                     case 1 -> {
-                        readBrokenFile();
                         brokenStack.clear();
                         System.out.println("All broken equipment is removed.");
                         writeBrokenFile();
