@@ -3,6 +3,11 @@ package entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * @author 
+ * Chan Mei Hui 19WMR11908
+ */
+
 public class Equipment implements Serializable{
     private String equipmentID;
     private String equipmentBrand;

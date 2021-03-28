@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
@@ -11,7 +6,6 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- *
  * @author Ong Yi Jie 19WMR11855
  */
 public class Maintenance implements Comparable<Maintenance>, Serializable {

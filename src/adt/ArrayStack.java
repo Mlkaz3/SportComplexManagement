@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * @author 
+ * Chan Mei Hui 19WMR11908
+ */
+
 public class ArrayStack<T> implements ArrayStackWithIteratorInterface<T>, Serializable {
 
     //Variable Declaration

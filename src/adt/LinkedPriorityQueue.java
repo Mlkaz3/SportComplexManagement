@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package adt;
 
 import java.io.Serializable;
@@ -12,11 +7,7 @@ import java.io.Serializable;
  * @author Ong Yi Jie 19WMR11855
  * @param <T>
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 public class LinkedPriorityQueue<T extends Comparable<T>> implements PriorityQueueInterface<T>, Serializable {
 
     private Node firstNode; // reference to first node

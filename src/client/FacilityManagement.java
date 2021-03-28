@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
 /**
@@ -10,13 +5,10 @@ package client;
  * @author Chen Chee Yong 19WMR11909
  */
 import adt.ArrList;
-import adt.ArrayStack;
 import adt.ListInter;
 import static client.SportComplexSystem.pressEnterKeyToContinue;
 import static client.SportComplexSystem.usageManagement;
-import entity.Equipment;
 import entity.Facility;
-import entity.Maintenance;
 import entity.ReservationRecord;
 import entity.User;
 import java.io.FileInputStream;
@@ -24,16 +16,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import static java.lang.System.in;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-/**
- *
- * @author andre
- */
 public class FacilityManagement {
 
     ListInter<Facility> facility;

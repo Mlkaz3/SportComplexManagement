@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
 import java.io.IOException;
@@ -12,8 +7,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- *
- * @author winnieyap
+ * @author 
+ * Chan Mei Hui 19WMR11908
+ * Chen Chee Yong 19WMR11909
+ * Ong Yi Jie 19WMR11855
+ * Winnie Yap Xiang Loo 19WMR11981
  */
 public class SportComplexSystem implements Serializable {
     public static EquipmentManagement equipmentManagement = new EquipmentManagement();
@@ -21,7 +19,6 @@ public class SportComplexSystem implements Serializable {
     public static UsageManagement usageManagement = new UsageManagement();
     public static FacilityManagement facilityManagement = new FacilityManagement();
     public static void main(String[] args) throws ParseException {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("WELCOME TO TARUC SPORT COMPLEX");
         System.out.println("");
         MainPage();

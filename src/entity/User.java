@@ -6,11 +6,13 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Scanner;
 
 /**
- *String userName, String userID, String userCategory, String userTel
- * @author YJ
+ * @author 
+ * Chan Mei Hui 19WMR11908
+ * Chen Chee Yong 19WMR11909
+ * Ong Yi Jie 19WMR11855
+ * Winnie Yap Xiang Loo 19WMR11981
  */
 public class User implements Serializable{
     

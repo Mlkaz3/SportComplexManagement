@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 /**
- *
  * @author Chen Chee Yong 19WMR11909
  */
 import java.io.Serializable;
-import java.util.Locale;
 import java.util.Objects;
 
 public class Facility implements Serializable {

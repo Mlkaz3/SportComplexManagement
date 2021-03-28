@@ -2,7 +2,6 @@ package client;
 
 import adt.ArrayStack;
 import adt.StackInterface;
-import adt.ArrayStackWithIteratorInterface;
 import static client.SportComplexSystem.usageManagement;
 import entity.Equipment;
 import entity.User;
@@ -17,6 +16,11 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+/**
+ * @author 
+ * Chan Mei Hui 19WMR11908
+ */
 
 public class EquipmentManagement {
 

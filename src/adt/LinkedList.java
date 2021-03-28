@@ -1,18 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package adt;
 
 import java.io.Serializable;
 import java.util.Iterator;
 
 /**
- *
- * @author winnieyap
+ * @author 
+ * Winnie Yap Xiang Loo 19WMR11981
  * @param <T>
  */
+
 public class LinkedList<T> implements ListInterface<T>, Serializable {
 
     private Node head;
