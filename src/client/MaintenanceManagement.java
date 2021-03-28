@@ -406,7 +406,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
 
                 try {
                     position = Integer.parseInt(input);
-                    if (position <= 0 || position > maintenanceHistory.filledSize()) {
+                    if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
                         valid = false;
                         System.out.println("\nError. Maintenance record not found.");
                     } else {
@@ -418,7 +418,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
                 }
             } while (valid != true);
 
-            maintenance = maintenanceHistory.get(position);
+            maintenance = maintenanceHistory.getEntry(position);
 
             if (maintenance.getEndDate() != null) {
                 System.out.println("\nThe maintenance is already completed.");
@@ -462,7 +462,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
             System.out.println("There is no record.");
 
         } else {
-            System.out.println("Total records: " + maintenanceHistory.filledSize());
+            System.out.println("Total records: " + maintenanceHistory.getfilledSize());
             System.out.println("==================");
 
             System.out.println("\nView report of a completed maintenance -> ");
@@ -477,7 +477,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
 
                 try {
                     position = Integer.parseInt(input);
-                    if (position <= 0 || position > maintenanceHistory.filledSize()) {
+                    if (position <= 0 || position > maintenanceHistory.getfilledSize()) {
                         valid = false;
                         System.out.println("\nError. Maintenance record not found.");
                     } else {
@@ -489,7 +489,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
                 }
             } while (valid != true);
 
-            maintenance = maintenanceHistory.get(position);
+            maintenance = maintenanceHistory.getEntry(position);
 
             if (maintenance.getEndDate() == null) {
                 System.out.println("\nMaintenance is still going on...");
@@ -576,7 +576,7 @@ public class MaintenanceManagement { // bug: same maintenance ID
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         for (int i = 1; i <= maintenanceHistory.filledSize(); i++) {
-            maintenance = maintenanceHistory.get(i);
+            maintenance = maintenanceHistory.getEntry(i);
             String maintenanceID = maintenance.getMaintenanceID();
             String facilityID = maintenance.getFacility().getFacilityID();
             String maintenanceType = maintenance.getMaintenanceType();
