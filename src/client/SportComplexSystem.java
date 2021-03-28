@@ -15,13 +15,11 @@ import java.util.Scanner;
  *
  * @author winnieyap
  */
-public class MainDriver implements Serializable {
-
+public class SportComplexSystem implements Serializable {
     public static EquipmentManagement equipmentManagement = new EquipmentManagement();
     public static MaintenanceManagement maintenanceMgmt = new MaintenanceManagement();
     public static UsageManagement usageManagement = new UsageManagement();
     public static FacilityManagement facilityManagement = new FacilityManagement();
-
     public static void main(String[] args) throws ParseException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("WELCOME TO TARUC SPORT COMPLEX");

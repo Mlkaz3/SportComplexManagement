@@ -3,7 +3,7 @@ package client;
 import adt.ArrayStack;
 import adt.StackInterface;
 import adt.ArrayStackWithIteratorInterface;
-import static client.MainDriver.usageManagement;
+import static client.SportComplexSystem.usageManagement;
 import entity.Equipment;
 import entity.User;
 import entity.ReservationRecord;

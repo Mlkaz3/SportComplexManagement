@@ -6,9 +6,9 @@
 package client;
 
 import adt.LinkedList;
-import static client.MainDriver.equipmentManagement;
-import static client.MainDriver.facilityManagement;
-import static client.MainDriver.pressEnterKeyToContinue;
+import static client.SportComplexSystem.equipmentManagement;
+import static client.SportComplexSystem.facilityManagement;
+import static client.SportComplexSystem.pressEnterKeyToContinue;
 import entity.Equipment;
 import entity.ReservationRecord;
 import entity.User;
@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
-import static client.MainDriver.usageManagement;
+import static client.SportComplexSystem.usageManagement;
 import entity.Facility;
 import java.awt.HeadlessException;
 import java.io.File;
@@ -269,7 +269,7 @@ public class UsageManagement implements Serializable {
                     if (row < 1 || row > reservationRecord.getLength()) {
                         System.out.println("Unknown row input, please try again.");
                     }
-                } catch (InputMismatchException exception) {
+                    } catch (InputMismatchException exception) {
                     System.out.println("Not an valid choice, please try again.");
                     if (input.next().isEmpty()) {
                         break;
@@ -473,6 +473,7 @@ public class UsageManagement implements Serializable {
         } else {
             usageManagement.displayHeading();
             System.out.println(equipment);
+            System.out.println("*".repeat(135));
         }
         System.out.println("\nBorrow Record for Facility");
         if (facility.getLength() == 0) {
@@ -482,6 +483,7 @@ public class UsageManagement implements Serializable {
         } else {
             usageManagement.displayHeading();
             System.out.println(facility);
+            System.out.println("*".repeat(135));
         }
         System.out.println("*".repeat(135));
         System.out.println("");

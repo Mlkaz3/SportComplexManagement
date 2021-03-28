@@ -9,7 +9,7 @@ import adt.ArrList;
 import adt.LinkedPriorityQueue;
 import adt.ListInter;
 import adt.PriorityQueueInterface;
-import static client.MainDriver.facilityManagement;
+import static client.SportComplexSystem.facilityManagement;
 import entity.Facility;
 import entity.Maintenance;
 import java.io.FileInputStream;
@@ -131,7 +131,7 @@ public class MaintenanceManagement {
         }
 
         writeAppt();
-        MainDriver.pressEnterKeyToContinue();
+        SportComplexSystem.pressEnterKeyToContinue();
     }
 
     //commence a maintenance
@@ -203,7 +203,7 @@ public class MaintenanceManagement {
         }
 
         writeAppt();
-        MainDriver.pressEnterKeyToContinue();
+        SportComplexSystem.pressEnterKeyToContinue();
     }
 
     //cancel appointment
@@ -257,7 +257,7 @@ public class MaintenanceManagement {
         }
 
         writeAppt();
-        MainDriver.pressEnterKeyToContinue();
+        SportComplexSystem.pressEnterKeyToContinue();
     }
 
     //edit appointment details
@@ -393,7 +393,7 @@ public class MaintenanceManagement {
         }
 
         writeAppt();
-        MainDriver.pressEnterKeyToContinue();
+        SportComplexSystem.pressEnterKeyToContinue();
     }
 
     //set end date, calculate waiting time, duration, cost
@@ -472,7 +472,7 @@ public class MaintenanceManagement {
         }
 
         writeRecord();
-        MainDriver.pressEnterKeyToContinue();
+        SportComplexSystem.pressEnterKeyToContinue();
     }
 
     //display report of chosen record
@@ -531,7 +531,7 @@ public class MaintenanceManagement {
             }
         }
 
-        MainDriver.pressEnterKeyToContinue();
+        SportComplexSystem.pressEnterKeyToContinue();
     }
 
     public void clearAll() {
@@ -579,7 +579,7 @@ public class MaintenanceManagement {
         }
 
         writeAppt();
-        MainDriver.pressEnterKeyToContinue();
+        SportComplexSystem.pressEnterKeyToContinue();
     }
 
     public void printFacility() {
