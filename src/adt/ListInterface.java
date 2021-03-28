@@ -28,6 +28,8 @@ public interface ListInterface<T> {
     public boolean replace(int givenPosition, T newEntry);
 
     public T getEntry(int givenPosition);
+    
+    public T getLast();
 
     public int getPosition(T newEntry);
 
@@ -38,5 +40,6 @@ public interface ListInterface<T> {
     public boolean isEmpty();
 
     public boolean isFull();
+    
 
 }

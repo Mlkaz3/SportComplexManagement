@@ -229,6 +229,21 @@ public class LinkedList<T> implements ListInterface<T>, Serializable {
         return count;
     }
 
+    @Override
+    public T getLast() {
+        T entry = null;
+        Node entryNode = null;
+        if (!isEmpty()) {
+            Node currentNode = head;
+            while (currentNode.next != null) {
+                currentNode = currentNode.next;
+            }
+            entryNode = currentNode;
+            entry = (T) entryNode.data;
+        }
+        return entry;
+    }
+
     private class Node<T> implements Serializable {
 
         T data;

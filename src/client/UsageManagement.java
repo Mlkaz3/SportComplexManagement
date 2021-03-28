@@ -7,6 +7,7 @@ package client;
 
 import adt.LinkedList;
 import static client.MainDriver.equipmentManagement;
+import static client.MainDriver.facilityManagement;
 import static client.MainDriver.pressEnterKeyToContinue;
 import entity.Equipment;
 import entity.ReservationRecord;
@@ -19,6 +20,7 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 import static client.MainDriver.usageManagement;
+import entity.Facility;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,22 +46,17 @@ public class UsageManagement implements Serializable {
 
     public UsageManagement() {
         this.reservationRecord = new LinkedList<>();
-        //reservationRecord.clear();
-
     }
 
     public boolean addReservation(ReservationRecord record) {
         Date now = new Date();
-        System.out.println(record.getReservationEndTime().compareTo(now));
         if (record.getReservationDuration() > 2) {
             System.out.println("The maximum hour to use an equipment/facilities is 2 hours only");
             return false;
-
         } else if (record.getReservationEndTime().compareTo(now) == -1) {
             System.out.println("The booking end time should not smaller than current time");
             return false;
         }
-
         System.out.println("Booking added successfully.");
         reservationRecord.addLast(record);
         serFileWriter();
@@ -68,6 +65,7 @@ public class UsageManagement implements Serializable {
 
     public void displayReservation() {
         serFileReader();
+//        checkID();
         if (reservationRecord.isEmpty()) {
             System.out.println("-----------------------");
             System.out.println("No booking record found");
@@ -99,17 +97,14 @@ public class UsageManagement implements Serializable {
         int ch = 0;
         serFileReader();
         usageManagement.displayReservation();
-
         int row = usageManagement.getRow();
         do {
-
-            Scanner input = new Scanner(System.in);
+            Scanner in = new Scanner(System.in);
             try {
                 if (row == -1) {
                     pressEnterKeyToContinue();
                     break;
                 }
-
                 System.out.println();
                 System.out.println("***************************************************");
                 System.out.println("*                    Booking                      *");
@@ -121,32 +116,24 @@ public class UsageManagement implements Serializable {
                 System.out.println("*                                                 *");
                 System.out.println("***************************************************");
                 System.out.println();
-
                 System.out.print("Please select your choice: ");
-                ch = input.nextInt();
+                ch = in.nextInt();
 
                 switch (ch) {
                     case 1 -> {
-                        //called viewBooking() function in Usage Management
                         usageManagement.viewBooking(row);
                         System.out.println("");
                     }
-
                     case 2 -> {
-                        //called updateBooking() function in Usage Management
                         usageManagement.updateBooking(row);
                         System.out.println("");
-
                     }
                     case 3 -> {
-                        //called deleteBooking() function in Usage Management which pass in the row number and 
                         usageManagement.deleteBooking(row);
                         System.out.println("");
                         ch = 4;
-
                     }
                     case 4 -> {
-
                     }
                     default -> {
                         System.out.println();
@@ -181,8 +168,6 @@ public class UsageManagement implements Serializable {
                 ch = input.nextInt();
                 switch (ch) {
                     case 1 -> {
-//                        filterBookingItem(row);
-//                        pressEnterKeyToContinue();
                         usageManagement.displayBookingDetails(row);
                         pressEnterKeyToContinue();
                     }
@@ -251,7 +236,6 @@ public class UsageManagement implements Serializable {
     public void deleteBooking(int row) {
         String deletion;
         serFileReader();
-
         if ("Complete".equals(reservationRecord.getEntry(row).getStatus())) {
             System.out.println("Unable to delete success booking");
             pressEnterKeyToContinue();
@@ -263,13 +247,13 @@ public class UsageManagement implements Serializable {
             switch (deletion.toLowerCase()) {
                 case "yes" -> {
                     if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
+                        Facility deletionFacility = reservationRecord.getEntry(row).getFacilities();
                         //here undone
-
+                        facilityManagement.returnDeleted(deletionFacility);
                     } else {
                         Equipment deletionEquipment = reservationRecord.getEntry(row).getEquipment();
                         equipmentManagement.returnDeleted(deletionEquipment);
                     }
-
                     deletionRecord = reservationRecord.removeAt(row);
                     System.out.println("The booking record with ID " + deletionRecord.getReservationID() + " is deleted.");
                 }
@@ -279,7 +263,6 @@ public class UsageManagement implements Serializable {
                 default -> {
                     System.out.println("Unknown selection.");
                 }
-
             }
         }
         serFileWriter();
@@ -318,10 +301,8 @@ public class UsageManagement implements Serializable {
             System.out.println("\nBooker Info Successfully Update.");
         }
         serFileWriter();
-
     }
 
-    //fail
     public void extendBooking(int row) throws ParseException {
         serFileReader();
         DateFormat format_date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -395,7 +376,7 @@ public class UsageManagement implements Serializable {
                         break;
                     }
                 }
-            } while (row < 1 || row > reservationRecord.getLength()); //validate the row input, make sure it is not larger than the list size
+            } while (row < 1 || row > reservationRecord.getLength());
         }
         return row;
 
@@ -540,12 +521,10 @@ public class UsageManagement implements Serializable {
                     reservationRecord.getEntry(position).setLateHour(datediff);
                     System.out.println("Late In Returning");
                     System.out.println("Penalty Fine: " + reservationRecord.getEntry(position).calculatePenalty());
-
                 }
                 break;
             }
         }
-
     }
 
     private static LinkedList<ReservationRecord> SortDateTime(LinkedList<ReservationRecord> toSortList) {
@@ -630,10 +609,8 @@ public class UsageManagement implements Serializable {
         for (int i = 1; i < reservationRecord.getLength() + 1; i++) {
             ReservationRecord record = reservationRecord.getEntry(i);
             if (record.getEquipment() != null) {
-                //add into equipment
                 equipment.addLast(record);
             }
-
         }
         return equipment;
     }
@@ -663,7 +640,6 @@ public class UsageManagement implements Serializable {
             System.out.println("No equipment booking record yet");
             System.out.println("--------------------------------");
         } else {
-
             displayHeading();
             System.out.println(equipment);
         }
@@ -711,4 +687,14 @@ public class UsageManagement implements Serializable {
             i.printStackTrace();
         }
     }
+
+//    private void checkID() {
+//        //get the last record 
+//        int nextNumber = reservationRecord.getLast().getIdNo();
+//        
+//        //reset the int static
+//        ReservationRecord.nextNumber = nextNumber;
+//     
+//
+//    }
 }

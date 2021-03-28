@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class ReservationRecord implements Serializable {
 
-    private static int nextNumber = 1000;
+    public static int nextNumber = 1000;
     private String reservationID;
     private String reservationType;
     private String status;
@@ -25,7 +25,7 @@ public class ReservationRecord implements Serializable {
     private Date reservationEndTime;
     private Date checkOutDateTime;
     private double reservationDuration;
-    private double penaltyRate = 8.00;
+    final private double penaltyRate = 8.50;
     private double lateHour;
     private boolean isExtend;
     private User user;
@@ -46,6 +46,7 @@ public class ReservationRecord implements Serializable {
         this.checkOutDateTime = null;
         this.lateHour = 0.0;
         this.isExtend = false;
+
     }
     //for equipment constructor 
 
@@ -61,6 +62,7 @@ public class ReservationRecord implements Serializable {
         this.checkOutDateTime = null;
         this.lateHour = 0.0;
         this.isExtend = false;
+       
     }
 
     double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
