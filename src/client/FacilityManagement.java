@@ -7,7 +7,7 @@ package client;
 
 /**
  *
- * @author andre
+ * @author Chen Chee Yong
  */
 import adt.ArrList;
 import adt.ArrayStack;
