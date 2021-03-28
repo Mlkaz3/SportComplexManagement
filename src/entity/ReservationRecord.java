@@ -46,6 +46,7 @@ public class ReservationRecord implements Serializable {
         this.checkOutDateTime = null;
         this.lateHour = 0.0;
         this.isExtend = false;
+
     }
     //for equipment constructor 
 
@@ -61,8 +62,18 @@ public class ReservationRecord implements Serializable {
         this.checkOutDateTime = null;
         this.lateHour = 0.0;
         this.isExtend = false;
+       
     }
 
+    public static int getNextNumber() {
+        return nextNumber;
+    }
+
+    public static void setNextNumber(int nextNumber) {
+        ReservationRecord.nextNumber = nextNumber;
+    }
+
+    
     double calculateDuration(Date reservationStartTime, Date reservationEndTime) {
         double difference_In_Time = reservationEndTime.getTime() - reservationStartTime.getTime();
         return (difference_In_Time / (1000 * 60 * 60)) % 24; //return in hour

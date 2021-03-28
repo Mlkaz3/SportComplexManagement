@@ -7,6 +7,7 @@ package client;
 
 import adt.LinkedList;
 import static client.MainDriver.equipmentManagement;
+import static client.MainDriver.facilityManagement;
 import static client.MainDriver.pressEnterKeyToContinue;
 import entity.Equipment;
 import entity.ReservationRecord;
@@ -19,6 +20,7 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 import static client.MainDriver.usageManagement;
+import entity.Facility;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,8 +46,6 @@ public class UsageManagement implements Serializable {
 
     public UsageManagement() {
         this.reservationRecord = new LinkedList<>();
-        //reservationRecord.clear();
-
     }
 
     public boolean addReservation(ReservationRecord record) {
@@ -68,6 +68,7 @@ public class UsageManagement implements Serializable {
 
     public void displayReservation() {
         serFileReader();
+        //checkID();
         if (reservationRecord.isEmpty()) {
             System.out.println("-----------------------");
             System.out.println("No booking record found");
@@ -127,26 +128,19 @@ public class UsageManagement implements Serializable {
 
                 switch (ch) {
                     case 1 -> {
-                        //called viewBooking() function in Usage Management
                         usageManagement.viewBooking(row);
                         System.out.println("");
                     }
-
                     case 2 -> {
-                        //called updateBooking() function in Usage Management
                         usageManagement.updateBooking(row);
                         System.out.println("");
-
                     }
                     case 3 -> {
-                        //called deleteBooking() function in Usage Management which pass in the row number and 
                         usageManagement.deleteBooking(row);
                         System.out.println("");
                         ch = 4;
-
                     }
                     case 4 -> {
-
                     }
                     default -> {
                         System.out.println();
@@ -181,8 +175,6 @@ public class UsageManagement implements Serializable {
                 ch = input.nextInt();
                 switch (ch) {
                     case 1 -> {
-//                        filterBookingItem(row);
-//                        pressEnterKeyToContinue();
                         usageManagement.displayBookingDetails(row);
                         pressEnterKeyToContinue();
                     }
@@ -251,7 +243,6 @@ public class UsageManagement implements Serializable {
     public void deleteBooking(int row) {
         String deletion;
         serFileReader();
-
         if ("Complete".equals(reservationRecord.getEntry(row).getStatus())) {
             System.out.println("Unable to delete success booking");
             pressEnterKeyToContinue();
@@ -263,13 +254,13 @@ public class UsageManagement implements Serializable {
             switch (deletion.toLowerCase()) {
                 case "yes" -> {
                     if ("Facilities".equals(reservationRecord.getEntry(row).getReservationType())) {
+                        Facility deletionFacility = reservationRecord.getEntry(row).getFacilities();
                         //here undone
-
+                        facilityManagement.returnDeleted(deletionFacility);
                     } else {
                         Equipment deletionEquipment = reservationRecord.getEntry(row).getEquipment();
                         equipmentManagement.returnDeleted(deletionEquipment);
                     }
-
                     deletionRecord = reservationRecord.removeAt(row);
                     System.out.println("The booking record with ID " + deletionRecord.getReservationID() + " is deleted.");
                 }
@@ -279,7 +270,6 @@ public class UsageManagement implements Serializable {
                 default -> {
                     System.out.println("Unknown selection.");
                 }
-
             }
         }
         serFileWriter();
@@ -710,5 +700,13 @@ public class UsageManagement implements Serializable {
         } catch (IOException i) {
             i.printStackTrace();
         }
+    }
+
+    private void checkID() {
+
+    }
+
+    private void returnDeleted(Facility deletionEquipment) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
