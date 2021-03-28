@@ -24,14 +24,7 @@ public interface ListInter<T> {
 
   public boolean replace(int atPosition, T newEntry);
 
-  public T getEntry(int atPosition);
-
-
   public boolean contains(T position);
-
-
-  public int getfilledSize();
-
 
   public boolean isEmpty();
 
@@ -39,7 +32,7 @@ public interface ListInter<T> {
   
   public int filledSize();
   
-  public T get(int index);
+  public T get(int atPosition);
   
   //public void grow();
 

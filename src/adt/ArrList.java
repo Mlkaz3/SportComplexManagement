@@ -114,18 +114,7 @@ public class ArrList<T> implements ListInter<T>, Serializable {
 
     return isSuccessful;
   }
-
-  @Override
-  public T getEntry(int atPosition) {
-    T result = null;
-
-    if ((atPosition >= 1) && (atPosition <= filledSize)) {
-      result = array[atPosition - 1];
-    }
-
-    return result;
-  }
-
+  
   @Override
   public boolean contains(T position) {
     boolean found = false;
@@ -135,11 +124,6 @@ public class ArrList<T> implements ListInter<T>, Serializable {
       }
     }
     return found;
-  }
-
-  @Override
-  public int getfilledSize() {
-    return filledSize;
   }
 
   @Override
@@ -196,9 +180,14 @@ public class ArrList<T> implements ListInter<T>, Serializable {
   }
 
 @Override  
-public T get(int index) throws IndexOutOfBoundsException {
-    if(index<0 || index>=this.filledSize) throw new IndexOutOfBoundsException();
-    return array[index];
+public T get(int atPosition) throws IndexOutOfBoundsException {
+    T result = null;
+
+    if ((atPosition >= 1) && (atPosition <= filledSize)) {
+      result = array[atPosition - 1];
+    }
+
+    return result;
     }
 
 //Grow the array by initializing new array of size FACTOR times original array, copying all elements to new array and changing reference of old array to new
