@@ -131,11 +131,11 @@ public class ArrList<T> implements ListInter<T>, Serializable {
     return filledSize == 0;
   }
 
-  @Override
+/*  @Override
   public boolean isFull() {
     return false;
   }
-
+*/
   @Override
   public String toString() {
  //   String outputStr = "";
@@ -201,11 +201,11 @@ private void grow(){
 array = tempArray;
 }
 
-    @Override
+/*    @Override
     public int size() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+*/
 
 
 }

@@ -27,7 +27,7 @@ public interface ListInter<T> {
 
   public boolean isEmpty();
 
-  public boolean isFull();
+  //public boolean isFull();
   
   public int filledSize();
   
@@ -35,7 +35,7 @@ public interface ListInter<T> {
   
   //public void grow();
 
-  public int size();
+  //public int size();
 }
 
 
