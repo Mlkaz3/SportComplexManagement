@@ -9,7 +9,7 @@ import entity.Facility;
 
 /**
  *
- * @author andre
+ * @author Chen Chee Yong 19WMR11909
  */
 public interface ListInter<T> {
 
@@ -27,14 +27,10 @@ public interface ListInter<T> {
 
   public boolean isEmpty();
 
-  //public boolean isFull();
-  
   public int filledSize();
   
   public T get(int atPosition);
-  
-  //public void grow();
-
+  //public void grow()
   //public int size();
 }
 

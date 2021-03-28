@@ -7,7 +7,7 @@ package entity;
 
 /**
  *
- * @author andre
+ * @author Chen Chee Yong 19WMR11909
  */
 import java.io.Serializable;
 import java.util.Locale;

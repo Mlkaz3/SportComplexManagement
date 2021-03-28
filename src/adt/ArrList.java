@@ -5,11 +5,9 @@ import java.io.Serializable;
 
 /**
  *
- * @author andre
+ * @author Chen Chee Yong 19WMR11909
  */
-
-/*        Badminton[a,b,c,d,e]
-        Tennis[a,b,c,d,e]
+/*    
 */
 public class ArrList<T> implements ListInter<T>, Serializable {
 
