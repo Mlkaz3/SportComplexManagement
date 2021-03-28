@@ -31,7 +31,6 @@ public class EquipmentManagement {
 
     public void displayStack() {
         serFileReader();
-        Iterator<Equipment> it = equipmentStack.getIterator();
 
         if (equipmentStack.isEmpty()) {
             System.out.println("Sorry. There are no racquet left.");
@@ -40,6 +39,7 @@ public class EquipmentManagement {
             System.out.printf("%-15s %-20s %-20s %-20s %-20s %-20s\n",
                     "Equipment ID", "Equipment Brand", "Equipment Status", "Equipment Price", "Equipment Location", "Equipment Type");
             System.out.println("------------------------------------------------------------------------------------------------------------------------");
+            Iterator<Equipment> it = equipmentStack.getIterator();
             while (it.hasNext()) {
                 System.out.println(it.next());
             }
@@ -230,44 +230,44 @@ public class EquipmentManagement {
         } else {
             viewBrokenStack();
 
-        System.out.println("Confirm clear all broken equipments? ->");
-        System.out.println("\n[1] Yes");
-        System.out.println("[2] No\n");
-        int num;
-        boolean valid = true;
-        do {
-            System.out.print("-> ");
-            String ch = input.nextLine();
+            System.out.println("Confirm clear all broken equipments? ->");
+            System.out.println("\n[1] Yes");
+            System.out.println("[2] No\n");
+            int num;
+            boolean valid = true;
+            do {
+                System.out.print("-> ");
+                String ch = input.nextLine();
 
-            try {
-                num = Integer.parseInt(ch);
-                switch (num) {
-                    case 1 -> {
-                        brokenStack.clear();
-                        System.out.println("All broken equipment is removed.");
-                        writeBrokenFile();
-                        valid = true;
+                try {
+                    num = Integer.parseInt(ch);
+                    switch (num) {
+                        case 1 -> {
+                            brokenStack.clear();
+                            System.out.println("All broken equipment is removed.");
+                            writeBrokenFile();
+                            valid = true;
+                        }
+                        //add back to equipment stack only when in good condition
+                        case 2 -> {
+                            System.out.println("No equipments removed.");
+                            valid = true;
+                        }
+                        default -> {
+                            System.out.println();
+                            System.out.println("Error. Please select a correct choice.");
+                            System.out.println();
+                            valid = false;
+                        }
                     }
-                    //add back to equipment stack only when in good condition
-                    case 2 -> {
-                        System.out.println("No equipments removed.");
-                        valid = true;
-                    }
-                    default -> {
-                        System.out.println();
-                        System.out.println("Error. Please select a correct choice.");
-                        System.out.println();
-                        valid = false;
-                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("\nError. Invalid input.");
+                    System.out.println();
+                    valid = false;
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("\nError. Invalid input.");
-                System.out.println();
-                valid = false;
-            }
-        } while (valid != true);
+            } while (valid != true);
         }
-        
+
     }
 
     //Display stack storing broken equipements

@@ -113,10 +113,8 @@ public class ArrayStack<T> implements ArrayStackWithIteratorInterface<T>, Serial
         //boolean contains = false;
         Iterator<T> iterator = getIterator();
         while (iterator.hasNext()) {
-            //if(iterator.next() == newEntry)
             if (iterator.next().equals(newEntry)) //contains = true;
             {
-                System.out.println("Equals");
                 return true;
             }
         }
@@ -143,7 +141,6 @@ public class ArrayStack<T> implements ArrayStackWithIteratorInterface<T>, Serial
         @Override
         // Retrieve the value of next element
         public T next() {
-            //System.out.println("iteratorIndex: " + iteratorIndex);
             if (hasNext()) {
                 return array[iteratorIndex++];
             } else {
