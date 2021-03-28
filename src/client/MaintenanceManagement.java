@@ -159,10 +159,19 @@ public class MaintenanceManagement {
                     switch (num) {
                         case 1 -> {
 
+                            Facility selectedFacility = maintenance.getFacility();
+
                             facilityManagement.readFacility();
-                            maintenance.getFacility().setFacilityAvailability(false);
+
+                            for (int i = 1; i <= facilityManagement.facility.filledSize(); i++) {
+                                if (selectedFacility.equals(facilityManagement.facility.get(i))) {
+                                    selectedFacility = facilityManagement.facility.get(i);
+                                }
+                            }
+                            selectedFacility.setFacilityAvailability(false);
 
                             facilityManagement.writeFacility();
+
                             GregorianCalendar startDate = new GregorianCalendar();
                             Date now = startDate.getTime();
                             maintenance.setStartDate(now);
@@ -321,8 +330,8 @@ public class MaintenanceManagement {
 
                             int count = 0;
                             for (int i = 1; i <= facilityManagement.facility.filledSize(); i++) {
-                                if (newID == null ? facilityManagement.facility.get(i) == null : 
-                                        newID.equals(facilityManagement.facility.get(i).getFacilityID())) {
+                                if (newID == null ? facilityManagement.facility.get(i) == null
+                                        : newID.equals(facilityManagement.facility.get(i).getFacilityID())) {
                                     count = 1;
                                     selectedFacility = facilityManagement.facility.get(i);
                                 }
@@ -426,8 +435,18 @@ public class MaintenanceManagement {
             if (maintenance.getEndDate() != null) {
                 System.out.println("\nThe maintenance is already completed.");
             } else {
+
+                Facility selectedFacility = maintenance.getFacility();
+
                 facilityManagement.readFacility();
-                maintenance.getFacility().setFacilityAvailability(true);
+
+                for (int i = 1; i <= facilityManagement.facility.filledSize(); i++) {
+                    if (selectedFacility.equals(facilityManagement.facility.get(i))) {
+                        selectedFacility = facilityManagement.facility.get(i);
+                    }
+                }
+                selectedFacility.setFacilityAvailability(true);
+
                 facilityManagement.writeFacility();
 
                 GregorianCalendar endDate = new GregorianCalendar();
